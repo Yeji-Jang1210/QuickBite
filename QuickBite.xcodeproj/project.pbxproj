@@ -10,9 +10,19 @@
 		B822CA022C6C70C000FAA59E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA012C6C70C000FAA59E /* AppDelegate.swift */; };
 		B822CA042C6C70C000FAA59E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA032C6C70C000FAA59E /* SceneDelegate.swift */; };
 		B822CA062C6C70C000FAA59E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA052C6C70C000FAA59E /* ViewController.swift */; };
-		B822CA092C6C70C000FAA59E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = B822CA082C6C70C000FAA59E /* Base */; };
 		B822CA0B2C6C70C200FAA59E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B822CA0A2C6C70C200FAA59E /* Assets.xcassets */; };
 		B822CA0E2C6C70C200FAA59E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = B822CA0D2C6C70C200FAA59E /* Base */; };
+		B822CA162C6C70D000FAA59E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B822CA152C6C70D000FAA59E /* .gitignore */; };
+		B822CA182C6C711200FAA59E /* APIInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA172C6C711200FAA59E /* APIInfo.swift */; };
+		B822CA1B2C6C71B000FAA59E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B822CA1A2C6C71B000FAA59E /* Alamofire */; };
+		B822CA1E2C6C71BD00FAA59E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B822CA1D2C6C71BD00FAA59E /* Kingfisher */; };
+		B822CA212C6C71C500FAA59E /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = B822CA202C6C71C500FAA59E /* Toast */; };
+		B822CA242C6C71D800FAA59E /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = B822CA232C6C71D800FAA59E /* RxCocoa */; };
+		B822CA262C6C71D800FAA59E /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = B822CA252C6C71D800FAA59E /* RxRelay */; };
+		B822CA282C6C71D800FAA59E /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B822CA272C6C71D800FAA59E /* RxSwift */; };
+		B822CA2B2C6C71ED00FAA59E /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = B822CA2A2C6C71ED00FAA59E /* Differentiator */; };
+		B822CA2D2C6C71ED00FAA59E /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = B822CA2C2C6C71ED00FAA59E /* RxDataSources */; };
+		B822CA302C6C71F700FAA59E /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B822CA2F2C6C71F700FAA59E /* IQKeyboardManagerSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,10 +30,11 @@
 		B822CA012C6C70C000FAA59E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B822CA032C6C70C000FAA59E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B822CA052C6C70C000FAA59E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B822CA082C6C70C000FAA59E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B822CA0A2C6C70C200FAA59E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B822CA0D2C6C70C200FAA59E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B822CA0F2C6C70C200FAA59E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B822CA152C6C70D000FAA59E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		B822CA172C6C711200FAA59E /* APIInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +42,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B822CA2B2C6C71ED00FAA59E /* Differentiator in Frameworks */,
+				B822CA282C6C71D800FAA59E /* RxSwift in Frameworks */,
+				B822CA262C6C71D800FAA59E /* RxRelay in Frameworks */,
+				B822CA212C6C71C500FAA59E /* Toast in Frameworks */,
+				B822CA1E2C6C71BD00FAA59E /* Kingfisher in Frameworks */,
+				B822CA302C6C71F700FAA59E /* IQKeyboardManagerSwift in Frameworks */,
+				B822CA2D2C6C71ED00FAA59E /* RxDataSources in Frameworks */,
+				B822CA242C6C71D800FAA59E /* RxCocoa in Frameworks */,
+				B822CA1B2C6C71B000FAA59E /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +60,7 @@
 		B822C9F52C6C70C000FAA59E = {
 			isa = PBXGroup;
 			children = (
+				B822CA152C6C70D000FAA59E /* .gitignore */,
 				B822CA002C6C70C000FAA59E /* QuickBite */,
 				B822C9FF2C6C70C000FAA59E /* Products */,
 			);
@@ -56,15 +77,127 @@
 		B822CA002C6C70C000FAA59E /* QuickBite */ = {
 			isa = PBXGroup;
 			children = (
-				B822CA012C6C70C000FAA59E /* AppDelegate.swift */,
-				B822CA032C6C70C000FAA59E /* SceneDelegate.swift */,
+				B822CA372C6C73D300FAA59E /* Network */,
+				B822CA3B2C6C73F700FAA59E /* Model */,
+				B822CA3E2C6C74AD00FAA59E /* UI */,
+				B822CA3D2C6C742700FAA59E /* App */,
+				B822CA3C2C6C740300FAA59E /* Abstract */,
+				B822CA3A2C6C73E300FAA59E /* Extension */,
+				B822CA392C6C73DF00FAA59E /* Utils */,
+				B822CA382C6C73DB00FAA59E /* Custom */,
 				B822CA052C6C70C000FAA59E /* ViewController.swift */,
-				B822CA072C6C70C000FAA59E /* Main.storyboard */,
 				B822CA0A2C6C70C200FAA59E /* Assets.xcassets */,
 				B822CA0C2C6C70C200FAA59E /* LaunchScreen.storyboard */,
 				B822CA0F2C6C70C200FAA59E /* Info.plist */,
+				B822CA172C6C711200FAA59E /* APIInfo.swift */,
 			);
 			path = QuickBite;
+			sourceTree = "<group>";
+		};
+		B822CA312C6C737400FAA59E /* MainTBC */ = {
+			isa = PBXGroup;
+			children = (
+				B822CA352C6C73A200FAA59E /* Main */,
+				B822CA342C6C739C00FAA59E /* Search */,
+				B822CA362C6C73A800FAA59E /* Profile */,
+			);
+			path = MainTBC;
+			sourceTree = "<group>";
+		};
+		B822CA322C6C737600FAA59E /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		B822CA332C6C737D00FAA59E /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		B822CA342C6C739C00FAA59E /* Search */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		B822CA352C6C73A200FAA59E /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		B822CA362C6C73A800FAA59E /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		B822CA372C6C73D300FAA59E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		B822CA382C6C73DB00FAA59E /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		B822CA392C6C73DF00FAA59E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		B822CA3A2C6C73E300FAA59E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		B822CA3B2C6C73F700FAA59E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B822CA3C2C6C740300FAA59E /* Abstract */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Abstract;
+			sourceTree = "<group>";
+		};
+		B822CA3D2C6C742700FAA59E /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B822CA012C6C70C000FAA59E /* AppDelegate.swift */,
+				B822CA032C6C70C000FAA59E /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		B822CA3E2C6C74AD00FAA59E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				B822CA332C6C737D00FAA59E /* SignIn */,
+				B822CA322C6C737600FAA59E /* SignUp */,
+				B822CA312C6C737400FAA59E /* MainTBC */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +216,17 @@
 			dependencies = (
 			);
 			name = QuickBite;
+			packageProductDependencies = (
+				B822CA1A2C6C71B000FAA59E /* Alamofire */,
+				B822CA1D2C6C71BD00FAA59E /* Kingfisher */,
+				B822CA202C6C71C500FAA59E /* Toast */,
+				B822CA232C6C71D800FAA59E /* RxCocoa */,
+				B822CA252C6C71D800FAA59E /* RxRelay */,
+				B822CA272C6C71D800FAA59E /* RxSwift */,
+				B822CA2A2C6C71ED00FAA59E /* Differentiator */,
+				B822CA2C2C6C71ED00FAA59E /* RxDataSources */,
+				B822CA2F2C6C71F700FAA59E /* IQKeyboardManagerSwift */,
+			);
 			productName = QuickBite;
 			productReference = B822C9FE2C6C70C000FAA59E /* QuickBite.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +255,14 @@
 				Base,
 			);
 			mainGroup = B822C9F52C6C70C000FAA59E;
+			packageReferences = (
+				B822CA192C6C71B000FAA59E /* XCRemoteSwiftPackageReference "Alamofire" */,
+				B822CA1C2C6C71BD00FAA59E /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				B822CA1F2C6C71C500FAA59E /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				B822CA222C6C71D800FAA59E /* XCRemoteSwiftPackageReference "RxSwift" */,
+				B822CA292C6C71ED00FAA59E /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				B822CA2E2C6C71F700FAA59E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+			);
 			productRefGroup = B822C9FF2C6C70C000FAA59E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,9 +277,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B822CA162C6C70D000FAA59E /* .gitignore in Resources */,
 				B822CA0B2C6C70C200FAA59E /* Assets.xcassets in Resources */,
 				B822CA0E2C6C70C200FAA59E /* Base in Resources */,
-				B822CA092C6C70C000FAA59E /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +292,7 @@
 			files = (
 				B822CA062C6C70C000FAA59E /* ViewController.swift in Sources */,
 				B822CA022C6C70C000FAA59E /* AppDelegate.swift in Sources */,
+				B822CA182C6C711200FAA59E /* APIInfo.swift in Sources */,
 				B822CA042C6C70C000FAA59E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,14 +300,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B822CA072C6C70C000FAA59E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B822CA082C6C70C000FAA59E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B822CA0C2C6C70C200FAA59E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -295,11 +440,10 @@
 				DEVELOPMENT_TEAM = 9N9NGPM747;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuickBite/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "한끼뚝딱";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -307,9 +451,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yeji.QuickBite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -323,11 +471,10 @@
 				DEVELOPMENT_TEAM = 9N9NGPM747;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuickBite/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "한끼뚝딱";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -335,9 +482,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yeji.QuickBite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -363,6 +514,105 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B822CA192C6C71B000FAA59E /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
+		B822CA1C2C6C71BD00FAA59E /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
+		B822CA1F2C6C71C500FAA59E /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
+		B822CA222C6C71D800FAA59E /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.7.1;
+			};
+		};
+		B822CA292C6C71ED00FAA59E /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
+		B822CA2E2C6C71F700FAA59E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B822CA1A2C6C71B000FAA59E /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B822CA192C6C71B000FAA59E /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		B822CA1D2C6C71BD00FAA59E /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B822CA1C2C6C71BD00FAA59E /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		B822CA202C6C71C500FAA59E /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B822CA1F2C6C71C500FAA59E /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
+		B822CA232C6C71D800FAA59E /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B822CA222C6C71D800FAA59E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		B822CA252C6C71D800FAA59E /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B822CA222C6C71D800FAA59E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		B822CA272C6C71D800FAA59E /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B822CA222C6C71D800FAA59E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		B822CA2A2C6C71ED00FAA59E /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B822CA292C6C71ED00FAA59E /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		B822CA2C2C6C71ED00FAA59E /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B822CA292C6C71ED00FAA59E /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
+		};
+		B822CA2F2C6C71F700FAA59E /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B822CA2E2C6C71F700FAA59E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B822C9F62C6C70C000FAA59E /* Project object */;
 }
