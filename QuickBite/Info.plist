@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>MaruBuri-Bold.otf</string>
+		<string>MaruBuri-SemiBold.otf</string>
+		<string>MaruBuri-Regular.otf</string>
+		<string>MaruBuri-Light.otf</string>
+		<string>MaruBuri-ExtraLight.otf</string>
+	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>사진을 업로드 하기 위한 권한이 필요합니다.</string>
 	<key>UIUserInterfaceStyle</key>

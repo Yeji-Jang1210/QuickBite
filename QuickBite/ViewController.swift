@@ -6,14 +6,12 @@
 //
 
 import UIKit
+import SnapKit
 
-class ViewController: UIViewController {
+class ViewController: BaseVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
-
 }
 
