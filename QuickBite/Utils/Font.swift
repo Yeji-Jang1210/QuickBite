@@ -37,15 +37,15 @@ struct Font {
         return UIFont(name: "MaruBuriot-Light", size: ofSize.rawValue) ?? .systemFont(ofSize: ofSize.rawValue)
     }
     
-    static func regular(ofSize: FontSize) -> UIFont {
+    static func regular(_ ofSize: FontSize) -> UIFont {
         return UIFont(name: "MaruBuriot-Regular", size: ofSize.rawValue) ?? .systemFont(ofSize: ofSize.rawValue)
     }
     
-    static func semiBold(ofSize: FontSize) -> UIFont {
+    static func semiBold(_ ofSize: FontSize) -> UIFont {
         return UIFont(name: "MaruBuriot-SemiBold", size: ofSize.rawValue) ?? .boldSystemFont(ofSize: ofSize.rawValue)
     }
     
-    static func boldFont(ofSize: FontSize) -> UIFont {
+    static func boldFont(_ ofSize: FontSize) -> UIFont {
         return UIFont(name: "MaruBuriot-Bold", size: ofSize.rawValue) ?? .boldSystemFont(ofSize: ofSize.rawValue)
     }
 }

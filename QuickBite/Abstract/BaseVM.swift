@@ -8,6 +8,14 @@
 import Foundation
 import RxSwift
 
+protocol BaseVMProtocol {
+    associatedtype Input
+    
+    associatedtype Output
+    
+    func transform(input: Input) -> Output
+}
+
 class BaseVM {
     
     let disposeBag = DisposeBag()

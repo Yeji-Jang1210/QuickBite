@@ -37,6 +37,14 @@
 		B822CA592C6C7BD800FAA59E /* MaruBuri-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B822CA542C6C7BD800FAA59E /* MaruBuri-SemiBold.otf */; };
 		B822CA5A2C6C7BD800FAA59E /* MaruBuri-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B822CA552C6C7BD800FAA59E /* MaruBuri-Light.otf */; };
 		B822CA5C2C6C7CBA00FAA59E /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA5B2C6C7CBA00FAA59E /* Font.swift */; };
+		B822CA602C6C88C600FAA59E /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA5F2C6C88C600FAA59E /* SignInVC.swift */; };
+		B822CA622C6C88F100FAA59E /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA612C6C88F100FAA59E /* BaseButton.swift */; };
+		B822CA642C6C8A3800FAA59E /* Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA632C6C8A3800FAA59E /* Localized.swift */; };
+		B822CA662C6C8B7200FAA59E /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA652C6C8B7200FAA59E /* BaseTextField.swift */; };
+		B822CA682C6C8BA100FAA59E /* ImageAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA672C6C8BA100FAA59E /* ImageAssets.swift */; };
+		B822CA6A2C6C9C8200FAA59E /* SignInVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA692C6C9C8200FAA59E /* SignInVM.swift */; };
+		B822CA6C2C6C9FDA00FAA59E /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA6B2C6C9FDA00FAA59E /* SignUpVC.swift */; };
+		B822CA6E2C6C9FE400FAA59E /* SignUpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA6D2C6C9FE400FAA59E /* SignUpVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +70,14 @@
 		B822CA542C6C7BD800FAA59E /* MaruBuri-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MaruBuri-SemiBold.otf"; sourceTree = "<group>"; };
 		B822CA552C6C7BD800FAA59E /* MaruBuri-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MaruBuri-Light.otf"; sourceTree = "<group>"; };
 		B822CA5B2C6C7CBA00FAA59E /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		B822CA5F2C6C88C600FAA59E /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
+		B822CA612C6C88F100FAA59E /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
+		B822CA632C6C8A3800FAA59E /* Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localized.swift; sourceTree = "<group>"; };
+		B822CA652C6C8B7200FAA59E /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
+		B822CA672C6C8BA100FAA59E /* ImageAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAssets.swift; sourceTree = "<group>"; };
+		B822CA692C6C9C8200FAA59E /* SignInVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVM.swift; sourceTree = "<group>"; };
+		B822CA6B2C6C9FDA00FAA59E /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		B822CA6D2C6C9FE400FAA59E /* SignUpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +152,8 @@
 		B822CA322C6C737600FAA59E /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
+				B822CA6B2C6C9FDA00FAA59E /* SignUpVC.swift */,
+				B822CA6D2C6C9FE400FAA59E /* SignUpVM.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -143,6 +161,8 @@
 		B822CA332C6C737D00FAA59E /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
+				B822CA5F2C6C88C600FAA59E /* SignInVC.swift */,
+				B822CA692C6C9C8200FAA59E /* SignInVM.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -178,6 +198,8 @@
 		B822CA382C6C73DB00FAA59E /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				B822CA612C6C88F100FAA59E /* BaseButton.swift */,
+				B822CA652C6C8B7200FAA59E /* BaseTextField.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -187,6 +209,8 @@
 			children = (
 				B822CA4B2C6C796200FAA59E /* Color.swift */,
 				B822CA5B2C6C7CBA00FAA59E /* Font.swift */,
+				B822CA632C6C8A3800FAA59E /* Localized.swift */,
+				B822CA672C6C8BA100FAA59E /* ImageAssets.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -348,15 +372,23 @@
 			files = (
 				B822CA062C6C70C000FAA59E /* ViewController.swift in Sources */,
 				B822CA462C6C764600FAA59E /* BaseCollectionViewCell.swift in Sources */,
+				B822CA6A2C6C9C8200FAA59E /* SignInVM.swift in Sources */,
+				B822CA662C6C8B7200FAA59E /* BaseTextField.swift in Sources */,
 				B822CA4C2C6C796200FAA59E /* Color.swift in Sources */,
 				B822CA442C6C763A00FAA59E /* Cell+Extension.swift in Sources */,
+				B822CA682C6C8BA100FAA59E /* ImageAssets.swift in Sources */,
+				B822CA6C2C6C9FDA00FAA59E /* SignUpVC.swift in Sources */,
 				B822CA422C6C760400FAA59E /* BaseVM.swift in Sources */,
+				B822CA602C6C88C600FAA59E /* SignInVC.swift in Sources */,
 				B822CA482C6C764D00FAA59E /* BaseTableViewCell.swift in Sources */,
 				B822CA022C6C70C000FAA59E /* AppDelegate.swift in Sources */,
 				B822CA182C6C711200FAA59E /* APIInfo.swift in Sources */,
 				B822CA5C2C6C7CBA00FAA59E /* Font.swift in Sources */,
+				B822CA642C6C8A3800FAA59E /* Localized.swift in Sources */,
+				B822CA622C6C88F100FAA59E /* BaseButton.swift in Sources */,
 				B822CA042C6C70C000FAA59E /* SceneDelegate.swift in Sources */,
 				B822CA402C6C760000FAA59E /* BaseVC.swift in Sources */,
+				B822CA6E2C6C9FE400FAA59E /* SignUpVM.swift in Sources */,
 				B822CA4A2C6C793400FAA59E /* UIColor+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

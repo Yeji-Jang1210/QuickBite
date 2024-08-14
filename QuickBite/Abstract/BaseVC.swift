@@ -12,11 +12,30 @@ import Toast
 
 class BaseVC: UIViewController {
     
+    private var isChild: Bool = false
+    
     let disposeBag = DisposeBag()
     
+    init(title: String = "", isChild: Bool = false){
+        super.init(nibName: nil, bundle: nil)
+        self.isChild = isChild
+        self.navigationItem.title = title
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : Color.primaryColor, .font: Font.boldFont(.smallLarge)]
+        
+        if isChild {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: ImageAssets.leftArrow, style: .done, target: self, action: #selector(dismissButtonTapped))
+            navigationItem.leftBarButtonItem?.tintColor = Color.primaryColor
+        }
+        
         configureHierarchy()
         configureLayout()
         configureUI()
@@ -39,6 +58,14 @@ class BaseVC: UIViewController {
         view.hideAllToasts()
         DispatchQueue.main.async {
             self.view.makeToast(msg)
+        }
+    }
+    
+    @objc private func dismissButtonTapped(){
+        if isChild {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            self.dismiss(animated: true)
         }
     }
 }
