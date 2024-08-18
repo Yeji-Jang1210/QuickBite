@@ -165,5 +165,11 @@ final class SignInVC: BaseVC {
                 owner.changeRootViewController(MainTBC(), animated: true)
             }
             .disposed(by: disposeBag)
+        
+        output.signUpButtonTapped
+            .bind(with: self) { owner, _ in
+                owner.navigationController?.pushViewController(SignUpVC(title: Localized.signup.title, isChild: true), animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }

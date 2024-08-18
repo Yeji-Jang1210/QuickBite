@@ -9,6 +9,7 @@ import UIKit
 
 enum EmailValidationState {
     case valid
+    case isEmpty
     case missingAtSymbol
     case missingDomain
     case missingLocalPart
@@ -21,6 +22,8 @@ enum EmailValidationState {
         switch self {
         case .valid:
             return "유효한 이메일 주소입니다."
+        case .isEmpty:
+            return ""
         case .missingAtSymbol:
             return "이메일 주소에 '@' 기호가 없습니다."
         case .missingDomain:
@@ -40,6 +43,11 @@ enum EmailValidationState {
     
     // 이메일 상태를 판별하는 함수
     static func validateEmail(_ email: String) -> EmailValidationState {
+        
+        if email.isEmpty {
+            return .isEmpty
+        }
+        
         // 이메일 길이 제한 (보통 1~254자)
         if email.count < 5 {
             return .tooShort

@@ -46,6 +46,7 @@ class SignUpVC: BaseVC {
     
     private let emailValidationButton = {
         let object = BaseButton()
+        object.isEnabled = false
         object.title = Localized.valid_email_button.title
         object.cornerRadius = 8
         return object
@@ -195,20 +196,54 @@ class SignUpVC: BaseVC {
     override func bind() {
         super.bind()
         
-        let input = SignUpVM.Input(emailText: emailTextField.text.orEmpty)
+        let input = SignUpVM.Input(emailText: emailTextField.text.orEmpty, emailValidateButtonTapped: emailValidationButton.rx.tap)
         
         let output = viewModel.transform(input: input)
         
-        output.emailValidateDescription
-            .asDriver(onErrorJustReturn: "")
+        let emailStatus = output.emailValidationStatus
+            .asDriver(onErrorJustReturn: .isEmpty)
+        
+        emailStatus
+            .map { $0.description }
             .drive(emailTextField.validationStatusText)
             .disposed(by: disposeBag)
         
+        emailStatus
+            .map { $0 == .valid ? .systemGreen : .systemRed }
+            .drive(emailTextField.validationStatusTextColor)
+            .disposed(by: disposeBag)
+        
+        emailStatus
+            .map { $0 == .valid ? true : false}
+            .drive(emailValidationButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
         output.emailIsValid
+            .map { $0.1 }
+            .bind(to: emailTextField.validationStatusText)
+            .disposed(by: disposeBag)
+        
+        let emailIsValid = output.emailIsValid
+            .map{ $0.0 }
             .asDriver(onErrorJustReturn: false)
+        
+        emailIsValid
             .map { $0 ? .systemGreen : .systemRed }
             .drive(emailTextField.validationStatusTextColor)
             .disposed(by: disposeBag)
+        
+        emailIsValid
+            .map { $0 ? .lightGray : .black }
+            .drive(emailTextField.textColor)
+            .disposed(by: disposeBag)
+            
+        emailIsValid
+            .map { !$0 }
+            .drive(emailTextField.isEditing, emailValidationButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        
+            
         
             
 //        let user = Userparams.JoinRequest(email: "ggaaammdoo@gmail.com", password: "123456", nick: "ggammmdoo", phoneNum: nil, birthDay: nil)

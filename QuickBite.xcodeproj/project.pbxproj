@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B822CA022C6C70C000FAA59E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA012C6C70C000FAA59E /* AppDelegate.swift */; };
 		B822CA042C6C70C000FAA59E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA032C6C70C000FAA59E /* SceneDelegate.swift */; };
-		B822CA062C6C70C000FAA59E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA052C6C70C000FAA59E /* ViewController.swift */; };
 		B822CA0B2C6C70C200FAA59E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B822CA0A2C6C70C200FAA59E /* Assets.xcassets */; };
 		B822CA0E2C6C70C200FAA59E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = B822CA0D2C6C70C200FAA59E /* Base */; };
 		B822CA162C6C70D000FAA59E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B822CA152C6C70D000FAA59E /* .gitignore */; };
@@ -62,13 +61,13 @@
 		B822CA932C6DE76100FAA59E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA922C6DE76100FAA59E /* User.swift */; };
 		B822CA962C71DE8200FAA59E /* EmailValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA952C71DE8200FAA59E /* EmailValidationState.swift */; };
 		B822CA982C71F94100FAA59E /* TokenError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA972C71F94100FAA59E /* TokenError.swift */; };
+		B822CA9A2C71F9F100FAA59E /* SignInError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA992C71F9F100FAA59E /* SignInError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B822C9FE2C6C70C000FAA59E /* QuickBite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickBite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B822CA012C6C70C000FAA59E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B822CA032C6C70C000FAA59E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B822CA052C6C70C000FAA59E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B822CA0A2C6C70C200FAA59E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B822CA0D2C6C70C200FAA59E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B822CA0F2C6C70C200FAA59E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -111,6 +110,7 @@
 		B822CA922C6DE76100FAA59E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B822CA952C71DE8200FAA59E /* EmailValidationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidationState.swift; sourceTree = "<group>"; };
 		B822CA972C71F94100FAA59E /* TokenError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenError.swift; sourceTree = "<group>"; };
+		B822CA992C71F9F100FAA59E /* SignInError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,7 +165,6 @@
 				B822CA3A2C6C73E300FAA59E /* Extension */,
 				B822CA392C6C73DF00FAA59E /* Utils */,
 				B822CA382C6C73DB00FAA59E /* Custom */,
-				B822CA052C6C70C000FAA59E /* ViewController.swift */,
 				B822CA0A2C6C70C200FAA59E /* Assets.xcassets */,
 				B822CA0C2C6C70C200FAA59E /* LaunchScreen.storyboard */,
 				B822CA0F2C6C70C200FAA59E /* Info.plist */,
@@ -343,6 +342,7 @@
 			children = (
 				B822CA952C71DE8200FAA59E /* EmailValidationState.swift */,
 				B822CA972C71F94100FAA59E /* TokenError.swift */,
+				B822CA992C71F9F100FAA59E /* SignInError.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -446,7 +446,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B822CA062C6C70C000FAA59E /* ViewController.swift in Sources */,
 				B822CA782C6D92C800FAA59E /* RecipesVC.swift in Sources */,
 				B822CA462C6C764600FAA59E /* BaseCollectionViewCell.swift in Sources */,
 				B822CA852C6D9B5200FAA59E /* UserAPI.swift in Sources */,
@@ -469,6 +468,7 @@
 				B822CA892C6D9B6300FAA59E /* PostAPI.swift in Sources */,
 				B822CA602C6C88C600FAA59E /* SignInVC.swift in Sources */,
 				B822CA482C6C764D00FAA59E /* BaseTableViewCell.swift in Sources */,
+				B822CA9A2C71F9F100FAA59E /* SignInError.swift in Sources */,
 				B822CA022C6C70C000FAA59E /* AppDelegate.swift in Sources */,
 				B822CA762C6D924A00FAA59E /* MainTBC.swift in Sources */,
 				B822CA932C6DE76100FAA59E /* User.swift in Sources */,

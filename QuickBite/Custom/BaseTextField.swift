@@ -56,6 +56,14 @@ final class BaseTextField: UIView {
         return textField.rx.text
     }
     
+    var textColor: Binder<UIColor?> {
+        return textField.rx.textColor
+    }
+    
+    var isEditing: Binder<Bool> {
+        return textField.rx.isEnabled
+    }
+    
     var validationStatusText: Binder<String?> {
         return validationLabel.rx.text
     }

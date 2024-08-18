@@ -50,4 +50,12 @@ class Userparams {
     struct TokenResponse: Codable {
         let accessToken: String
     }
+    
+    struct ValidationEmailResponse: Codable {
+        let email: String
+    }
+    
+    struct StatusMessageResponse: Codable {
+        let message: String
+    }
 }
