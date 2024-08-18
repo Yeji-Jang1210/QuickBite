@@ -44,8 +44,8 @@ final class SignInVM: BaseVM, BaseVMProtocol {
             .flatMap{ param in
                 UserAPI.shared.networking(service: .login(param: param), type: Userparams.LoginResponse.self)
             }
-            .subscribe(with: self) { owner, response in
-                switch response {
+            .subscribe(with: self) { owner, networkResult in
+                switch networkResult {
                 case .success(let result):
                     UserDefaultsManager.shared.token = result.accessToken
                     UserDefaultsManager.shared.refreshToken = result.refreshToken
@@ -60,6 +60,8 @@ final class SignInVM: BaseVM, BaseVMProtocol {
                 }
             }
             .disposed(by: disposeBag)
+        
+        
         
         
         return Output(isLoginValidStatus: isLoginValidStatus,

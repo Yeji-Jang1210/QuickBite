@@ -196,7 +196,13 @@ class SignUpVC: BaseVC {
     override func bind() {
         super.bind()
         
-        let input = SignUpVM.Input(emailText: emailTextField.text.orEmpty, emailValidateButtonTapped: emailValidationButton.rx.tap)
+        let input = SignUpVM.Input(emailText: emailTextField.text.orEmpty,
+                                   emailValidateButtonTapped: emailValidationButton.rx.tap,
+                                   passwordText: passwordTextField.text.orEmpty,
+                                   nicknameText: nicknameTextField.text.orEmpty,
+                                   birthdayText: birthdayTextField.text.orEmpty,
+                                   phoneNumberText: phoneNumberTextField.text.orEmpty,
+                                   signUpButtonTapped: signupButton.rx.tap)
         
         let output = viewModel.transform(input: input)
         
@@ -217,15 +223,15 @@ class SignUpVC: BaseVC {
             .map { $0 == .valid ? true : false}
             .drive(emailValidationButton.rx.isEnabled)
             .disposed(by: disposeBag)
-        
-        output.emailIsValid
-            .map { $0.1 }
-            .bind(to: emailTextField.validationStatusText)
-            .disposed(by: disposeBag)
-        
+
         let emailIsValid = output.emailIsValid
-            .map{ $0.0 }
+            .map{ $0 }
             .asDriver(onErrorJustReturn: false)
+        
+        output.emailIsValidMessage
+            .asDriver(onErrorJustReturn: "")
+            .drive(emailTextField.validationStatusText)
+            .disposed(by: disposeBag)
         
         emailIsValid
             .map { $0 ? .systemGreen : .systemRed }
@@ -242,23 +248,49 @@ class SignUpVC: BaseVC {
             .drive(emailTextField.isEditing, emailValidationButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
+        let passwordIsValid = output.passwordIsValid
+            .asDriver(onErrorJustReturn: false)
         
-            
+        passwordIsValid
+            .map { $0 ? "" : "5자리 이상 입력해주세요" }
+            .drive(passwordTextField.validationStatusText)
+            .disposed(by: disposeBag)
+       
+        passwordIsValid
+            .map { $0 ? .systemGreen : .systemRed }
+            .drive(passwordTextField.validationStatusTextColor)
+            .disposed(by: disposeBag)
         
+        let nicknameIsValid = output.nicknameIsValid
+            .asDriver(onErrorJustReturn: false)
+        
+        nicknameIsValid
+            .map { $0 ? "" : "3글자 이상으로 입력해주세요" }
+            .drive(nicknameTextField.validationStatusText)
+            .disposed(by: disposeBag)
+       
+        nicknameIsValid
+            .map { $0 ? .systemGreen : .systemRed }
+            .drive(nicknameTextField.validationStatusTextColor)
+            .disposed(by: disposeBag)
+        
+        output.isValidSignUp
+            .drive(signupButton.rx.isEnabled)
+            .disposed(by: disposeBag)
             
-//        let user = Userparams.JoinRequest(email: "ggaaammdoo@gmail.com", password: "123456", nick: "ggammmdoo", phoneNum: nil, birthDay: nil)
-//        
-//        UserAPI.shared.networking(service: .signUp(params: user), type: User.self)
-//            .subscribe(with: self) { owner, result in
-//                switch result {
-//                case .success(let value):
-//                    dump(value)
-//                case .error(let statusCode):
-//                    print("status code: \(statusCode)")
-//                case .decodedError:
-//                    print("decoded Error")
-//                }
-//            }
-//            .disposed(by: disposeBag)
+        output.errorMessage
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self) { owner, msg in
+                owner.showToastMsg(msg: msg)
+            }
+            .disposed(by: disposeBag)
+        
+        output.isLoginSuccess
+            .asDriver(onErrorJustReturn: false)
+            .filter { $0 }
+            .drive(with: self){ owner, _ in
+                owner.changeRootViewController(MainTBC(), animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }

@@ -23,7 +23,7 @@ enum EmailValidationState {
         case .valid:
             return "유효한 이메일 주소입니다."
         case .isEmpty:
-            return ""
+            return "이메일을 입력해주세요."
         case .missingAtSymbol:
             return "이메일 주소에 '@' 기호가 없습니다."
         case .missingDomain:

@@ -58,4 +58,16 @@ class Userparams {
     struct StatusMessageResponse: Codable {
         let message: String
     }
+    
+    struct SignupResponse: Codable {
+        let userId: String
+        let email: String
+        let nick: String
+        
+        enum CodingKeys: String, CodingKey {
+            case userId = "user_id"
+            case email
+            case nick
+        }
+    }
 }
