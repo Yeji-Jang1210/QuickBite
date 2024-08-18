@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 final class BaseTextField: UIView {
     
@@ -17,7 +19,7 @@ final class BaseTextField: UIView {
         return object
     }()
     
-    private lazy var textField = {
+    lazy var textField = {
         let object = UITextField()
         return object
     }()
@@ -28,6 +30,13 @@ final class BaseTextField: UIView {
         object.alignment = .center
         object.spacing = 12
         [textFieldImage, textField].map { object.addArrangedSubview($0) }
+        return object
+    }()
+    
+    private let validationLabel = {
+        let object = UILabel()
+        object.font = Font.regular(.small)
+        object.textAlignment = .right
         return object
     }()
     
@@ -42,6 +51,18 @@ final class BaseTextField: UIView {
         object.backgroundColor = .lightGray
         return object
     }()
+    
+    var text: ControlProperty<String?> {
+        return textField.rx.text
+    }
+    
+    var validationStatusText: Binder<String?> {
+        return validationLabel.rx.text
+    }
+    
+    var validationStatusTextColor: Binder<UIColor> {
+        return validationLabel.rx.textColor
+    }
     
     var placeholder: String = "" {
         didSet {
@@ -71,6 +92,7 @@ final class BaseTextField: UIView {
     func configureHierarchy(){
         addSubview(stackView)
         addSubview(separateLine)
+        addSubview(validationLabel)
     }
     
     func configureLayout(){
@@ -84,12 +106,19 @@ final class BaseTextField: UIView {
         
         stackView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(12)
-            make.verticalEdges.equalToSuperview().inset(8)
+            make.top.equalToSuperview().inset(12)
         }
         
         separateLine.snp.makeConstraints { make in
             make.height.equalTo(0.5)
-            make.horizontalEdges.bottom.equalToSuperview()
+            make.top.equalTo(stackView.snp.bottom)
+            make.horizontalEdges.equalToSuperview()
+        }
+        
+        validationLabel.snp.makeConstraints { make in
+            make.top.equalTo(separateLine.snp.bottom).offset(4)
+            make.horizontalEdges.equalTo(separateLine.snp.horizontalEdges)
+            make.bottom.equalToSuperview()
         }
     }
     

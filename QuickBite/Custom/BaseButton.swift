@@ -15,9 +15,23 @@ final class BaseButton: UIButton {
             backgroundColor = isEnabled ? Color.primaryColor : UIColor.lightGray
         }
     }
+    
+    var cornerRadius: CGFloat = 0 {
+        didSet {
+            self.layer.cornerRadius = cornerRadius
+        }
+    }
+    
+    var title: String = "" {
+        didSet {
+            self.titleLabel?.font = Font.regular(.medium)
+            self.setTitle(title, for: .normal)
+        }
+    }
 
     init() {
         super.init(frame: .zero)
+        self.backgroundColor = Color.primaryColor
     }
     
     override init(frame: CGRect) {

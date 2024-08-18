@@ -44,18 +44,34 @@ class SignUpVC: BaseVC {
         return object
     }()
     
+    private let emailValidationButton = {
+        let object = BaseButton()
+        object.title = Localized.valid_email_button.title
+        object.cornerRadius = 8
+        return object
+    }()
+    
+    private lazy var emailStackView = {
+        let object = UIStackView()
+        object.axis = .horizontal
+        object.alignment = .center
+        object.spacing = 4
+        [emailTextField, emailValidationButton].map {object.addArrangedSubview($0)}
+        return object
+    }()
+    
     private let passwordTextField = {
         let object = BaseTextField()
         object.isSecureTextEntry = true
         object.image = ImageAssets.lock
-        object.placeholder = Localized.email_textField_placeholder.text
+        object.placeholder = Localized.password_textField_placeholder.text
         return object
     }()
     
     private let nicknameTextField = {
         let object = BaseTextField()
         object.image = ImageAssets.person
-        object.placeholder = Localized.email_textField_placeholder.text
+        object.placeholder = Localized.nickname_textField_placeholder.text
         return object
     }()
     
@@ -82,13 +98,12 @@ class SignUpVC: BaseVC {
     
     private let signupButton = {
         let object = BaseButton()
-        object.backgroundColor = Color.primaryColor
-        object.titleLabel?.font = Font.regular(.medium)
-        object.setTitle(Localized.signin_button.title, for: .normal)
+        object.title = Localized.signin_button.title
         object.isEnabled = false
         return object
     }()
     
+    let viewModel = SignUpVM()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,7 +117,7 @@ class SignUpVC: BaseVC {
         
         contentsView.addSubview(titleLabel)
         contentsView.addSubview(descriptionLabel)
-        contentsView.addSubview(emailTextField)
+        contentsView.addSubview(emailStackView)
         contentsView.addSubview(passwordTextField)
         contentsView.addSubview(nicknameTextField)
         contentsView.addSubview(optionalLabel)
@@ -134,9 +149,14 @@ class SignUpVC: BaseVC {
             make.leading.equalToSuperview()
         }
         
-        emailTextField.snp.makeConstraints { make in
+        emailStackView.snp.makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(40)
             make.horizontalEdges.equalToSuperview()
+        }
+        
+        emailValidationButton.snp.makeConstraints { make in
+            make.width.equalTo(100)
+            make.height.equalTo(44)
         }
         
         passwordTextField.snp.makeConstraints { make in
@@ -170,6 +190,40 @@ class SignUpVC: BaseVC {
             make.bottom.equalToSuperview().offset(-20)
             make.height.equalTo(44)
         }
+    }
+    
+    override func bind() {
+        super.bind()
         
+        let input = SignUpVM.Input(emailText: emailTextField.text.orEmpty)
+        
+        let output = viewModel.transform(input: input)
+        
+        output.emailValidateDescription
+            .asDriver(onErrorJustReturn: "")
+            .drive(emailTextField.validationStatusText)
+            .disposed(by: disposeBag)
+        
+        output.emailIsValid
+            .asDriver(onErrorJustReturn: false)
+            .map { $0 ? .systemGreen : .systemRed }
+            .drive(emailTextField.validationStatusTextColor)
+            .disposed(by: disposeBag)
+        
+            
+//        let user = Userparams.JoinRequest(email: "ggaaammdoo@gmail.com", password: "123456", nick: "ggammmdoo", phoneNum: nil, birthDay: nil)
+//        
+//        UserAPI.shared.networking(service: .signUp(params: user), type: User.self)
+//            .subscribe(with: self) { owner, result in
+//                switch result {
+//                case .success(let value):
+//                    dump(value)
+//                case .error(let statusCode):
+//                    print("status code: \(statusCode)")
+//                case .decodedError:
+//                    print("decoded Error")
+//                }
+//            }
+//            .disposed(by: disposeBag)
     }
 }

@@ -12,6 +12,8 @@ enum Localized {
     case signin_button
     case email_textField_placeholder
     case password_textField_placeholder
+    case nickname_textField_placeholder
+    case valid_email_button
     
     case signup
     case signup_description
@@ -25,6 +27,8 @@ enum Localized {
             return "한끼뚝딱"
         case .signin_button:
             return "로그인"
+        case .valid_email_button:
+            return "중복확인"
         case .signup:
             return "회원가입"
         default:
@@ -38,6 +42,8 @@ enum Localized {
             return "이메일을 입력해주세요."
         case .password_textField_placeholder:
             return "비밀번호를 입력해주세요."
+        case .nickname_textField_placeholder:
+            return "닉네임을 입력해주세요."
         case .signup_description:
             return "요리사님이 누구인지 알려주세요!"
         case .signup_birtday_placeholder:
