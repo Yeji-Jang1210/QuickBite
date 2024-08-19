@@ -27,9 +27,7 @@ final class SignInVM: BaseVM, BaseVMProtocol {
     
     func transform(input: Input) -> Output {
         
-        let isLoginValid = Observable.combineLatest(input.emailText, input.passwordText)
-            .map { $0.isEmpty || $1.isEmpty }
-            .map { !$0 }
+        let isLoginValid = PublishRelay<Bool>()
         
         let isLoginValidStatus = isLoginValid
             .asDriver(onErrorJustReturn: false)
@@ -39,6 +37,14 @@ final class SignInVM: BaseVM, BaseVMProtocol {
         
         input.signInButtonTapped
             .throttle(.seconds(2), scheduler: MainScheduler.instance)
+            .withLatestFrom(Observable.combineLatest(input.emailText, input.passwordText).map { $0.isEmpty || $1.isEmpty })
+            .bind {
+                isLoginValid.accept(!$0)
+            }
+            .disposed(by: disposeBag)
+        
+        isLoginValid
+            .filter { $0 }
             .withLatestFrom(Observable.combineLatest(input.emailText, input.passwordText))
             .map { Userparams.LoginRequest(email: $0, password: $1)}
             .flatMap{ param in
@@ -60,9 +66,6 @@ final class SignInVM: BaseVM, BaseVMProtocol {
                 }
             }
             .disposed(by: disposeBag)
-        
-        
-        
         
         return Output(isLoginValidStatus: isLoginValidStatus,
                       errorMessage: errorMessage,

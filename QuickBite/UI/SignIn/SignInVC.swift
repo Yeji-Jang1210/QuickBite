@@ -12,38 +12,47 @@ import RxCocoa
 
 final class SignInVC: BaseVC {
     
-    let titleImageView = {
+    private let titleImageView = {
         let object = UIImageView()
         object.contentMode = .scaleAspectFit
         object.image = ImageAssets.titleImage
         return object
     }()
     
-    let titleLabel = {
+    private lazy var stackView = {
+        let object = UIStackView()
+        object.axis = .vertical
+        object.spacing = 12
+        [titleLabel, subtitleLabel].map {object.addArrangedSubview($0)}
+        return object
+    }()
+    
+    private let titleLabel = {
         let object = UILabel()
         object.font = Font.boldFont(.extraLarge)
         object.text = Localized.title.title
         object.textAlignment = .center
-        object.textColor = .white
+        object.textColor = Color.primaryColor
         return object
     }()
     
-    let signinView = {
-        let object = UIView()
-        object.backgroundColor = .white
-        object.clipsToBounds = true
-        object.layer.cornerRadius = 24
+    private let subtitleLabel = {
+        let object = UILabel()
+        object.font = Font.boldFont(.smallLarge)
+        object.text = Localized.subtitle.title
+        object.textAlignment = .center
+        object.textColor = .darkGray
         return object
     }()
     
-    let emailTextField = {
+    private let emailTextField = {
         let object = BaseTextField()
         object.image = ImageAssets.person
         object.placeholder = Localized.email_textField_placeholder.text
         return object
     }()
     
-    let passwordTextField = {
+    private let passwordTextField = {
         let object = BaseTextField()
         object.image = ImageAssets.lock
         object.isSecureTextEntry = true
@@ -51,90 +60,68 @@ final class SignInVC: BaseVC {
         return object
     }()
     
-    let signinButton = {
+    private let signinButton = {
         let object = BaseButton()
         object.title = Localized.signin_button.title
         return object
     }()
     
-    let signupButton = {
+    private let signupButton = {
        let object = UIButton()
         object.setAttributedTitle(NSAttributedString(string: Localized.signup.title, attributes: [.font: Font.semiBold(.medium), .foregroundColor: Color.primaryColor]), for: .normal)
         return object
     }()
     
-    let loginIsValidLabel = {
-        let object = UILabel()
-        object.font = Font.semiBold(.small)
-        object.text = "아이디 또는 비밀번호를 입력해주세요."
-        object.textAlignment = .right
-        object.textColor = .darkGray
-        return object
-    }()
-    
-    let viewModel = SignInVM()
+    private let viewModel = SignInVM()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Color.primaryColor
     }
     
     override func configureHierarchy() {
         super.configureHierarchy()
         view.addSubview(titleImageView)
-        view.addSubview(titleLabel)
-        view.addSubview(signinView)
-        
-        signinView.addSubview(emailTextField)
-        signinView.addSubview(passwordTextField)
-        signinView.addSubview(signinButton)
-        signinView.addSubview(signupButton)
-        signinView.addSubview(loginIsValidLabel)
+        view.addSubview(stackView)
+        view.addSubview(emailTextField)
+        view.addSubview(passwordTextField)
+        view.addSubview(signinButton)
+        view.addSubview(signupButton)
     }
     
     override func configureLayout() {
         super.configureLayout()
         
-        titleLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(signinView.snp.top).offset(-40)
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
-        }
-        
         titleImageView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(40)
+            make.bottom.equalTo(stackView.snp.top).offset(-40)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(40)
-            make.bottom.equalTo(titleLabel.snp.top).offset(-40)
         }
         
-        signinView.snp.makeConstraints { make in
-            make.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
-            make.height.equalTo(UIScreen.main.bounds.height / 2)
+        stackView.snp.makeConstraints { make in
+            make.centerX.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(60)
+            make.bottom.equalTo(view.snp.centerY).offset(-40)
         }
         
         emailTextField.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(20)
-            make.top.equalToSuperview().offset(100)
+            make.horizontalEdges.equalToSuperview().inset(40)
+            make.top.equalTo(view.snp.centerY).offset(40)
         }
         
         passwordTextField.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(20)
+            make.horizontalEdges.equalToSuperview().inset(40)
             make.top.equalTo(emailTextField.snp.bottom).offset(20)
         }
         
-        loginIsValidLabel.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(12)
-            make.horizontalEdges.equalTo(passwordTextField)
-        }
-        
         signinButton.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(20)
+            make.horizontalEdges.equalToSuperview().inset(40)
             make.height.equalTo(44)
-            make.top.equalTo(loginIsValidLabel.snp.bottom).offset(30)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(30)
         }
         
         signupButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
         }
     }
     
@@ -149,7 +136,10 @@ final class SignInVC: BaseVC {
         let output = viewModel.transform(input: input)
         
         output.isLoginValidStatus
-            .drive(loginIsValidLabel.rx.isHidden, signinButton.rx.isEnabled)
+            .filter { !$0 }
+            .drive(with: self) { owner, _ in
+                owner.showToastMsg(msg: "아이디 또는 비밀번호를 입력해주세요.")
+            }
             .disposed(by: disposeBag)
         
         output.errorMessage

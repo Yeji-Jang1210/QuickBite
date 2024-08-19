@@ -99,7 +99,7 @@ class SignUpVC: BaseVC {
     
     private let signupButton = {
         let object = BaseButton()
-        object.title = Localized.signin_button.title
+        object.title = Localized.signup.title
         object.isEnabled = false
         return object
     }()
@@ -228,7 +228,7 @@ class SignUpVC: BaseVC {
             .map{ $0 }
             .asDriver(onErrorJustReturn: false)
         
-        output.emailIsValidMessage
+        output.emailValidMessage
             .asDriver(onErrorJustReturn: "")
             .drive(emailTextField.validationStatusText)
             .disposed(by: disposeBag)
@@ -248,30 +248,53 @@ class SignUpVC: BaseVC {
             .drive(emailTextField.isEditing, emailValidationButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        let passwordIsValid = output.passwordIsValid
-            .asDriver(onErrorJustReturn: false)
-        
-        passwordIsValid
-            .map { $0 ? "" : "5자리 이상 입력해주세요" }
+        output.passwordValidMessage
+            .asDriver(onErrorJustReturn: "")
             .drive(passwordTextField.validationStatusText)
             .disposed(by: disposeBag)
        
-        passwordIsValid
+        output.passwordIsValid
             .map { $0 ? .systemGreen : .systemRed }
+            .asDriver(onErrorJustReturn: .black)
             .drive(passwordTextField.validationStatusTextColor)
             .disposed(by: disposeBag)
         
-        let nicknameIsValid = output.nicknameIsValid
-            .asDriver(onErrorJustReturn: false)
-        
-        nicknameIsValid
-            .map { $0 ? "" : "3글자 이상으로 입력해주세요" }
-            .drive(nicknameTextField.validationStatusText)
+        output.nicknameIsValid
+            .map { $0 ? .systemGreen : .systemRed }
+            .asDriver(onErrorJustReturn: .black)
+            .drive(nicknameTextField.validationStatusTextColor)
             .disposed(by: disposeBag)
        
-        nicknameIsValid
+        output.nicknameValidMessage
+            .asDriver(onErrorJustReturn: "")
+            .drive(nicknameTextField.validationStatusText)
+            .disposed(by: disposeBag)
+        
+        output.birthdayIsValid
             .map { $0 ? .systemGreen : .systemRed }
-            .drive(nicknameTextField.validationStatusTextColor)
+            .asDriver(onErrorJustReturn: .black)
+            .drive(birthdayTextField.validationStatusTextColor)
+            .disposed(by: disposeBag)
+       
+        output.birthdayValidMessage
+            .asDriver(onErrorJustReturn: "")
+            .drive(birthdayTextField.validationStatusText)
+            .disposed(by: disposeBag)
+        
+        output.phoneNumber
+            .asDriver(onErrorJustReturn: "")
+            .drive(phoneNumberTextField.text)
+            .disposed(by: disposeBag)
+        
+        output.phoneNumberIsValid
+            .map { $0 ? .systemGreen : .systemRed }
+            .asDriver(onErrorJustReturn: .black)
+            .drive(phoneNumberTextField.validationStatusTextColor)
+            .disposed(by: disposeBag)
+        
+        output.phoneNumberValidMessage
+            .asDriver(onErrorJustReturn: "")
+            .drive(phoneNumberTextField.validationStatusText)
             .disposed(by: disposeBag)
         
         output.isValidSignUp

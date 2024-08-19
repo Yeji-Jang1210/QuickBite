@@ -22,11 +22,23 @@ final class SignUpVM: BaseVM, BaseVMProtocol {
     }
     
     struct Output {
-        let emailValidationStatus: BehaviorRelay<EmailValidationState>
+        let emailValidationStatus: PublishRelay<EmailValidationState>
         let emailIsValid: PublishRelay<Bool>
-        let emailIsValidMessage: PublishRelay<String>
-        let passwordIsValid: Observable<Bool>
-        let nicknameIsValid: Observable<Bool>
+        let emailValidMessage: PublishRelay<String>
+        
+        let passwordIsValid: PublishRelay<Bool>
+        let passwordValidMessage: PublishRelay<String>
+        
+        let nicknameIsValid: PublishRelay<Bool>
+        let nicknameValidMessage: PublishRelay<String>
+        
+        let birthdayIsValid: PublishRelay<Bool>
+        let birthdayValidMessage: PublishRelay<String>
+        
+        let phoneNumber: PublishRelay<String>
+        let phoneNumberIsValid: PublishRelay<Bool>
+        let phoneNumberValidMessage: PublishRelay<String>
+        
         let isValidSignUp: Driver<Bool>
         let isLoginSuccess: PublishRelay<Bool>
         let errorMessage: PublishRelay<String>
@@ -34,9 +46,23 @@ final class SignUpVM: BaseVM, BaseVMProtocol {
     
     func transform(input: Input) -> Output {
         
-        let emailValidationStatus = BehaviorRelay<EmailValidationState>(value: .isEmpty)
+        let emailValidationStatus = PublishRelay<EmailValidationState>()
         let emailIsValid = PublishRelay<Bool>()
-        let emailIsValidMessage = PublishRelay<String>()
+        let emailValidMessage = PublishRelay<String>()
+        
+        let passwordIsValid = PublishRelay<Bool>()
+        let passwordValidMessage = PublishRelay<String>()
+        
+        let nicknameIsValid = PublishRelay<Bool>()
+        let nicknameValidMessage = PublishRelay<String>()
+        
+        let birthdayIsValid = PublishRelay<Bool>()
+        let birthdayValidMessage = PublishRelay<String>()
+        
+        let phoneNumber = PublishRelay<String>()
+        let phoneNumberValidMessage = PublishRelay<String>()
+        let phoneNumberIsValid = PublishRelay<Bool>()
+        
         let isLoginInfo = PublishRelay<Userparams.LoginRequest>()
         let isLoginSuccess = PublishRelay<Bool>()
         let errorMessage = PublishRelay<String>()
@@ -44,9 +70,7 @@ final class SignUpVM: BaseVM, BaseVMProtocol {
         input.emailText
             .distinctUntilChanged()
             .map { EmailValidationState.validateEmail($0) }
-            .bind {
-                emailValidationStatus.accept($0)
-            }
+            .bind { emailValidationStatus.accept($0) }
             .disposed(by: disposeBag)
         
         input.emailValidateButtonTapped
@@ -59,14 +83,16 @@ final class SignUpVM: BaseVM, BaseVMProtocol {
             .subscribe(with: self){ owner, networkResult in
                 switch networkResult {
                 case .success(let result):
-                    emailIsValidMessage.accept(result.message)
+                    emailValidMessage.accept(result.message)
                     emailIsValid.accept(true)
                 case .error(let statusCode):
-                    guard ValidationError(rawValue: statusCode) != nil else {
+                    guard let error = EmailValidationError(rawValue: statusCode) else {
                         emailIsValid.accept(false)
                         errorMessage.accept("알수없는 오류")
                         return
                     }
+                    emailIsValid.accept(false)
+                    emailValidMessage.accept(error.message)
                 case .decodedError:
                     emailIsValid.accept(false)
                     errorMessage.accept("알수없는 오류")
@@ -74,17 +100,81 @@ final class SignUpVM: BaseVM, BaseVMProtocol {
             }
             .disposed(by: disposeBag)
         
-        let passwordIsValid = input.passwordText
+        input.passwordText
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .map { $0.count > 5 }
-        
-        
-        let nicknameIsValid = input.nicknameText
+            .map { $0.count > 4 }
+            .bind { result in
+                if result {
+                    passwordValidMessage.accept("")
+                } else {
+                    passwordValidMessage.accept("5자리 이상 입력해주세요")
+                }
+                
+                passwordIsValid.accept(result)
+            }
+            .disposed(by: disposeBag)
+            
+        input.nicknameText
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .map { $0.count > 5 }
+            .map { $0.count > 2 }
+            .bind { result in
+                if result {
+                    nicknameValidMessage.accept("")
+                } else {
+                    nicknameValidMessage.accept("3자리 이상 입력해주세요")
+                }
+                
+                nicknameIsValid.accept(result)
+            }
+            .disposed(by: disposeBag)
             
         //전화번호, 생년월일 구현 필요
+        input.phoneNumberText
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, text in
+                let text = text.replacingOccurrences(of: "-", with: "")
+                
+                if text.isEmpty {
+                    phoneNumberValidMessage.accept("")
+                    return phoneNumberIsValid.accept(true)
+                }
+                
+                if Int(text) == nil {
+                    phoneNumberValidMessage.accept("숫자만 입력해주세요.")
+                    phoneNumberIsValid.accept(false)
+                    return
+                } else {
+                    phoneNumber.accept(owner.format(phoneNumber: text))
+                }
+                
+                if text.count != 11 {
+                    phoneNumberValidMessage.accept("11자리 숫자를 입력해주세요.")
+                    phoneNumberIsValid.accept(false)
+                    return
+                }
+                
+                phoneNumberValidMessage.accept("")
+                return phoneNumberIsValid.accept(true)
+            }
+            .disposed(by: disposeBag)
         
+        input.birthdayText
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, text in
+                if text.isEmpty {
+                    birthdayIsValid.accept(true)
+                    birthdayValidMessage.accept("")
+                    return
+                }
+                
+                let result = owner.isValidDateFormat(text)
+                birthdayValidMessage.accept(result ? "" : "형식에 맞게 입력해주세요")
+                birthdayIsValid.accept(result)
+                
+            }
+            .disposed(by: disposeBag)
         
         let isValidSignup = Observable.combineLatest(emailIsValid, passwordIsValid, nicknameIsValid)
             .map{ $0 && $1 && $2 }
@@ -93,7 +183,7 @@ final class SignUpVM: BaseVM, BaseVMProtocol {
         
         input.signUpButtonTapped
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .flatMap { _ in
+            .flatMapLatest { _ in
             Observable.combineLatest(input.emailText,
                                                    input.passwordText,
                                                    input.nicknameText,
@@ -104,92 +194,94 @@ final class SignUpVM: BaseVM, BaseVMProtocol {
                    return user
                }
         }
-        .flatMap { param in
+        .flatMapLatest { param in
             UserAPI.shared.networking(service: .signUp(param: param), type: Userparams.SignupResponse.self)
         }
-        .subscribe(with: self) { owner, networkResult in
+        .take(1)
+        .withLatestFrom(input.passwordText){ (networkResult, pwd) in
             switch networkResult {
             case .success(let result):
-                input.passwordText.subscribe { pwd in
-                    let param = Userparams.LoginRequest(email: result.email, password: pwd)
-                    isLoginInfo.accept(param)
-                }
-                .disposed(by: owner.disposeBag)
-                
+                return Userparams.LoginRequest(email: result.email, password: pwd)
             case .error(let statusCode):
-                guard let error = SignUpError(rawValue: statusCode) else {
-                    errorMessage.accept(SignUpError.unknownError.message)
-                    return
+                if let error = SignUpError(rawValue: statusCode) {
+                    errorMessage.accept(error.message)
                 }
-                errorMessage.accept(error.message)
             case .decodedError:
                 errorMessage.accept("알수없는 오류")
             }
+            
+            return nil
+        }
+        .compactMap { $0 }
+        .flatMapLatest{ param in
+            UserAPI.shared.networking(service: .login(param: param), type: Userparams.LoginResponse.self)
+        }
+        .subscribe(with: self){ owner, networkResult in
+            switch networkResult {
+            case .success(let result):
+                UserDefaultsManager.shared.token = result.accessToken
+                UserDefaultsManager.shared.refreshToken = result.refreshToken
+                isLoginSuccess.accept(true)
+            case .error(let statusCode):
+                guard let error = LoginError(rawValue: statusCode) else { errorMessage.accept("알수없는 오류")
+                    return
+                }
+                errorMessage.accept(error.description)
+            case .decodedError:
+                errorMessage.accept(LoginError.decodedError.description)
+            }
         }
         .disposed(by: disposeBag)
-        
-        isLoginInfo
-            .flatMap{ param in
-                UserAPI.shared.networking(service: .login(param: param), type: Userparams.LoginResponse.self)
-            }
-            .subscribe(with: self) { owner, networkResult in
-                switch networkResult {
-                case .success(let result):
-                    UserDefaultsManager.shared.token = result.accessToken
-                    UserDefaultsManager.shared.refreshToken = result.refreshToken
-                    isLoginSuccess.accept(true)
-                case .error(let statusCode):
-                    guard let error = LoginError(rawValue: statusCode) else { errorMessage.accept("알수없는 오류")
-                        return
-                    }
-                    errorMessage.accept(error.description)
-                case .decodedError:
-                    errorMessage.accept(LoginError.decodedError.description)
-                }
-            }
-            .disposed(by: disposeBag)
         
         
         
         return Output(emailValidationStatus: emailValidationStatus,
                       emailIsValid:emailIsValid,
-                      emailIsValidMessage: emailIsValidMessage,
+                      emailValidMessage: emailValidMessage,
                       passwordIsValid: passwordIsValid,
+                      passwordValidMessage: passwordValidMessage,
                       nicknameIsValid: nicknameIsValid,
+                      nicknameValidMessage: nicknameValidMessage,
+                      birthdayIsValid: birthdayIsValid,
+                      birthdayValidMessage: birthdayValidMessage,
+                      phoneNumber: phoneNumber,
+                      phoneNumberIsValid: phoneNumberIsValid,
+                      phoneNumberValidMessage: phoneNumberValidMessage,
                       isValidSignUp: isValidSignup,
                       isLoginSuccess: isLoginSuccess,
                       errorMessage: errorMessage)
     }
-}
-
-enum ValidationError: Int {
-    case missingRequiredField = 400
-    case invalidEmailAddress = 409
     
-    // 에러 상태에 따라 적절한 메시지를 제공
-    var message: String {
-        switch self {
-        case .missingRequiredField:
-            return "필수값을 채워주세요."
-        case .invalidEmailAddress:
-            return "사용이 불가능한 이메일입니다."
+    private func format(phoneNumber: String) -> String {
+        var formatted = ""
+        let length = phoneNumber.count
+        
+        if length > 0 {
+            formatted += String(phoneNumber.prefix(3))
+        }
+        if length > 3 {
+            let start = phoneNumber.index(phoneNumber.startIndex, offsetBy: 3)
+            let end = phoneNumber.index(phoneNumber.startIndex, offsetBy: min(7, length))
+            formatted += "-" + phoneNumber[start..<end]
+        }
+        if length > 7 {
+            let start = phoneNumber.index(phoneNumber.startIndex, offsetBy: 7)
+            formatted += "-" + phoneNumber[start...]
+        }
+        
+        return formatted
+    }
+    
+    func isValidDateFormat(_ dateString: String) -> Bool {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+    
+        if let _ = dateFormatter.date(from: dateString) {
+            return true
+        } else {
+            return false
         }
     }
 }
  
-enum SignUpError: Int {
-    case registeredUser = 409
-    case unknownError
-    case missingRequiredField = 400
-    
-    var message: String {
-        switch self {
-        case .missingRequiredField:
-            return "필수값을 채워주세요."
-        case .registeredUser:
-            return "이미 등록된 회원입니다."
-        case .unknownError:
-            return "알수없는 오류입니다."
-        }
-    }
-}

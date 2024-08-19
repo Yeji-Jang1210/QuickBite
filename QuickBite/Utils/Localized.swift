@@ -9,6 +9,7 @@ import Foundation
 
 enum Localized {
     case title
+    case subtitle
     case signin_button
     case email_textField_placeholder
     case password_textField_placeholder
@@ -25,6 +26,8 @@ enum Localized {
         switch self {
         case .title:
             return "한끼뚝딱"
+        case .subtitle:
+            return "끼니를 해결할 간단한 레시피"
         case .signin_button:
             return "로그인"
         case .valid_email_button:

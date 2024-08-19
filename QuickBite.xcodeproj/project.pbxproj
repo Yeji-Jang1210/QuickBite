@@ -62,6 +62,7 @@
 		B822CA962C71DE8200FAA59E /* EmailValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA952C71DE8200FAA59E /* EmailValidationState.swift */; };
 		B822CA982C71F94100FAA59E /* TokenError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA972C71F94100FAA59E /* TokenError.swift */; };
 		B822CA9A2C71F9F100FAA59E /* SignInError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA992C71F9F100FAA59E /* SignInError.swift */; };
+		B822CA9C2C72548E00FAA59E /* SignUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA9B2C72548E00FAA59E /* SignUpError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,6 +112,7 @@
 		B822CA952C71DE8200FAA59E /* EmailValidationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidationState.swift; sourceTree = "<group>"; };
 		B822CA972C71F94100FAA59E /* TokenError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenError.swift; sourceTree = "<group>"; };
 		B822CA992C71F9F100FAA59E /* SignInError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInError.swift; sourceTree = "<group>"; };
+		B822CA9B2C72548E00FAA59E /* SignUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -343,6 +345,7 @@
 				B822CA952C71DE8200FAA59E /* EmailValidationState.swift */,
 				B822CA972C71F94100FAA59E /* TokenError.swift */,
 				B822CA992C71F9F100FAA59E /* SignInError.swift */,
+				B822CA9B2C72548E00FAA59E /* SignUpError.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				B822CA7E2C6D997D00FAA59E /* UserDefaultsManager.swift in Sources */,
 				B822CA7C2C6D995800FAA59E /* Header.swift in Sources */,
 				B822CA722C6D8CEF00FAA59E /* MainVM.swift in Sources */,
+				B822CA9C2C72548E00FAA59E /* SignUpError.swift in Sources */,
 				B822CA982C71F94100FAA59E /* TokenError.swift in Sources */,
 				B822CA8D2C6D9D3700FAA59E /* UserParams.swift in Sources */,
 				B822CA912C6DA43800FAA59E /* MoyaLoggingPlugin.swift in Sources */,

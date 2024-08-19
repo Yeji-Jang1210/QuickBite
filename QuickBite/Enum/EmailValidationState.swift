@@ -7,6 +7,21 @@
 
 import UIKit
 
+enum EmailValidationError: Int {
+    case missingRequiredField = 400
+    case invalidEmailAddress = 409
+    
+    // 에러 상태에 따라 적절한 메시지를 제공
+    var message: String {
+        switch self {
+        case .missingRequiredField:
+            return "필수값을 채워주세요."
+        case .invalidEmailAddress:
+            return "사용이 불가능한 이메일입니다."
+        }
+    }
+}
+
 enum EmailValidationState {
     case valid
     case isEmpty
