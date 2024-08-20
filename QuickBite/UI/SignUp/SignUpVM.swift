@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class SignUpVM: BaseVM, BaseVMProtocol {
+final class SignUpVM: BaseVM, BaseVMProvider {
     
     struct Input {
         let emailText: ControlProperty<String>

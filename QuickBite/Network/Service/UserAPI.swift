@@ -14,6 +14,8 @@ enum UserService {
     case signUp(param: Userparams.JoinRequest)
     case validationEmail(param: Userparams.ValidationEmailRequest)
     case refreshToken(param: Userparams.TokenRequest)
+    case load
+    case edit(param: Userparams.EditRequest)
     case withdraw
 }
 
@@ -34,6 +36,8 @@ extension UserService: TargetType {
             return "/v1/auth/refresh"
         case .withdraw:
             return "v1/users/withdraw"
+        case .load, .edit:
+            return "/v1/users/me/profile"
         }
     }
     
@@ -41,8 +45,10 @@ extension UserService: TargetType {
         switch self {
         case .login, .signUp, .validationEmail:
             return .post
-        case .refreshToken, .withdraw:
+        case .refreshToken, .withdraw, .load:
             return .get
+        case .edit:
+            return .put
         }
     }
     
@@ -54,9 +60,9 @@ extension UserService: TargetType {
             return .requestJSONEncodable(param)
         case .validationEmail(let param):
             return .requestJSONEncodable(param)
-        case .refreshToken:
-            return .requestPlain
-        case .withdraw:
+        case .edit(let param):
+            return .uploadMultipart(param.convertMultiPartFormData())
+        case .refreshToken, .withdraw, .load:
             return .requestPlain
         }
     }
@@ -71,9 +77,15 @@ extension UserService: TargetType {
                 Header.sesacKey.rawValue: APIInfo.key,
                 Header.refresh.rawValue: param.refreshToken
             ]
-        case .withdraw:
+        case .withdraw, .load:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
+                Header.sesacKey.rawValue: APIInfo.key
+            ]
+        case .edit(param: let param):
+            return [
+                Header.authorization.rawValue: UserDefaultsManager.shared.token,
+                Header.contentType.rawValue: Header.multipart.rawValue,
                 Header.sesacKey.rawValue: APIInfo.key
             ]
         }

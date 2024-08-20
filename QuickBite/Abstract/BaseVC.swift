@@ -35,6 +35,7 @@ class BaseVC: UIViewController {
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: ImageAssets.leftArrow, style: .done, target: self, action: #selector(dismissButtonTapped))
             navigationItem.leftBarButtonItem?.tintColor = Color.primaryColor
         }
+
         
         configureHierarchy()
         configureLayout()

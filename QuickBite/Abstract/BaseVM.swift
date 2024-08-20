@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-protocol BaseVMProtocol {
+protocol BaseVMProvider {
     associatedtype Input
     
     associatedtype Output

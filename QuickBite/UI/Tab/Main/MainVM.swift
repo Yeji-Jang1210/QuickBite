@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class MainVM: BaseVM, BaseVMProtocol {
+final class MainVM: BaseVM, BaseVMProvider {
     
     struct Input {
         

@@ -9,7 +9,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-final class SignInVM: BaseVM, BaseVMProtocol {
+final class SignInVM: BaseVM, BaseVMProvider {
     
     struct Input {
         let signInButtonTapped: ControlEvent<Void>

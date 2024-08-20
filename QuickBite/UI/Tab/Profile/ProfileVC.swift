@@ -9,13 +9,13 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 final class ProfileVC: BaseVC {
     private let profileImageView = ProfileImageView(frame: .zero)
     
     private let nicknameLabel = {
         let object = UILabel()
-        object.text = "아아아아아ㅏㅇ아아ㅏ아"
         object.textAlignment = .center
         object.font = Font.semiBold(.medium)
         return object
@@ -31,7 +31,6 @@ final class ProfileVC: BaseVC {
     
     private let emailLabel = {
         let object = UILabel()
-        object.text = "jyg8727@naver.com"
         object.font = Font.regular(.small)
         object.textColor = .darkGray
         return object
@@ -64,7 +63,6 @@ final class ProfileVC: BaseVC {
     //안보여줄것인지, 생일만 보여줄것인지, 생년월일 다 보여줄 것인지 선택 가능하게
     private lazy var birthdayLabel = {
         let object = UILabel()
-        object.text = "1998년 12월 10일"
         object.font = Font.regular(.small)
         object.textColor = .darkGray
         return object
@@ -77,6 +75,18 @@ final class ProfileVC: BaseVC {
         [birthdayImageView, birthdayLabel].map { object.addArrangedSubview($0) }
         return object
     }()
+    
+    private lazy var settingBarButtonItem = {
+        let object = UIBarButtonItem(image: ImageAssets.gear, style: .done, target: nil, action: nil)
+        return object
+    }()
+    
+    private var viewModel: ProfileVM!
+    
+    init(title: String = "", isChild: Bool = false, viewModel: ProfileVM) {
+        super.init(title: title, isChild: isChild)
+        self.viewModel = viewModel
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,7 +102,7 @@ final class ProfileVC: BaseVC {
         super.configureLayout()
         
         profileImageView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(40)
+            make.top.equalTo(view.safeAreaLayoutGuide)
             make.size.equalTo(120)
             make.centerX.equalTo(view.safeAreaLayoutGuide)
         }
@@ -110,6 +120,56 @@ final class ProfileVC: BaseVC {
             make.centerX.equalTo(view.safeAreaLayoutGuide)
             make.top.equalTo(nicknameLabel.snp.bottom).offset(12)
         }
+    }
+    
+    override func configureUI() {
+        super.configureUI()
+        configureNaivgationBarItem()
+    }
+    
+    func configureNaivgationBarItem(){
+        navigationItem.rightBarButtonItem = settingBarButtonItem
+        navigationItem.rightBarButtonItem?.tintColor = Color.primaryColor
+    }
+    
+    override func bind() {
+        super.bind()
         
+        let input = ProfileVM.Input()
+        
+        let output = viewModel.transform(input: input)
+        
+        output.email
+            .drive(emailLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.nickname
+            .drive(nicknameLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.birthdayIsEmpty
+            .drive(birthdayStackView.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        output.birthday
+            .drive(birthdayLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.imagePath
+            .drive(with: self) { owner, path in
+                guard let path, let url = URL(string: path) else {
+                    owner.profileImageView.image = ImageAssets.defaultProfile
+                    return
+                }
+                
+                owner.profileImageView.kf.setImage(with: url)
+            }
+            .disposed(by: disposeBag)
+        
+        settingBarButtonItem.rx.tap
+            .bind {
+                print("tap")
+            }
+            .disposed(by: disposeBag)
     }
 }

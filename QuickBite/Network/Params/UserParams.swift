@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Moya
 
 
 class Userparams {
@@ -24,6 +25,37 @@ class Userparams {
     struct LoginRequest: Codable {
         let email: String
         let password: String
+    }
+    
+    struct EditRequest: Codable {
+        let nick: String?
+        let phoneNum: String?
+        let birthDay: String?
+        let profile: Data?
+        let profileImageName: String?
+        
+        func convertMultiPartFormData() -> [MultipartFormData] {
+            let parameters: [String : String?] = [
+                "nick": nick,
+                "phoneNum": phoneNum,
+                "birthDay": birthDay,
+            ]
+            
+            var multipartFormData: [MultipartFormData] = []
+            
+            for (key, value) in parameters {
+                if let value = value {
+                    multipartFormData.append(MultipartFormData(provider: .data(value.data(using: .utf8)!), name: key))
+                }
+            }
+            
+            if let profile = profile, let profileImageName = profileImageName {
+                multipartFormData.append(MultipartFormData(provider: .data(profile), name: "profile", fileName: profileImageName, mimeType: "image/png"))
+            }
+            
+            return multipartFormData
+            
+        }
     }
     
     struct TokenRequest: Codable {
@@ -68,6 +100,46 @@ class Userparams {
             case userId = "user_id"
             case email
             case nick
+        }
+    }
+    
+    struct EditResponse: Codable {
+        let userId: String
+        let email: String
+        let nick: String
+        let phoneNum: String?
+        let birthDay: String?
+        let profileImage: String?
+        let posts: [String]
+        
+        enum CodingKeys: String, CodingKey {
+            case userId = "user_id"
+            case email
+            case nick
+            case phoneNum
+            case birthDay
+            case profileImage
+            case posts
+        }
+    }
+    
+    struct LoadResponse: Codable {
+        let userId: String
+        let email: String
+        let nick: String
+        let phoneNum: String?
+        let birthDay: String?
+        let profileImage: String?
+        let posts: [String]
+        
+        enum CodingKeys: String, CodingKey {
+            case userId = "user_id"
+            case email
+            case nick
+            case phoneNum
+            case birthDay
+            case profileImage
+            case posts
         }
     }
 }

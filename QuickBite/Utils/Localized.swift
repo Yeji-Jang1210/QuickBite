@@ -22,6 +22,8 @@ enum Localized {
     case signup_birtday_placeholder
     case signup_phoneNumber_placeholder
     
+    case birthday_format(year: String, month: String, day: String)
+    
     var title: String {
         switch self {
         case .title:
@@ -55,6 +57,8 @@ enum Localized {
             return "휴대폰 번호를 - 없이 입력해주세요."
         case .signup_optional:
             return "선택사항"
+        case .birthday_format(let year, let month, let day):
+            return "\(year)년 \(month)월 \(day)일"
         default:
             return ""
         }
