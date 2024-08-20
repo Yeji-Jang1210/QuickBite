@@ -10,7 +10,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class SignUpVC: BaseVC {
+final class SignUpVC: BaseVC {
     
     private lazy var scrollView = {
         let object = UIScrollView()
@@ -104,7 +104,12 @@ class SignUpVC: BaseVC {
         return object
     }()
     
-    let viewModel = SignUpVM()
+    var viewModel: SignUpVM!
+    
+    init(title: String = "", isChild: Bool = false, viewModel: SignUpVM) {
+        super.init(title: title, isChild: isChild)
+        self.viewModel = viewModel
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -316,4 +321,30 @@ class SignUpVC: BaseVC {
             }
             .disposed(by: disposeBag)
     }
+    
+    func showAlert(title: String, message: String? = nil) -> Single<AlertType> {
+        return Single<AlertType>.create { [weak self] single in
+            guard let self else { return Disposables.create() }
+            
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+            let confirm = UIAlertAction(title: "확인", style: .default) { _ in
+                single(.success(.ok))
+            }
+            let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in
+                single(.success(.cancel))
+            }
+            
+            alert.addAction(confirm)
+            alert.addAction(cancel)
+            
+            present(alert, animated: true)
+            return Disposables.create()
+        }
+    }
+}
+
+enum AlertType {
+    case ok
+    case cancel
 }

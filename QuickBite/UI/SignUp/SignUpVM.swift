@@ -101,7 +101,7 @@ final class SignUpVM: BaseVM, BaseVMProtocol {
             .disposed(by: disposeBag)
         
         input.passwordText
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .throttle(.microseconds(500), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .map { $0.count > 4 }
             .bind { result in
@@ -116,14 +116,14 @@ final class SignUpVM: BaseVM, BaseVMProtocol {
             .disposed(by: disposeBag)
             
         input.nicknameText
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .throttle(.microseconds(500), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .map { $0.count > 2 }
+            .map { !$0.contains(" ") && $0.count > 2 }
             .bind { result in
                 if result {
                     nicknameValidMessage.accept("")
                 } else {
-                    nicknameValidMessage.accept("3자리 이상 입력해주세요")
+                    nicknameValidMessage.accept("공백을 제거한 세자리 이상 문자를 입력해주세요")
                 }
                 
                 nicknameIsValid.accept(result)
@@ -184,7 +184,7 @@ final class SignUpVM: BaseVM, BaseVMProtocol {
         input.signUpButtonTapped
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .flatMapLatest { _ in
-            Observable.combineLatest(input.emailText,
+            Observable.zip(input.emailText,
                                                    input.passwordText,
                                                    input.nicknameText,
                                                    input.phoneNumberText,
@@ -197,7 +197,6 @@ final class SignUpVM: BaseVM, BaseVMProtocol {
         .flatMapLatest { param in
             UserAPI.shared.networking(service: .signUp(param: param), type: Userparams.SignupResponse.self)
         }
-        .take(1)
         .withLatestFrom(input.passwordText){ (networkResult, pwd) in
             switch networkResult {
             case .success(let result):
