@@ -63,6 +63,7 @@
 		B822CA982C71F94100FAA59E /* TokenError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA972C71F94100FAA59E /* TokenError.swift */; };
 		B822CA9A2C71F9F100FAA59E /* SignInError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA992C71F9F100FAA59E /* SignInError.swift */; };
 		B822CA9C2C72548E00FAA59E /* SignUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA9B2C72548E00FAA59E /* SignUpError.swift */; };
+		B87C64102C741888000880FC /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87C640F2C741888000880FC /* ProfileImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +114,7 @@
 		B822CA972C71F94100FAA59E /* TokenError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenError.swift; sourceTree = "<group>"; };
 		B822CA992C71F9F100FAA59E /* SignInError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInError.swift; sourceTree = "<group>"; };
 		B822CA9B2C72548E00FAA59E /* SignUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpError.swift; sourceTree = "<group>"; };
+		B87C640F2C741888000880FC /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +249,7 @@
 			children = (
 				B822CA612C6C88F100FAA59E /* BaseButton.swift */,
 				B822CA652C6C8B7200FAA59E /* BaseTextField.swift */,
+				B87C640F2C741888000880FC /* ProfileImageView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				B822CA9A2C71F9F100FAA59E /* SignInError.swift in Sources */,
 				B822CA022C6C70C000FAA59E /* AppDelegate.swift in Sources */,
 				B822CA762C6D924A00FAA59E /* MainTBC.swift in Sources */,
+				B87C64102C741888000880FC /* ProfileImageView.swift in Sources */,
 				B822CA932C6DE76100FAA59E /* User.swift in Sources */,
 				B822CA182C6C711200FAA59E /* APIInfo.swift in Sources */,
 				B822CA702C6D8CE900FAA59E /* MainVC.swift in Sources */,

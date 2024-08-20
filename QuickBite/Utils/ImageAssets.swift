@@ -18,6 +18,7 @@ struct ImageAssets {
     static let phone = UIImage(systemName: "iphone.gen1")
     
     static let titleImage = UIImage(named: "titleImage")
+    static let defaultProfile = UIImage(named: "default_profile")
     
     //tab icon
     static let main = UIImage(named: "main_tab")
