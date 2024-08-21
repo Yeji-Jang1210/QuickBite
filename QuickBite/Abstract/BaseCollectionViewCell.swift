@@ -14,6 +14,10 @@ class BaseCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        configureHierarchy()
+        configureLayout()
+        configureUI()
     }
     
     @available(*, unavailable)
@@ -29,4 +33,11 @@ class BaseCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         disposeBag = DisposeBag()
     }
+    
+    func configureHierarchy(){ }
+    
+    func configureLayout(){ }
+    
+    func configureUI(){ }
+    
 }

@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 
-class BaseTableViewCellL: UITableViewCell {
+class BaseTableViewCell: UITableViewCell {
     
     var disposeBag = DisposeBag()
     

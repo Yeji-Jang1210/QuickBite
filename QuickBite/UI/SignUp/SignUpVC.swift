@@ -10,6 +10,11 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+enum UserType {
+    case signUp
+    case edit
+}
+
 final class SignUpVC: BaseVC {
     
     private lazy var scrollView = {
@@ -20,15 +25,6 @@ final class SignUpVC: BaseVC {
     }()
     
     private let contentsView = UIView()
-    
-    private let titleLabel = {
-        let object = UILabel()
-        object.font = Font.boldFont(.extraLarge)
-        object.text = Localized.title.title
-        object.textAlignment = .center
-        object.textColor = .white
-        return object
-    }()
     
     private let descriptionLabel = {
         let object = UILabel()
@@ -49,6 +45,7 @@ final class SignUpVC: BaseVC {
         object.isEnabled = false
         object.title = Localized.valid_email_button.title
         object.cornerRadius = 8
+        
         return object
     }()
     
@@ -58,6 +55,30 @@ final class SignUpVC: BaseVC {
         object.alignment = .center
         object.spacing = 4
         [emailTextField, emailValidationButton].map {object.addArrangedSubview($0)}
+        return object
+    }()
+    
+    private lazy var profileInfoStackView = {
+        let object = UIStackView()
+        object.axis = .vertical
+        object.spacing = 40
+        [descriptionLabel, requiredProfileInfoStackView, optionalProfileInfoStackView, signupButton].map { object.addArrangedSubview($0)}
+        return object
+    }()
+    
+    private lazy var requiredProfileInfoStackView = {
+        let object = UIStackView()
+        object.axis = .vertical
+        object.spacing = 20
+        [emailStackView, passwordTextField, nicknameTextField].map { object.addArrangedSubview($0)}
+        return object
+    }()
+    
+    private lazy var optionalProfileInfoStackView = {
+        let object = UIStackView()
+        object.axis = .vertical
+        object.spacing = 20
+        [optionalLabel, birthdayTextField, phoneNumberTextField].map { object.addArrangedSubview($0)}
         return object
     }()
     
@@ -121,16 +142,8 @@ final class SignUpVC: BaseVC {
         view.addSubview(scrollView)
         scrollView.addSubview(contentsView)
         
-        contentsView.addSubview(titleLabel)
         contentsView.addSubview(descriptionLabel)
-        contentsView.addSubview(emailStackView)
-        contentsView.addSubview(passwordTextField)
-        contentsView.addSubview(nicknameTextField)
-        contentsView.addSubview(optionalLabel)
-        contentsView.addSubview(birthdayTextField)
-        contentsView.addSubview(phoneNumberTextField)
-        
-        contentsView.addSubview(signupButton)
+        contentsView.addSubview(profileInfoStackView)
     }
     
     override func configureLayout() {
@@ -146,18 +159,10 @@ final class SignUpVC: BaseVC {
             make.verticalEdges.equalToSuperview()
         }
         
-        titleLabel.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview()
-        }
-        
-        descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(12)
-            make.leading.equalToSuperview()
-        }
-        
-        emailStackView.snp.makeConstraints { make in
-            make.top.equalTo(descriptionLabel.snp.bottom).offset(40)
-            make.horizontalEdges.equalToSuperview()
+        profileInfoStackView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(40)
+            make.bottom.equalToSuperview()
+            make.horizontalEdges.equalTo(contentsView)
         }
         
         emailValidationButton.snp.makeConstraints { make in
@@ -165,35 +170,7 @@ final class SignUpVC: BaseVC {
             make.height.equalTo(44)
         }
         
-        passwordTextField.snp.makeConstraints { make in
-            make.top.equalTo(emailTextField.snp.bottom).offset(20)
-            make.horizontalEdges.equalToSuperview()
-        }
-        
-        nicknameTextField.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(20)
-            make.horizontalEdges.equalToSuperview()
-        }
-        
-        optionalLabel.snp.makeConstraints { make in
-            make.top.equalTo(nicknameTextField.snp.bottom).offset(80)
-            make.leading.equalToSuperview()
-        }
-        
-        birthdayTextField.snp.makeConstraints { make in
-            make.top.equalTo(optionalLabel.snp.bottom).offset(20)
-            make.horizontalEdges.equalToSuperview()
-        }
-        
-        phoneNumberTextField.snp.makeConstraints { make in
-            make.top.equalTo(birthdayTextField.snp.bottom).offset(20)
-            make.horizontalEdges.equalToSuperview()
-        }
-        
         signupButton.snp.makeConstraints { make in
-            make.top.equalTo(phoneNumberTextField.snp.bottom).offset(100)
-            make.horizontalEdges.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-20)
             make.height.equalTo(44)
         }
     }

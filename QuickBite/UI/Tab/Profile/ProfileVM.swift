@@ -12,7 +12,7 @@ import RxCocoa
 final class ProfileVM: BaseVM, BaseVMProvider {
     
     struct Input {
-        
+        let settingBarButtonTap: ControlEvent<Void>
     }
     
     struct Output {
@@ -21,9 +21,12 @@ final class ProfileVM: BaseVM, BaseVMProvider {
         let birthday: Driver<String>
         let birthdayIsEmpty: Driver<Bool>
         let imagePath: Driver<String?>
+        let presentProfileSetting: PublishRelay<[String:String?]>
     }
     
     func transform(input: Input) -> Output {
+        
+        let presentProfileSetting = PublishRelay<[String:String?]>()
         
         let user = UserAPI.shared.networking(service: .load, type: Userparams.LoadResponse.self)
             .compactMap { networkResult in
@@ -74,10 +77,27 @@ final class ProfileVM: BaseVM, BaseVMProvider {
             .map{ $0.profileImage }
             .asDriver(onErrorJustReturn: nil)
         
+        input.settingBarButtonTap
+            .withLatestFrom(user.asObservable())
+            .map { user in
+                return [
+                    "profileImage": user.profileImage,
+                    "email": user.email,
+                    "nick": user.nick,
+                    "birthday": user.birthDay,
+                    "phoneNum": user.phoneNum
+                ]
+            }
+            .subscribe{ user in
+                presentProfileSetting.accept(user)
+            }
+            .disposed(by: disposeBag)
+        
         return Output(nickname: nickname,
                       email: email,
                       birthday: birthday, 
                       birthdayIsEmpty: birthdayIsEmpty,
-                      imagePath: imagePath)
+                      imagePath: imagePath,
+                      presentProfileSetting: presentProfileSetting)
     }
 }

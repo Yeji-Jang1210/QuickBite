@@ -64,6 +64,14 @@
 		B822CA9A2C71F9F100FAA59E /* SignInError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA992C71F9F100FAA59E /* SignInError.swift */; };
 		B822CA9C2C72548E00FAA59E /* SignUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA9B2C72548E00FAA59E /* SignUpError.swift */; };
 		B844C6DE2C748ABA00B6F783 /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */; };
+		B844C6E12C74F2A700B6F783 /* TabBarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6E02C74F2A700B6F783 /* TabBarCollectionViewCell.swift */; };
+		B844C6E32C74F30300B6F783 /* TabPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6E22C74F30300B6F783 /* TabPageCollectionViewCell.swift */; };
+		B851AA022C761B6D003901F0 /* ProfileSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA012C761B6D003901F0 /* ProfileSettingVC.swift */; };
+		B851AA042C761B74003901F0 /* ProfileSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA032C761B74003901F0 /* ProfileSettingVM.swift */; };
+		B851AA062C762F7C003901F0 /* ProfileSettingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA052C762F7C003901F0 /* ProfileSettingSectionModel.swift */; };
+		B851AA082C763ADF003901F0 /* ProfileSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA072C763ADF003901F0 /* ProfileSettingTableViewCell.swift */; };
+		B851AA0A2C7644BB003901F0 /* ProfileDetailSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA092C7644BB003901F0 /* ProfileDetailSettingVC.swift */; };
+		B851AA0C2C7644C3003901F0 /* ProfileDetailSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA0B2C7644C3003901F0 /* ProfileDetailSettingVM.swift */; };
 		B87C64102C741888000880FC /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87C640F2C741888000880FC /* ProfileImageView.swift */; };
 /* End PBXBuildFile section */
 
@@ -116,6 +124,14 @@
 		B822CA992C71F9F100FAA59E /* SignInError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInError.swift; sourceTree = "<group>"; };
 		B822CA9B2C72548E00FAA59E /* SignUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpError.swift; sourceTree = "<group>"; };
 		B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
+		B844C6E02C74F2A700B6F783 /* TabBarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCollectionViewCell.swift; sourceTree = "<group>"; };
+		B844C6E22C74F30300B6F783 /* TabPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPageCollectionViewCell.swift; sourceTree = "<group>"; };
+		B851AA012C761B6D003901F0 /* ProfileSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVC.swift; sourceTree = "<group>"; };
+		B851AA032C761B74003901F0 /* ProfileSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVM.swift; sourceTree = "<group>"; };
+		B851AA052C762F7C003901F0 /* ProfileSettingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingSectionModel.swift; sourceTree = "<group>"; };
+		B851AA072C763ADF003901F0 /* ProfileSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingTableViewCell.swift; sourceTree = "<group>"; };
+		B851AA092C7644BB003901F0 /* ProfileDetailSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailSettingVC.swift; sourceTree = "<group>"; };
+		B851AA0B2C7644C3003901F0 /* ProfileDetailSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailSettingVM.swift; sourceTree = "<group>"; };
 		B87C640F2C741888000880FC /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -185,7 +201,6 @@
 				B822CA352C6C73A200FAA59E /* Main */,
 				B822CA342C6C739C00FAA59E /* Recipes */,
 				B822CA362C6C73A800FAA59E /* Profile */,
-				B822CA752C6D924A00FAA59E /* MainTBC.swift */,
 			);
 			path = Tab;
 			sourceTree = "<group>";
@@ -228,8 +243,13 @@
 		B822CA362C6C73A800FAA59E /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				B844C6DF2C74F28C00B6F783 /* Cell */,
 				B822CA792C6D92D900FAA59E /* ProfileVC.swift */,
 				B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */,
+				B851AA012C761B6D003901F0 /* ProfileSettingVC.swift */,
+				B851AA032C761B74003901F0 /* ProfileSettingVM.swift */,
+				B851AA092C7644BB003901F0 /* ProfileDetailSettingVC.swift */,
+				B851AA0B2C7644C3003901F0 /* ProfileDetailSettingVM.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -309,6 +329,7 @@
 		B822CA3E2C6C74AD00FAA59E /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				B822CA752C6D924A00FAA59E /* MainTBC.swift */,
 				B822CA332C6C737D00FAA59E /* SignIn */,
 				B822CA322C6C737600FAA59E /* SignUp */,
 				B822CA312C6C737400FAA59E /* Tab */,
@@ -354,6 +375,17 @@
 				B822CA9B2C72548E00FAA59E /* SignUpError.swift */,
 			);
 			path = Enum;
+			sourceTree = "<group>";
+		};
+		B844C6DF2C74F28C00B6F783 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B844C6E02C74F2A700B6F783 /* TabBarCollectionViewCell.swift */,
+				B844C6E22C74F30300B6F783 /* TabPageCollectionViewCell.swift */,
+				B851AA052C762F7C003901F0 /* ProfileSettingSectionModel.swift */,
+				B851AA072C763ADF003901F0 /* ProfileSettingTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -463,10 +495,12 @@
 				B822CA4C2C6C796200FAA59E /* Color.swift in Sources */,
 				B822CA442C6C763A00FAA59E /* Cell+Extension.swift in Sources */,
 				B822CA682C6C8BA100FAA59E /* ImageAssets.swift in Sources */,
+				B851AA0A2C7644BB003901F0 /* ProfileDetailSettingVC.swift in Sources */,
 				B822CA7A2C6D92D900FAA59E /* ProfileVC.swift in Sources */,
 				B822CA742C6D8E3A00FAA59E /* UIViewController+Extension.swift in Sources */,
 				B822CA7E2C6D997D00FAA59E /* UserDefaultsManager.swift in Sources */,
 				B822CA7C2C6D995800FAA59E /* Header.swift in Sources */,
+				B844C6E32C74F30300B6F783 /* TabPageCollectionViewCell.swift in Sources */,
 				B822CA722C6D8CEF00FAA59E /* MainVM.swift in Sources */,
 				B822CA9C2C72548E00FAA59E /* SignUpError.swift in Sources */,
 				B822CA982C71F94100FAA59E /* TokenError.swift in Sources */,
@@ -478,8 +512,11 @@
 				B822CA892C6D9B6300FAA59E /* PostAPI.swift in Sources */,
 				B822CA602C6C88C600FAA59E /* SignInVC.swift in Sources */,
 				B822CA482C6C764D00FAA59E /* BaseTableViewCell.swift in Sources */,
+				B851AA0C2C7644C3003901F0 /* ProfileDetailSettingVM.swift in Sources */,
+				B851AA062C762F7C003901F0 /* ProfileSettingSectionModel.swift in Sources */,
 				B822CA9A2C71F9F100FAA59E /* SignInError.swift in Sources */,
 				B822CA022C6C70C000FAA59E /* AppDelegate.swift in Sources */,
+				B851AA082C763ADF003901F0 /* ProfileSettingTableViewCell.swift in Sources */,
 				B822CA762C6D924A00FAA59E /* MainTBC.swift in Sources */,
 				B87C64102C741888000880FC /* ProfileImageView.swift in Sources */,
 				B822CA932C6DE76100FAA59E /* User.swift in Sources */,
@@ -489,8 +526,11 @@
 				B844C6DE2C748ABA00B6F783 /* ProfileVM.swift in Sources */,
 				B822CA642C6C8A3800FAA59E /* Localized.swift in Sources */,
 				B822CA622C6C88F100FAA59E /* BaseButton.swift in Sources */,
+				B851AA022C761B6D003901F0 /* ProfileSettingVC.swift in Sources */,
 				B822CA042C6C70C000FAA59E /* SceneDelegate.swift in Sources */,
+				B851AA042C761B74003901F0 /* ProfileSettingVM.swift in Sources */,
 				B822CA962C71DE8200FAA59E /* EmailValidationState.swift in Sources */,
+				B844C6E12C74F2A700B6F783 /* TabBarCollectionViewCell.swift in Sources */,
 				B822CA402C6C760000FAA59E /* BaseVC.swift in Sources */,
 				B822CA6E2C6C9FE400FAA59E /* SignUpVM.swift in Sources */,
 				B822CA4A2C6C793400FAA59E /* UIColor+Extension.swift in Sources */,
