@@ -40,6 +40,12 @@ final class BaseTextField: UIView {
         return object
     }()
     
+    var imageIsHidden: Bool = false {
+        didSet {
+            textFieldImage.isHidden = imageIsHidden
+        }
+    }
+    
     var image: UIImage? {
         didSet {
             textFieldImage.image = image

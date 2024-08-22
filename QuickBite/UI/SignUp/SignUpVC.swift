@@ -10,11 +10,6 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-enum UserType {
-    case signUp
-    case edit
-}
-
 final class SignUpVC: BaseVC {
     
     private lazy var scrollView = {

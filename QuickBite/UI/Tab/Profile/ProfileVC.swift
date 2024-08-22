@@ -10,22 +10,10 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import Kingfisher
+import SwiftUI
 
 final class ProfileVC: BaseVC {
     
-    enum PostType: CaseIterable {
-        case userPost
-        case bookMark
-        
-        var icon: UIImage? {
-            switch self {
-            case .userPost:
-                return UIImage(systemName: "pencil.line")
-            case .bookMark:
-                return UIImage(systemName: "bookmark.fill")
-            }
-        }
-    }
     private let profileImageView = ProfileImageView(frame: .zero)
     
     private let nicknameLabel = {
@@ -54,7 +42,7 @@ final class ProfileVC: BaseVC {
         let object = UIStackView()
         object.axis = .horizontal
         object.spacing = 12
-        [emailStackView, UIView(), birthdayStackView].map { object.addArrangedSubview($0) }
+        [emailStackView, birthdayStackView].map { object.addArrangedSubview($0) }
         return object
     }()
     
@@ -95,26 +83,19 @@ final class ProfileVC: BaseVC {
         return object
     }()
     
-    private lazy var tabBarCollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let object = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        object.showsHorizontalScrollIndicator = false
-        object.register(TabBarCollectionViewCell.self, forCellWithReuseIdentifier: TabBarCollectionViewCell.identifier)
+    private lazy var headerView = {
+        let object = UIView()
+        [profileImageView, nicknameLabel, detailInfoStackView, containerView].map { object.addSubview($0) }
+        return object
+    }()
+
+    private lazy var containerView = {
+        let object = UIView()
+        object.addSubview(tabVC.view)
         return object
     }()
     
-    private let pageCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let object = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        object.showsHorizontalScrollIndicator = false
-        object.isPagingEnabled = true
-        object.register(TabPageCollectionViewCell.self, forCellWithReuseIdentifier: TabPageCollectionViewCell.identifier)
-        return object
-    }()
+    private lazy var tabVC = TabVC()
     
     private var viewModel: ProfileVM!
     
@@ -129,26 +110,26 @@ final class ProfileVC: BaseVC {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let firstIndexPath = IndexPath(item: 0, section: 0)
-        tabBarCollectionView.selectItem(at: firstIndexPath, animated: true, scrollPosition: [])
-        collectionView(tabBarCollectionView, didSelectItemAt: firstIndexPath)
-        
-        pageCollectionView.reloadData()
     }
     
     override func configureHierarchy() {
         super.configureHierarchy()
-        
-        [profileImageView, nicknameLabel, detailInfoStackView, tabBarCollectionView, pageCollectionView].map { view.addSubview($0) }
+        view.addSubview(headerView)
+        addChild(tabVC)
     }
     
     override func configureLayout() {
         super.configureLayout()
         
-        profileImageView.snp.makeConstraints { make in
+        headerView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.horizontalEdges.equalToSuperview()
+        }
+        
+        profileImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
             make.size.equalTo(120)
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
+            make.centerX.equalToSuperview()
         }
         
         emailImageView.snp.makeConstraints { make in
@@ -157,40 +138,30 @@ final class ProfileVC: BaseVC {
         
         nicknameLabel.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(20)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.horizontalEdges.equalToSuperview().inset(20)
         }
         
         detailInfoStackView.snp.makeConstraints { make in
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
+            make.centerX.equalToSuperview()
             make.top.equalTo(nicknameLabel.snp.bottom).offset(12)
         }
         
-        tabBarCollectionView.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+        containerView.snp.makeConstraints { make in
             make.top.equalTo(detailInfoStackView.snp.bottom).offset(20)
-            make.height.equalTo(44)
+            make.horizontalEdges.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
-        pageCollectionView.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.top.equalTo(tabBarCollectionView.snp.bottom)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        tabVC.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
     
     override func configureUI() {
         super.configureUI()
         configureNaivgationBarItem()
-        setTabbar()
     }
-    
-    func setTabbar() {
-        pageCollectionView.delegate = self
-        pageCollectionView.dataSource = self
-        tabBarCollectionView.delegate = self
-        tabBarCollectionView.dataSource = self
-    }
-    
+
     func configureNaivgationBarItem(){
         navigationItem.rightBarButtonItem = settingBarButtonItem
         navigationItem.rightBarButtonItem?.tintColor = Color.primaryColor
@@ -239,50 +210,16 @@ final class ProfileVC: BaseVC {
     }
 }
 
-extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == pageCollectionView {
-            let collectionViewFrame = collectionView.frame
-            return CGSize(width: collectionViewFrame.width, height: collectionViewFrame.height)
-        } else {
-            return CGSize(width: UIScreen.main.bounds.width / 2, height: 44)
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        Container().edgesIgnoringSafeArea(.all)
+    }
+    struct Container: UIViewControllerRepresentable {
+        func makeUIViewController(context: Context) -> UIViewController {
+            return UINavigationController(rootViewController: ProfileVC(viewModel: ProfileVM()))
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == tabBarCollectionView {
-            pageCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        } else {
-            tabBarCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         }
-        
-        pageCollectionView.reloadData()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == tabBarCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TabBarCollectionViewCell.identifier, for: indexPath) as? TabBarCollectionViewCell else { return UICollectionViewCell() }
-            cell.iconImageView.image = PostType.allCases[indexPath.row].icon
-            return cell
-        } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TabPageCollectionViewCell.identifier, for: indexPath) as? TabPageCollectionViewCell else { return UICollectionViewCell() }
-            cell.backView.backgroundColor = [.systemOrange, .systemPurple, .systemCyan, .systemMint, .systemBrown, .systemYellow].randomElement()
-            cell.setTitle(title: "\(indexPath)")
-            return cell
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let indexPath = IndexPath(row: Int(targetContentOffset.pointee.x / UIScreen.main.bounds.width), section: 0)
-        tabBarCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        typealias  UIViewControllerType = UIViewController
     }
 }

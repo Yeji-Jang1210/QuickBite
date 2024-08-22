@@ -63,6 +63,7 @@
 		B822CA982C71F94100FAA59E /* TokenError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA972C71F94100FAA59E /* TokenError.swift */; };
 		B822CA9A2C71F9F100FAA59E /* SignInError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA992C71F9F100FAA59E /* SignInError.swift */; };
 		B822CA9C2C72548E00FAA59E /* SignUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA9B2C72548E00FAA59E /* SignUpError.swift */; };
+		B835F1012C7788550006B718 /* PostTableViewSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1002C7788550006B718 /* PostTableViewSectionModel.swift */; };
 		B844C6DE2C748ABA00B6F783 /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */; };
 		B844C6E12C74F2A700B6F783 /* TabBarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6E02C74F2A700B6F783 /* TabBarCollectionViewCell.swift */; };
 		B844C6E32C74F30300B6F783 /* TabPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6E22C74F30300B6F783 /* TabPageCollectionViewCell.swift */; };
@@ -72,6 +73,12 @@
 		B851AA082C763ADF003901F0 /* ProfileSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA072C763ADF003901F0 /* ProfileSettingTableViewCell.swift */; };
 		B851AA0A2C7644BB003901F0 /* ProfileDetailSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA092C7644BB003901F0 /* ProfileDetailSettingVC.swift */; };
 		B851AA0C2C7644C3003901F0 /* ProfileDetailSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA0B2C7644C3003901F0 /* ProfileDetailSettingVM.swift */; };
+		B851AA182C775AFE003901F0 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = B851AA172C775AFE003901F0 /* Tabman */; };
+		B851AA1B2C775C28003901F0 /* TabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA1A2C775C28003901F0 /* TabVC.swift */; };
+		B851AA1D2C775DD5003901F0 /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA1C2C775DD5003901F0 /* PostVC.swift */; };
+		B851AA1F2C775EE7003901F0 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA1E2C775EE7003901F0 /* PostCollectionViewCell.swift */; };
+		B851AA212C775F83003901F0 /* PostSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA202C775F83003901F0 /* PostSectionModel.swift */; };
+		B851AA232C776034003901F0 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA222C776034003901F0 /* Post.swift */; };
 		B87C64102C741888000880FC /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87C640F2C741888000880FC /* ProfileImageView.swift */; };
 /* End PBXBuildFile section */
 
@@ -123,6 +130,7 @@
 		B822CA972C71F94100FAA59E /* TokenError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenError.swift; sourceTree = "<group>"; };
 		B822CA992C71F9F100FAA59E /* SignInError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInError.swift; sourceTree = "<group>"; };
 		B822CA9B2C72548E00FAA59E /* SignUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpError.swift; sourceTree = "<group>"; };
+		B835F1002C7788550006B718 /* PostTableViewSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewSectionModel.swift; sourceTree = "<group>"; };
 		B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
 		B844C6E02C74F2A700B6F783 /* TabBarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCollectionViewCell.swift; sourceTree = "<group>"; };
 		B844C6E22C74F30300B6F783 /* TabPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -132,6 +140,11 @@
 		B851AA072C763ADF003901F0 /* ProfileSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingTableViewCell.swift; sourceTree = "<group>"; };
 		B851AA092C7644BB003901F0 /* ProfileDetailSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailSettingVC.swift; sourceTree = "<group>"; };
 		B851AA0B2C7644C3003901F0 /* ProfileDetailSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailSettingVM.swift; sourceTree = "<group>"; };
+		B851AA1A2C775C28003901F0 /* TabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabVC.swift; sourceTree = "<group>"; };
+		B851AA1C2C775DD5003901F0 /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
+		B851AA1E2C775EE7003901F0 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
+		B851AA202C775F83003901F0 /* PostSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSectionModel.swift; sourceTree = "<group>"; };
+		B851AA222C776034003901F0 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		B87C640F2C741888000880FC /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -145,6 +158,7 @@
 				B822CA262C6C71D800FAA59E /* RxRelay in Frameworks */,
 				B822CA212C6C71C500FAA59E /* Toast in Frameworks */,
 				B822CA1E2C6C71BD00FAA59E /* Kingfisher in Frameworks */,
+				B851AA182C775AFE003901F0 /* Tabman in Frameworks */,
 				B822CA812C6D9A8700FAA59E /* Moya in Frameworks */,
 				B822CA302C6C71F700FAA59E /* IQKeyboardManagerSwift in Frameworks */,
 				B822CA2D2C6C71ED00FAA59E /* RxDataSources in Frameworks */,
@@ -243,6 +257,7 @@
 		B822CA362C6C73A800FAA59E /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				B851AA192C775C1B003901F0 /* Tab */,
 				B844C6DF2C74F28C00B6F783 /* Cell */,
 				B822CA792C6D92D900FAA59E /* ProfileVC.swift */,
 				B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */,
@@ -302,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				B822CA922C6DE76100FAA59E /* User.swift */,
+				B851AA222C776034003901F0 /* Post.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -388,6 +404,18 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		B851AA192C775C1B003901F0 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				B851AA1A2C775C28003901F0 /* TabVC.swift */,
+				B851AA1C2C775DD5003901F0 /* PostVC.swift */,
+				B851AA1E2C775EE7003901F0 /* PostCollectionViewCell.swift */,
+				B851AA202C775F83003901F0 /* PostSectionModel.swift */,
+				B835F1002C7788550006B718 /* PostTableViewSectionModel.swift */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -416,6 +444,7 @@
 				B822CA2F2C6C71F700FAA59E /* IQKeyboardManagerSwift */,
 				B822CA4E2C6C7A1800FAA59E /* SnapKit */,
 				B822CA802C6D9A8700FAA59E /* Moya */,
+				B851AA172C775AFE003901F0 /* Tabman */,
 			);
 			productName = QuickBite;
 			productReference = B822C9FE2C6C70C000FAA59E /* QuickBite.app */;
@@ -454,6 +483,7 @@
 				B822CA2E2C6C71F700FAA59E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				B822CA4D2C6C7A1800FAA59E /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B822CA7F2C6D9A8700FAA59E /* XCRemoteSwiftPackageReference "Moya" */,
+				B851AA162C775AFE003901F0 /* XCRemoteSwiftPackageReference "Tabman" */,
 			);
 			productRefGroup = B822C9FF2C6C70C000FAA59E /* Products */;
 			projectDirPath = "";
@@ -487,6 +517,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B835F1012C7788550006B718 /* PostTableViewSectionModel.swift in Sources */,
 				B822CA782C6D92C800FAA59E /* RecipesVC.swift in Sources */,
 				B822CA462C6C764600FAA59E /* BaseCollectionViewCell.swift in Sources */,
 				B822CA852C6D9B5200FAA59E /* UserAPI.swift in Sources */,
@@ -507,7 +538,9 @@
 				B822CA8D2C6D9D3700FAA59E /* UserParams.swift in Sources */,
 				B822CA912C6DA43800FAA59E /* MoyaLoggingPlugin.swift in Sources */,
 				B822CA6C2C6C9FDA00FAA59E /* SignUpVC.swift in Sources */,
+				B851AA1F2C775EE7003901F0 /* PostCollectionViewCell.swift in Sources */,
 				B822CA422C6C760400FAA59E /* BaseVM.swift in Sources */,
+				B851AA1B2C775C28003901F0 /* TabVC.swift in Sources */,
 				B822CA872C6D9B5E00FAA59E /* APIService.swift in Sources */,
 				B822CA892C6D9B6300FAA59E /* PostAPI.swift in Sources */,
 				B822CA602C6C88C600FAA59E /* SignInVC.swift in Sources */,
@@ -518,14 +551,17 @@
 				B822CA022C6C70C000FAA59E /* AppDelegate.swift in Sources */,
 				B851AA082C763ADF003901F0 /* ProfileSettingTableViewCell.swift in Sources */,
 				B822CA762C6D924A00FAA59E /* MainTBC.swift in Sources */,
+				B851AA212C775F83003901F0 /* PostSectionModel.swift in Sources */,
 				B87C64102C741888000880FC /* ProfileImageView.swift in Sources */,
 				B822CA932C6DE76100FAA59E /* User.swift in Sources */,
 				B822CA182C6C711200FAA59E /* APIInfo.swift in Sources */,
 				B822CA702C6D8CE900FAA59E /* MainVC.swift in Sources */,
 				B822CA5C2C6C7CBA00FAA59E /* Font.swift in Sources */,
+				B851AA1D2C775DD5003901F0 /* PostVC.swift in Sources */,
 				B844C6DE2C748ABA00B6F783 /* ProfileVM.swift in Sources */,
 				B822CA642C6C8A3800FAA59E /* Localized.swift in Sources */,
 				B822CA622C6C88F100FAA59E /* BaseButton.swift in Sources */,
+				B851AA232C776034003901F0 /* Post.swift in Sources */,
 				B851AA022C761B6D003901F0 /* ProfileSettingVC.swift in Sources */,
 				B822CA042C6C70C000FAA59E /* SceneDelegate.swift in Sources */,
 				B851AA042C761B74003901F0 /* ProfileSettingVM.swift in Sources */,
@@ -820,6 +856,14 @@
 				minimumVersion = 15.0.3;
 			};
 		};
+		B851AA162C775AFE003901F0 /* XCRemoteSwiftPackageReference "Tabman" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/uias/Tabman.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -877,6 +921,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B822CA7F2C6D9A8700FAA59E /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = Moya;
+		};
+		B851AA172C775AFE003901F0 /* Tabman */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B851AA162C775AFE003901F0 /* XCRemoteSwiftPackageReference "Tabman" */;
+			productName = Tabman;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

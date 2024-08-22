@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = UINavigationController(rootViewController: SignInVC())
         }
         
-       // window?.rootViewController = UINavigationController(rootViewController: SignInVC())
+//        window?.rootViewController = UINavigationController(rootViewController: SignInVC())
         
         //show
         window?.makeKeyAndVisible()

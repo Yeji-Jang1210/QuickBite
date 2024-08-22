@@ -135,8 +135,8 @@ final class ProfileSettingVC: BaseVC {
         
         output.selectedItem
             .bind(with: self) { owner, info in
-                let vc = ProfileDetailSettingVC(title: info.type.title, isChild: true, viewModel: ProfileDetailSettingVM(type: info))
-                
+                let vc = ProfileDetailSettingVC(title: info.type.title, isChild: true, info: info)
+
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)

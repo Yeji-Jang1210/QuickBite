@@ -55,6 +55,8 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
         input.itemSelected
             .bind { info in
                 switch info.type {
+                case .email:
+                    break
                 case .logout:
                     logoutSelected.accept(true)
                 case .withdraw:
