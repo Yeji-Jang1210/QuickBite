@@ -120,12 +120,7 @@ final class SignUpVC: BaseVC {
         return object
     }()
     
-    var viewModel: SignUpVM!
-    
-    init(title: String = "", isChild: Bool = false, viewModel: SignUpVM) {
-        super.init(title: title, isChild: isChild)
-        self.viewModel = viewModel
-    }
+    var viewModel = SignUpVM()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -292,27 +287,6 @@ final class SignUpVC: BaseVC {
                 owner.changeRootViewController(MainTBC(), animated: true)
             }
             .disposed(by: disposeBag)
-    }
-    
-    func showAlert(title: String, message: String? = nil) -> Single<AlertType> {
-        return Single<AlertType>.create { [weak self] single in
-            guard let self else { return Disposables.create() }
-            
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            
-            let confirm = UIAlertAction(title: "확인", style: .default) { _ in
-                single(.success(.ok))
-            }
-            let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in
-                single(.success(.cancel))
-            }
-            
-            alert.addAction(confirm)
-            alert.addAction(cancel)
-            
-            present(alert, animated: true)
-            return Disposables.create()
-        }
     }
 }
 

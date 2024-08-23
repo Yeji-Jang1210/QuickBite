@@ -15,6 +15,7 @@ final class ProfileDetailSettingVM: BaseVM, BaseVMProvider {
     
     struct Input {
         let text: ControlProperty<String>
+        let saveButtonTapped: ControlEvent<Void>
     }
     
     struct Output {
@@ -49,6 +50,14 @@ final class ProfileDetailSettingVM: BaseVM, BaseVMProvider {
         let isValid = isValidResult
             .asDriver(onErrorJustReturn: false)
         
-        return Output(isValid: isValid, validMessage: validMessage)
+        input.saveButtonTapped
+            .bind {
+                
+            }
+            .disposed(by: disposeBag)
+        
+        
+        return Output(isValid: isValid,
+                      validMessage: validMessage)
     }
 }

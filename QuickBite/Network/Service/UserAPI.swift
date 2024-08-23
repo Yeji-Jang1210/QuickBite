@@ -95,7 +95,6 @@ extension UserService: TargetType {
 enum NetworkResult<T> {
     case success(T)
     case error(Int)
-    case decodedError
 }
 
 class UserAPI {
@@ -114,7 +113,6 @@ class UserAPI {
                     switch response.statusCode {
                     case 200..<300:
                         guard let data = try? response.map(T.self) else {
-                            single(.success(.decodedError))
                             return
                         }
                         single(.success(.success(data)))

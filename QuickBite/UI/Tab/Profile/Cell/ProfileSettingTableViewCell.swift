@@ -14,5 +14,6 @@ final class ProfileSettingTableViewCell: BaseTableViewCell {
         
         textLabel?.font = Font.regular(.smallLarge)
         detailTextLabel?.font = Font.boldFont(.medium)
+        selectionStyle = .none
     }
 }

@@ -17,6 +17,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
+        
+        print(UserDefaultsManager.shared.token)
+        print(UserDefaultsManager.shared.refreshToken)
+        
         if !UserDefaultsManager.shared.token.isEmpty {
             window?.rootViewController = MainTBC()
         } else {

@@ -59,7 +59,8 @@ final class ProfileDetailSettingVC: BaseVC {
     }
     
     override func bind(){
-        let input = ProfileDetailSettingVM.Input(text: textField.text.orEmpty)
+        let input = ProfileDetailSettingVM.Input(text: textField.text.orEmpty,
+                                                 saveButtonTapped: saveButton.rx.tap)
         let output = viewModel.transform(input: input)
         
         output.isValid
@@ -75,6 +76,5 @@ final class ProfileDetailSettingVC: BaseVC {
             .asDriver(onErrorJustReturn: "")
             .drive(textField.validationStatusText)
             .disposed(by: disposeBag)
-        
     }
 }

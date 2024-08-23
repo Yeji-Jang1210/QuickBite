@@ -30,19 +30,27 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
     
     struct Input {
         let itemSelected: ControlEvent<SettingInfo>
+        let alertOkButtonTap: PublishRelay<ProfileInfo>
     }
     
     struct Output {
         let infoItems: Driver<[ProfileSettingSectionModel]>
         let selectedItem: PublishRelay<SettingInfo>
+        let showAlert: PublishRelay<ProfileInfo>
+        let loginViewWillPresent: PublishRelay<Void>
+        let errorMessage: PublishRelay<String>
     }
     
     func transform(input: Input) -> Output {
         
         let info = BehaviorRelay(value: user)
         let selectedItem = PublishRelay<SettingInfo>()
+        let showAlert = PublishRelay<ProfileInfo>()
         let logoutSelected = PublishRelay<Bool>()
         let withDrawSelected = PublishRelay<Bool>()
+        let callwithDraw = PublishRelay<Void>()
+        let loginViewWillPresent = PublishRelay<Void>()
+        let errorMessage = PublishRelay<String>()
         
         let infoItems = info
             .compactMap{ $0 }
@@ -58,17 +66,63 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
                 case .email:
                     break
                 case .logout:
-                    logoutSelected.accept(true)
+                    showAlert.accept(info.type)
                 case .withdraw:
-                    withDrawSelected.accept(true)
+                    showAlert.accept(info.type)
                 default:
                     selectedItem.accept(info)
                 }
             }
             .disposed(by: disposeBag)
-        
-        
-        
-        return Output(infoItems: infoItems, selectedItem: selectedItem)
+       
+        input.alertOkButtonTap
+            .bind(with: self){ owner, type in
+                switch type {
+                case .logout:
+                    owner.resetToken()
+                    loginViewWillPresent.accept(())
+                case .withdraw:
+                    callwithDraw.accept(())
+                default:
+                    return
+                }
+            }
+            .disposed(by: disposeBag)
+      
+        callwithDraw
+            .flatMap { _ in
+                UserAPI.shared.networking(service: .withdraw, type: Userparams.WithDrawResponse.self)
+            }
+            .subscribe(with: self){ owner, networkResult in
+                switch networkResult {
+                case .success(let result):
+                    owner.resetToken()
+                    loginViewWillPresent.accept(())
+                case .error(let statusCode):
+                    switch statusCode {
+                    case 401:
+                        errorMessage.accept("인증할 수 없는 액세스 토큰입니다.")
+                    case 403:
+                        errorMessage.accept("접근 권한이 없습니다.")
+                    case 419:
+                        errorMessage.accept("액세스 토큰이 만료되었습니다.")
+                        loginViewWillPresent.accept(())
+                    default:
+                        errorMessage.accept("회원 탈퇴에 실패했습니다.")
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+
+        return Output(infoItems: infoItems,
+                      selectedItem: selectedItem,
+                      showAlert: showAlert,
+                      loginViewWillPresent: loginViewWillPresent,
+                      errorMessage: errorMessage)
+    }
+    
+    func resetToken(){
+        UserDefaultsManager.shared.token = ""
+        UserDefaultsManager.shared.refreshToken = ""
     }
 }

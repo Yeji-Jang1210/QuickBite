@@ -83,11 +83,8 @@ class MainTBC: UITabBarController {
                     
                     DispatchQueue.main.async {
                         owner.showToastMsg(msg: error.message)
-                        owner.changeRootViewController(SignInVC())
+                        owner.changeRootViewController(UINavigationController(rootViewController: SignInVC()))
                     }
-                    
-                case .decodedError:
-                    owner.showToastMsg(msg: "알수없는 오류")
                 }
             }
             .disposed(by: disposeBag)

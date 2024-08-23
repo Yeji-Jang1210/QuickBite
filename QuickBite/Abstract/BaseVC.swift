@@ -69,4 +69,25 @@ class BaseVC: UIViewController {
             self.dismiss(animated: true)
         }
     }
+    
+    func showAlert(title: String, message: String? = nil) -> Single<AlertType> {
+        return Single<AlertType>.create { [weak self] single in
+            guard let self else { return Disposables.create() }
+            
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+            let confirm = UIAlertAction(title: "확인", style: .default) { _ in
+                single(.success(.ok))
+            }
+            let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in
+                single(.success(.cancel))
+            }
+            
+            alert.addAction(confirm)
+            alert.addAction(cancel)
+            
+            present(alert, animated: true)
+            return Disposables.create()
+        }
+    }
 }

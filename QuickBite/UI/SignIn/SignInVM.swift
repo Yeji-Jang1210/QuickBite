@@ -36,7 +36,6 @@ final class SignInVM: BaseVM, BaseVMProvider {
         let isLoginSucceeded = PublishRelay<Bool>()
         
         input.signInButtonTapped
-            .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .withLatestFrom(Observable.combineLatest(input.emailText, input.passwordText).map { $0.isEmpty || $1.isEmpty })
             .bind {
                 isLoginValid.accept(!$0)
@@ -61,8 +60,6 @@ final class SignInVM: BaseVM, BaseVMProvider {
                         return
                     }
                     errorMessage.accept(error.description)
-                case .decodedError:
-                    errorMessage.accept(LoginError.decodedError.description)
                 }
             }
             .disposed(by: disposeBag)

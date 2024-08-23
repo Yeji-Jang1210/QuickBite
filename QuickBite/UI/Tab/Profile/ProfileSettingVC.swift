@@ -36,6 +36,17 @@ enum ProfileInfo: String, CaseIterable {
         }
     }
     
+    var message: String {
+        switch self {
+        case .logout:
+            return "로그아웃 하시겠습니까?"
+        case .withdraw:
+            return "회원탈퇴를 진행하시겠습니까?\n 기존의 데이터들까지 초기화됩니다."
+        default:
+            return ""
+        }
+    }
+    
     var textColor: UIColor {
         switch self {
         case .withdraw:
@@ -75,7 +86,7 @@ final class ProfileSettingVC: BaseVC {
         cell.detailTextLabel?.text = item.value
         
         switch item.type {
-        case .logout, .withdraw:
+        case .logout, .withdraw, .email:
             break
         default:
             cell.accessoryType = .disclosureIndicator
@@ -125,8 +136,10 @@ final class ProfileSettingVC: BaseVC {
     
     override func bind() {
         super.bind()
+        let alertOkButtonTap = PublishRelay<ProfileInfo>()
         
-        let input = ProfileSettingVM.Input(itemSelected: tableView.rx.modelSelected(SettingInfo.self))
+        let input = ProfileSettingVM.Input(itemSelected: tableView.rx.modelSelected(SettingInfo.self),
+                                           alertOkButtonTap: alertOkButtonTap)
         let output = viewModel.transform(input: input)
         
         output.infoItems
@@ -136,11 +149,38 @@ final class ProfileSettingVC: BaseVC {
         output.selectedItem
             .bind(with: self) { owner, info in
                 let vc = ProfileDetailSettingVC(title: info.type.title, isChild: true, info: info)
-
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
+        output.showAlert
+            .flatMap { [weak self] type -> Single<(ProfileInfo, AlertType)> in
+                return self?.showAlert(title: type.title, message: type.message)
+                    .map { alertType in (type, alertType) } ?? .just((type, .cancel))
+            }
+            .bind{ type, result in
+                switch result {
+                case .ok:
+                    alertOkButtonTap.accept(type)
+                case .cancel:
+                    break
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self){ owner, msg in
+                owner.showToastMsg(msg: msg)
+            }
+            .disposed(by: disposeBag)
+        
+        output.loginViewWillPresent
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self){ owner, _ in
+                owner.changeRootViewController(UINavigationController(rootViewController: SignInVC()))
+            }
+            .disposed(by: disposeBag)
     }
 }
 

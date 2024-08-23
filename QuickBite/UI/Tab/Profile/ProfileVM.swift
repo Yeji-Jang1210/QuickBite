@@ -35,8 +35,6 @@ final class ProfileVM: BaseVM, BaseVMProvider {
                     return result
                 case .error(let statusCode):
                     print("\(statusCode)")
-                case .decodedError:
-                    print("DecodedError")
                 }
                 return nil
             }

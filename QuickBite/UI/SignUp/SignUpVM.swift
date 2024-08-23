@@ -93,9 +93,6 @@ final class SignUpVM: BaseVM, BaseVMProvider {
                     }
                     emailIsValid.accept(false)
                     emailValidMessage.accept(error.message)
-                case .decodedError:
-                    emailIsValid.accept(false)
-                    errorMessage.accept("알수없는 오류")
                 }
             }
             .disposed(by: disposeBag)
@@ -205,8 +202,6 @@ final class SignUpVM: BaseVM, BaseVMProvider {
                 if let error = SignUpError(rawValue: statusCode) {
                     errorMessage.accept(error.message)
                 }
-            case .decodedError:
-                errorMessage.accept("알수없는 오류")
             }
             
             return nil
@@ -226,8 +221,6 @@ final class SignUpVM: BaseVM, BaseVMProvider {
                     return
                 }
                 errorMessage.accept(error.description)
-            case .decodedError:
-                errorMessage.accept(LoginError.decodedError.description)
             }
         }
         .disposed(by: disposeBag)
