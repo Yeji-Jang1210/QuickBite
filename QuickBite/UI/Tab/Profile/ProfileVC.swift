@@ -96,7 +96,7 @@ final class ProfileVC: BaseVC {
     }()
     
     private lazy var tabVC = TabVC()
-    
+    private let callProfileAPI = PublishRelay<Void>()
     private var viewModel: ProfileVM!
     
     init(title: String = "", isChild: Bool = false, viewModel: ProfileVM) {
@@ -110,6 +110,7 @@ final class ProfileVC: BaseVC {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        callProfileAPI.accept(())
     }
     
     override func configureHierarchy() {
@@ -170,7 +171,8 @@ final class ProfileVC: BaseVC {
     override func bind() {
         super.bind()
         
-        let input = ProfileVM.Input(settingBarButtonTap: settingBarButtonItem.rx.tap)
+        let input = ProfileVM.Input(callProfileAPI: callProfileAPI,
+            settingBarButtonTap: settingBarButtonItem.rx.tap)
         
         let output = viewModel.transform(input: input)
         
@@ -207,19 +209,5 @@ final class ProfileVC: BaseVC {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        Container().edgesIgnoringSafeArea(.all)
-    }
-    struct Container: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> UIViewController {
-            return UINavigationController(rootViewController: ProfileVC(viewModel: ProfileVM()))
-        }
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        }
-        typealias  UIViewControllerType = UIViewController
     }
 }

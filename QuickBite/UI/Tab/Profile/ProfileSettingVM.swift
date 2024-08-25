@@ -16,16 +16,10 @@ struct SettingInfo: Equatable {
 
 final class ProfileSettingVM: BaseVM, BaseVMProvider {
     
-    private var user: [SettingInfo] = []
+    private var user: [String: String?] = [:]
     
     init(_ user: [String:String?]){
-        for type in ProfileInfo.allCases {
-            if let value = user[type.rawValue] {
-                self.user.append(SettingInfo(type: type, value: value ?? ""))
-            }
-        }
-        
-        dump(self.user)
+        self.user = user
     }
     
     struct Input {
@@ -35,7 +29,7 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
     
     struct Output {
         let infoItems: Driver<[ProfileSettingSectionModel]>
-        let selectedItem: PublishRelay<SettingInfo>
+        let selectedItem: PublishRelay<(ProfileInfo, [String: String?])>
         let showAlert: PublishRelay<ProfileInfo>
         let loginViewWillPresent: PublishRelay<Void>
         let errorMessage: PublishRelay<String>
@@ -44,7 +38,7 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
     func transform(input: Input) -> Output {
         
         let info = BehaviorRelay(value: user)
-        let selectedItem = PublishRelay<SettingInfo>()
+        let selectedItem = PublishRelay<(ProfileInfo, [String: String?])>()
         let showAlert = PublishRelay<ProfileInfo>()
         let logoutSelected = PublishRelay<Bool>()
         let withDrawSelected = PublishRelay<Bool>()
@@ -53,7 +47,11 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
         let errorMessage = PublishRelay<String>()
         
         let infoItems = info
-            .compactMap{ $0 }
+            .compactMap { dict in
+                ProfileInfo.allCases.compactMap { type in
+                    dict[type.rawValue].map { SettingInfo(type: type, value: $0 ?? "") }
+                }
+            }
             .map {
                 [ProfileSettingSectionModel(header: "개인설정", items: $0),
                  ProfileSettingSectionModel(header: "로그인", items: [SettingInfo(type: .logout, value: ""), SettingInfo(type: .withdraw, value: "")])]
@@ -61,7 +59,7 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
             .asDriver(onErrorJustReturn: [])
         
         input.itemSelected
-            .bind { info in
+            .bind(with: self){ owner, info in
                 switch info.type {
                 case .email:
                     break
@@ -70,7 +68,7 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
                 case .withdraw:
                     showAlert.accept(info.type)
                 default:
-                    selectedItem.accept(info)
+                    selectedItem.accept((info.type, owner.user))
                 }
             }
             .disposed(by: disposeBag)
@@ -95,7 +93,7 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
             }
             .subscribe(with: self){ owner, networkResult in
                 switch networkResult {
-                case .success(let result):
+                case .success(let _):
                     owner.resetToken()
                     loginViewWillPresent.accept(())
                 case .error(let statusCode):

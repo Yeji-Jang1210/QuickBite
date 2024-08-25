@@ -47,6 +47,21 @@ enum ProfileInfo: String, CaseIterable {
         }
     }
     
+    var placeHolder: String {
+        switch self {
+        case .email:
+            return Localized.email_textField_placeholder.text
+        case .nick:
+            return Localized.nickname_textField_placeholder.text
+        case .birthday:
+            return Localized.signup_birtday_placeholder.text
+        case .phoneNum:
+            return Localized.signup_phoneNumber_placeholder.text
+        default:
+            return ""
+        }
+    }
+    
     var textColor: UIColor {
         switch self {
         case .withdraw:
@@ -83,14 +98,21 @@ final class ProfileSettingVC: BaseVC {
         
         cell.textLabel?.text = item.type.title
         cell.textLabel?.textColor = item.type.textColor
-        cell.detailTextLabel?.text = item.value
         
         switch item.type {
-        case .logout, .withdraw, .email:
-            break
+        case .logout, .withdraw:
+            return cell
+        case .email:
+            cell.detailTextLabel?.text = item.value
+            return cell
+        case .phoneNum:
+            cell.detailTextLabel?.text = ValidationPhoneNumber.format(phoneNumber: item.value)
+        case .birthday:
+            cell.detailTextLabel?.text = ValidationBirthday.format(item.value)
         default:
-            cell.accessoryType = .disclosureIndicator
+            cell.detailTextLabel?.text = item.value
         }
+        cell.accessoryType = .disclosureIndicator
         return cell
     } titleForHeaderInSection: { dataSource, index in
         return dataSource[index].header
@@ -147,10 +169,10 @@ final class ProfileSettingVC: BaseVC {
             .disposed(by: disposeBag)
         
         output.selectedItem
-            .bind(with: self) { owner, info in
-                let vc = ProfileDetailSettingVC(title: info.type.title, isChild: true, info: info)
+            .bind(with: self, onNext: { owner, userInfo in
+                let vc = ProfileDetailSettingVC(title: userInfo.0.title, isChild: true, info: userInfo)
                 owner.navigationController?.pushViewController(vc, animated: true)
-            }
+            })
             .disposed(by: disposeBag)
         
         output.showAlert

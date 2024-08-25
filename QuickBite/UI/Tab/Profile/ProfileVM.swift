@@ -12,6 +12,7 @@ import RxCocoa
 final class ProfileVM: BaseVM, BaseVMProvider {
     
     struct Input {
+        let callProfileAPI: PublishRelay<Void>
         let settingBarButtonTap: ControlEvent<Void>
     }
     
@@ -28,7 +29,10 @@ final class ProfileVM: BaseVM, BaseVMProvider {
         
         let presentProfileSetting = PublishRelay<[String:String?]>()
         
-        let user = UserAPI.shared.networking(service: .load, type: Userparams.LoadResponse.self)
+        let user = input.callProfileAPI
+            .flatMap {
+                UserAPI.shared.networking(service: .load, type: Userparams.LoadResponse.self)
+            }
             .compactMap { networkResult in
                 switch networkResult {
                 case .success(let result):
@@ -56,19 +60,7 @@ final class ProfileVM: BaseVM, BaseVMProvider {
         let birthday = user
             .compactMap{ $0.birthDay }
             .filter { !$0.isEmpty }
-            .map { text in
-                let yearStartIndex = text.index(text.startIndex, offsetBy: 4)
-                let year = "\(text[text.startIndex..<yearStartIndex])"
-                
-                let monthStartIndex = text.index(text.startIndex, offsetBy: 4) //5
-                let month = "\(text[monthStartIndex..<text.index(monthStartIndex, offsetBy: 2)])"
-
-
-                let dayStartIndex = text.index(monthStartIndex, offsetBy: 2)
-                let day = "\(text[dayStartIndex..<text.index(dayStartIndex, offsetBy:2)])"
-                
-                return Localized.birthday_format(year: year, month: month, day: day).text
-            }
+            .map {ValidationBirthday.format($0)}
             .asDriver(onErrorJustReturn: "")
             
         let imagePath = user

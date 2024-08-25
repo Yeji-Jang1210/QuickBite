@@ -30,10 +30,15 @@ final class ProfileDetailSettingVC: BaseVC {
     
     private var viewModel: ProfileDetailSettingVM!
     
-    init(title: String = "", isChild: Bool = false, info: SettingInfo) {
+    init(title: String = "", isChild: Bool = false, info: (ProfileInfo, [String: String?])) {
         super.init(title: title, isChild: true)
-        self.viewModel = ProfileDetailSettingVM(info: info.type)
-        textField.textField.text = info.value
+        self.viewModel = ProfileDetailSettingVM(info)
+        
+        if let type = ProfileInfo(rawValue:info.0.rawValue), let value = info.1[type.rawValue] ?? "" {
+            textField.textField.text = type == .phoneNum ? ValidationPhoneNumber.format(phoneNumber: value) : value
+            textField.placeholder = type.placeHolder
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -54,7 +59,6 @@ final class ProfileDetailSettingVC: BaseVC {
     
     override func configureUI() {
         super.configureUI()
-        
         navigationItem.rightBarButtonItem = saveButton
     }
     
@@ -62,6 +66,11 @@ final class ProfileDetailSettingVC: BaseVC {
         let input = ProfileDetailSettingVM.Input(text: textField.text.orEmpty,
                                                  saveButtonTapped: saveButton.rx.tap)
         let output = viewModel.transform(input: input)
+        
+        output.phoneNumber
+            .asDriver(onErrorJustReturn: "")
+            .drive(input.text)
+            .disposed(by: disposeBag)
         
         output.isValid
             .drive(saveButton.rx.isEnabled)
@@ -75,6 +84,20 @@ final class ProfileDetailSettingVC: BaseVC {
         output.validMessage
             .asDriver(onErrorJustReturn: "")
             .drive(textField.validationStatusText)
+            .disposed(by: disposeBag)
+        
+        output.rootViewWillPresent
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self){ owner, _ in
+                owner.navigationController?.popToRootViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.toastMessage
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self){ owner, msg in
+                owner.showToastMsg(msg: msg)
+            }
             .disposed(by: disposeBag)
     }
 }

@@ -21,6 +21,7 @@ final class BaseTextField: UIView {
     
     lazy var textField = {
         let object = UITextField()
+        object.font = Font.regular(.medium)
         return object
     }()
     

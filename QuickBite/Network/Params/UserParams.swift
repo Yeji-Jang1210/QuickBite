@@ -32,7 +32,6 @@ class Userparams {
         let phoneNum: String?
         let birthDay: String?
         let profile: Data?
-        let profileImageName: String?
         
         func convertMultiPartFormData() -> [MultipartFormData] {
             let parameters: [String : String?] = [
@@ -49,8 +48,8 @@ class Userparams {
                 }
             }
             
-            if let profile = profile, let profileImageName = profileImageName {
-                multipartFormData.append(MultipartFormData(provider: .data(profile), name: "profile", fileName: profileImageName, mimeType: "image/png"))
+            if let profile = profile {
+                multipartFormData.append(MultipartFormData(provider: .data(profile), name: "profile", fileName: "profile.png", mimeType: "image/png"))
             }
             
             return multipartFormData

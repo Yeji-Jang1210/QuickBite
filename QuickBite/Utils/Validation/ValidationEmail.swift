@@ -1,5 +1,5 @@
 //
-//  EmailValidationState.swift
+//  ValidationEmail.swift
 //  QuickBite
 //
 //  Created by 장예지 on 8/18/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum EmailValidationError: Int {
+enum ValidationEmailError: Int {
     case missingRequiredField = 400
     case invalidEmailAddress = 409
     
@@ -22,7 +22,7 @@ enum EmailValidationError: Int {
     }
 }
 
-enum EmailValidationState {
+enum ValidationEmail {
     case valid
     case isEmpty
     case missingAtSymbol
@@ -57,7 +57,7 @@ enum EmailValidationState {
     }
     
     // 이메일 상태를 판별하는 함수
-    static func validateEmail(_ email: String) -> EmailValidationState {
+    static func validateEmail(_ email: String) -> ValidationEmail {
         
         if email.isEmpty {
             return .isEmpty

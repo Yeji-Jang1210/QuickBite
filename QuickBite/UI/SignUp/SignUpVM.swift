@@ -22,7 +22,7 @@ final class SignUpVM: BaseVM, BaseVMProvider {
     }
     
     struct Output {
-        let emailValidationStatus: PublishRelay<EmailValidationState>
+        let emailValidationStatus: PublishRelay<ValidationEmail>
         let emailIsValid: PublishRelay<Bool>
         let emailValidMessage: PublishRelay<String>
         
@@ -46,7 +46,7 @@ final class SignUpVM: BaseVM, BaseVMProvider {
     
     func transform(input: Input) -> Output {
         
-        let emailValidationStatus = PublishRelay<EmailValidationState>()
+        let emailValidationStatus = PublishRelay<ValidationEmail>()
         let emailIsValid = PublishRelay<Bool>()
         let emailValidMessage = PublishRelay<String>()
         
@@ -69,7 +69,7 @@ final class SignUpVM: BaseVM, BaseVMProvider {
         
         input.emailText
             .distinctUntilChanged()
-            .map { EmailValidationState.validateEmail($0) }
+            .map { ValidationEmail.validateEmail($0) }
             .bind { emailValidationStatus.accept($0) }
             .disposed(by: disposeBag)
         
@@ -86,7 +86,7 @@ final class SignUpVM: BaseVM, BaseVMProvider {
                     emailValidMessage.accept(result.message)
                     emailIsValid.accept(true)
                 case .error(let statusCode):
-                    guard let error = EmailValidationError(rawValue: statusCode) else {
+                    guard let error = ValidationEmailError(rawValue: statusCode) else {
                         emailIsValid.accept(false)
                         errorMessage.accept("알수없는 오류")
                         return
@@ -131,45 +131,24 @@ final class SignUpVM: BaseVM, BaseVMProvider {
         input.phoneNumberText
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, text in
-                let text = text.replacingOccurrences(of: "-", with: "")
-                
-                if text.isEmpty {
-                    phoneNumberValidMessage.accept("")
-                    return phoneNumberIsValid.accept(true)
+                ValidationPhoneNumber.validatePhoneNumber(text) { result in
+                    phoneNumberIsValid.accept(result.isValid)
+                    phoneNumberValidMessage.accept(result.message)
+                    
+                    if result == .isNumber {
+                        phoneNumber.accept(ValidationPhoneNumber.format(phoneNumber: text))
+                    }
                 }
-                
-                if Int(text) == nil {
-                    phoneNumberValidMessage.accept("숫자만 입력해주세요.")
-                    phoneNumberIsValid.accept(false)
-                    return
-                } else {
-                    phoneNumber.accept(owner.format(phoneNumber: text))
-                }
-                
-                if text.count != 11 {
-                    phoneNumberValidMessage.accept("11자리 숫자를 입력해주세요.")
-                    phoneNumberIsValid.accept(false)
-                    return
-                }
-                
-                phoneNumberValidMessage.accept("")
-                return phoneNumberIsValid.accept(true)
             }
             .disposed(by: disposeBag)
         
         input.birthdayText
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, text in
-                if text.isEmpty {
-                    birthdayIsValid.accept(true)
-                    birthdayValidMessage.accept("")
-                    return
+                ValidationBirthday.validateBirthday(text) { result in
+                    birthdayValidMessage.accept(result.message)
+                    birthdayIsValid.accept(result.isValid)
                 }
-                
-                let result = owner.isValidDateFormat(text)
-                birthdayValidMessage.accept(result ? "" : "형식에 맞게 입력해주세요")
-                birthdayIsValid.accept(result)
-                
             }
             .disposed(by: disposeBag)
         
@@ -243,37 +222,5 @@ final class SignUpVM: BaseVM, BaseVMProvider {
                       isLoginSuccess: isLoginSuccess,
                       errorMessage: errorMessage)
     }
-    
-    private func format(phoneNumber: String) -> String {
-        var formatted = ""
-        let length = phoneNumber.count
-        
-        if length > 0 {
-            formatted += String(phoneNumber.prefix(3))
-        }
-        if length > 3 {
-            let start = phoneNumber.index(phoneNumber.startIndex, offsetBy: 3)
-            let end = phoneNumber.index(phoneNumber.startIndex, offsetBy: min(7, length))
-            formatted += "-" + phoneNumber[start..<end]
-        }
-        if length > 7 {
-            let start = phoneNumber.index(phoneNumber.startIndex, offsetBy: 7)
-            formatted += "-" + phoneNumber[start...]
-        }
-        
-        return formatted
-    }
-    
-    func isValidDateFormat(_ dateString: String) -> Bool {
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMdd"
-    
-        if let _ = dateFormatter.date(from: dateString) {
-            return true
-        } else {
-            return false
-        }
-    }
 }
- 
+

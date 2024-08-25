@@ -59,11 +59,13 @@
 		B822CA8D2C6D9D3700FAA59E /* UserParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA8C2C6D9D3700FAA59E /* UserParams.swift */; };
 		B822CA912C6DA43800FAA59E /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA902C6DA43800FAA59E /* MoyaLoggingPlugin.swift */; };
 		B822CA932C6DE76100FAA59E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA922C6DE76100FAA59E /* User.swift */; };
-		B822CA962C71DE8200FAA59E /* EmailValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA952C71DE8200FAA59E /* EmailValidationState.swift */; };
+		B822CA962C71DE8200FAA59E /* ValidationEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA952C71DE8200FAA59E /* ValidationEmail.swift */; };
 		B822CA982C71F94100FAA59E /* TokenError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA972C71F94100FAA59E /* TokenError.swift */; };
 		B822CA9A2C71F9F100FAA59E /* SignInError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA992C71F9F100FAA59E /* SignInError.swift */; };
 		B822CA9C2C72548E00FAA59E /* SignUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA9B2C72548E00FAA59E /* SignUpError.swift */; };
 		B835F1012C7788550006B718 /* PostTableViewSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1002C7788550006B718 /* PostTableViewSectionModel.swift */; };
+		B835F1082C78882F0006B718 /* ValidationBirthday.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1072C78882F0006B718 /* ValidationBirthday.swift */; };
+		B835F10A2C7888A10006B718 /* ValidationPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1092C7888A10006B718 /* ValidationPhoneNumber.swift */; };
 		B844C6DE2C748ABA00B6F783 /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */; };
 		B844C6E12C74F2A700B6F783 /* TabBarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6E02C74F2A700B6F783 /* TabBarCollectionViewCell.swift */; };
 		B844C6E32C74F30300B6F783 /* TabPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6E22C74F30300B6F783 /* TabPageCollectionViewCell.swift */; };
@@ -126,11 +128,13 @@
 		B822CA8C2C6D9D3700FAA59E /* UserParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserParams.swift; sourceTree = "<group>"; };
 		B822CA902C6DA43800FAA59E /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
 		B822CA922C6DE76100FAA59E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		B822CA952C71DE8200FAA59E /* EmailValidationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidationState.swift; sourceTree = "<group>"; };
+		B822CA952C71DE8200FAA59E /* ValidationEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationEmail.swift; sourceTree = "<group>"; };
 		B822CA972C71F94100FAA59E /* TokenError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenError.swift; sourceTree = "<group>"; };
 		B822CA992C71F9F100FAA59E /* SignInError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInError.swift; sourceTree = "<group>"; };
 		B822CA9B2C72548E00FAA59E /* SignUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpError.swift; sourceTree = "<group>"; };
 		B835F1002C7788550006B718 /* PostTableViewSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewSectionModel.swift; sourceTree = "<group>"; };
+		B835F1072C78882F0006B718 /* ValidationBirthday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationBirthday.swift; sourceTree = "<group>"; };
+		B835F1092C7888A10006B718 /* ValidationPhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationPhoneNumber.swift; sourceTree = "<group>"; };
 		B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
 		B844C6E02C74F2A700B6F783 /* TabBarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCollectionViewCell.swift; sourceTree = "<group>"; };
 		B844C6E22C74F30300B6F783 /* TabPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -295,6 +299,7 @@
 		B822CA392C6C73DF00FAA59E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B835F1062C78881F0006B718 /* Validation */,
 				B822CA4B2C6C796200FAA59E /* Color.swift */,
 				B822CA5B2C6C7CBA00FAA59E /* Font.swift */,
 				B822CA632C6C8A3800FAA59E /* Localized.swift */,
@@ -385,12 +390,21 @@
 		B822CA942C71DE6C00FAA59E /* Enum */ = {
 			isa = PBXGroup;
 			children = (
-				B822CA952C71DE8200FAA59E /* EmailValidationState.swift */,
 				B822CA972C71F94100FAA59E /* TokenError.swift */,
 				B822CA992C71F9F100FAA59E /* SignInError.swift */,
 				B822CA9B2C72548E00FAA59E /* SignUpError.swift */,
 			);
 			path = Enum;
+			sourceTree = "<group>";
+		};
+		B835F1062C78881F0006B718 /* Validation */ = {
+			isa = PBXGroup;
+			children = (
+				B822CA952C71DE8200FAA59E /* ValidationEmail.swift */,
+				B835F1072C78882F0006B718 /* ValidationBirthday.swift */,
+				B835F1092C7888A10006B718 /* ValidationPhoneNumber.swift */,
+			);
+			path = Validation;
 			sourceTree = "<group>";
 		};
 		B844C6DF2C74F28C00B6F783 /* Cell */ = {
@@ -540,6 +554,7 @@
 				B822CA6C2C6C9FDA00FAA59E /* SignUpVC.swift in Sources */,
 				B851AA1F2C775EE7003901F0 /* PostCollectionViewCell.swift in Sources */,
 				B822CA422C6C760400FAA59E /* BaseVM.swift in Sources */,
+				B835F10A2C7888A10006B718 /* ValidationPhoneNumber.swift in Sources */,
 				B851AA1B2C775C28003901F0 /* TabVC.swift in Sources */,
 				B822CA872C6D9B5E00FAA59E /* APIService.swift in Sources */,
 				B822CA892C6D9B6300FAA59E /* PostAPI.swift in Sources */,
@@ -552,6 +567,7 @@
 				B851AA082C763ADF003901F0 /* ProfileSettingTableViewCell.swift in Sources */,
 				B822CA762C6D924A00FAA59E /* MainTBC.swift in Sources */,
 				B851AA212C775F83003901F0 /* PostSectionModel.swift in Sources */,
+				B835F1082C78882F0006B718 /* ValidationBirthday.swift in Sources */,
 				B87C64102C741888000880FC /* ProfileImageView.swift in Sources */,
 				B822CA932C6DE76100FAA59E /* User.swift in Sources */,
 				B822CA182C6C711200FAA59E /* APIInfo.swift in Sources */,
@@ -565,7 +581,7 @@
 				B851AA022C761B6D003901F0 /* ProfileSettingVC.swift in Sources */,
 				B822CA042C6C70C000FAA59E /* SceneDelegate.swift in Sources */,
 				B851AA042C761B74003901F0 /* ProfileSettingVM.swift in Sources */,
-				B822CA962C71DE8200FAA59E /* EmailValidationState.swift in Sources */,
+				B822CA962C71DE8200FAA59E /* ValidationEmail.swift in Sources */,
 				B844C6E12C74F2A700B6F783 /* TabBarCollectionViewCell.swift in Sources */,
 				B822CA402C6C760000FAA59E /* BaseVC.swift in Sources */,
 				B822CA6E2C6C9FE400FAA59E /* SignUpVM.swift in Sources */,
