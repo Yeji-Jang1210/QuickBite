@@ -19,9 +19,9 @@ final class TabVC: TabmanViewController {
         var icon: UIImage? {
             switch self {
             case .userPost:
-                return UIImage(systemName: "pencil.line")
+                return ImageAssets.pencilLine
             case .bookMark:
-                return UIImage(systemName: "bookmark.fill")
+                return ImageAssets.bookmarkFill
             }
         }
     }

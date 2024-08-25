@@ -17,6 +17,9 @@ struct ImageAssets {
     static let cake = UIImage(systemName: "birthday.cake.fill")
     static let phone = UIImage(systemName: "iphone.gen1")
     static let gear = UIImage(systemName: "gearshape.fill")
+    static let bookmark = UIImage(systemName: "bookmark")
+    static let bookmarkFill = UIImage(systemName: "bookmark.fill")
+    static let pencilLine = UIImage(systemName: "pencil.line")
     
     static let titleImage = UIImage(named: "titleImage")
     static let defaultProfile = UIImage(named: "default_profile")
@@ -25,4 +28,9 @@ struct ImageAssets {
     static let main = UIImage(named: "main_tab")
     static let recipes = UIImage(named: "recipe_tab")
     static let profile = UIImage(named: "profile_tab")
+    
+    //recipe icon
+    static let servings = UIImage(systemName: "person.2")
+    static let level = UIImage(systemName: "cellularbars")
+    static let timer = UIImage(systemName: "timer")
 }

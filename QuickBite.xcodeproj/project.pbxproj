@@ -66,9 +66,13 @@
 		B835F1012C7788550006B718 /* PostTableViewSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1002C7788550006B718 /* PostTableViewSectionModel.swift */; };
 		B835F1082C78882F0006B718 /* ValidationBirthday.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1072C78882F0006B718 /* ValidationBirthday.swift */; };
 		B835F10A2C7888A10006B718 /* ValidationPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1092C7888A10006B718 /* ValidationPhoneNumber.swift */; };
+		B835F10C2C7B5A240006B718 /* CarouselLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F10B2C7B5A240006B718 /* CarouselLayout.swift */; };
+		B835F10F2C7B5EC30006B718 /* MainRecipeSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F10E2C7B5EC30006B718 /* MainRecipeSectionModel.swift */; };
+		B835F1112C7B5F700006B718 /* MainRecipeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1102C7B5F700006B718 /* MainRecipeCollectionViewCell.swift */; };
+		B835F1132C7B63180006B718 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1122C7B63180006B718 /* Recipe.swift */; };
+		B835F1152C7B72D10006B718 /* IconLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1142C7B72D10006B718 /* IconLabelView.swift */; };
+		B835F1172C7B87C70006B718 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1162C7B87C70006B718 /* UIView+Extension.swift */; };
 		B844C6DE2C748ABA00B6F783 /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */; };
-		B844C6E12C74F2A700B6F783 /* TabBarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6E02C74F2A700B6F783 /* TabBarCollectionViewCell.swift */; };
-		B844C6E32C74F30300B6F783 /* TabPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6E22C74F30300B6F783 /* TabPageCollectionViewCell.swift */; };
 		B851AA022C761B6D003901F0 /* ProfileSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA012C761B6D003901F0 /* ProfileSettingVC.swift */; };
 		B851AA042C761B74003901F0 /* ProfileSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA032C761B74003901F0 /* ProfileSettingVM.swift */; };
 		B851AA062C762F7C003901F0 /* ProfileSettingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA052C762F7C003901F0 /* ProfileSettingSectionModel.swift */; };
@@ -135,9 +139,13 @@
 		B835F1002C7788550006B718 /* PostTableViewSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewSectionModel.swift; sourceTree = "<group>"; };
 		B835F1072C78882F0006B718 /* ValidationBirthday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationBirthday.swift; sourceTree = "<group>"; };
 		B835F1092C7888A10006B718 /* ValidationPhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationPhoneNumber.swift; sourceTree = "<group>"; };
+		B835F10B2C7B5A240006B718 /* CarouselLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLayout.swift; sourceTree = "<group>"; };
+		B835F10E2C7B5EC30006B718 /* MainRecipeSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRecipeSectionModel.swift; sourceTree = "<group>"; };
+		B835F1102C7B5F700006B718 /* MainRecipeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRecipeCollectionViewCell.swift; sourceTree = "<group>"; };
+		B835F1122C7B63180006B718 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		B835F1142C7B72D10006B718 /* IconLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLabelView.swift; sourceTree = "<group>"; };
+		B835F1162C7B87C70006B718 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
-		B844C6E02C74F2A700B6F783 /* TabBarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCollectionViewCell.swift; sourceTree = "<group>"; };
-		B844C6E22C74F30300B6F783 /* TabPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPageCollectionViewCell.swift; sourceTree = "<group>"; };
 		B851AA012C761B6D003901F0 /* ProfileSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVC.swift; sourceTree = "<group>"; };
 		B851AA032C761B74003901F0 /* ProfileSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVM.swift; sourceTree = "<group>"; };
 		B851AA052C762F7C003901F0 /* ProfileSettingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingSectionModel.swift; sourceTree = "<group>"; };
@@ -252,6 +260,7 @@
 		B822CA352C6C73A200FAA59E /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				B835F10D2C7B5EAC0006B718 /* Cell */,
 				B822CA6F2C6D8CE900FAA59E /* MainVC.swift */,
 				B822CA712C6D8CEF00FAA59E /* MainVM.swift */,
 			);
@@ -292,6 +301,8 @@
 				B822CA612C6C88F100FAA59E /* BaseButton.swift */,
 				B822CA652C6C8B7200FAA59E /* BaseTextField.swift */,
 				B87C640F2C741888000880FC /* ProfileImageView.swift */,
+				B835F10B2C7B5A240006B718 /* CarouselLayout.swift */,
+				B835F1142C7B72D10006B718 /* IconLabelView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -314,6 +325,7 @@
 				B822CA432C6C763A00FAA59E /* Cell+Extension.swift */,
 				B822CA492C6C793400FAA59E /* UIColor+Extension.swift */,
 				B822CA732C6D8E3A00FAA59E /* UIViewController+Extension.swift */,
+				B835F1162C7B87C70006B718 /* UIView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -323,6 +335,7 @@
 			children = (
 				B822CA922C6DE76100FAA59E /* User.swift */,
 				B851AA222C776034003901F0 /* Post.swift */,
+				B835F1122C7B63180006B718 /* Recipe.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -407,11 +420,18 @@
 			path = Validation;
 			sourceTree = "<group>";
 		};
+		B835F10D2C7B5EAC0006B718 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B835F10E2C7B5EC30006B718 /* MainRecipeSectionModel.swift */,
+				B835F1102C7B5F700006B718 /* MainRecipeCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		B844C6DF2C74F28C00B6F783 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				B844C6E02C74F2A700B6F783 /* TabBarCollectionViewCell.swift */,
-				B844C6E22C74F30300B6F783 /* TabPageCollectionViewCell.swift */,
 				B851AA052C762F7C003901F0 /* ProfileSettingSectionModel.swift */,
 				B851AA072C763ADF003901F0 /* ProfileSettingTableViewCell.swift */,
 			);
@@ -538,6 +558,7 @@
 				B822CA6A2C6C9C8200FAA59E /* SignInVM.swift in Sources */,
 				B822CA662C6C8B7200FAA59E /* BaseTextField.swift in Sources */,
 				B822CA4C2C6C796200FAA59E /* Color.swift in Sources */,
+				B835F10C2C7B5A240006B718 /* CarouselLayout.swift in Sources */,
 				B822CA442C6C763A00FAA59E /* Cell+Extension.swift in Sources */,
 				B822CA682C6C8BA100FAA59E /* ImageAssets.swift in Sources */,
 				B851AA0A2C7644BB003901F0 /* ProfileDetailSettingVC.swift in Sources */,
@@ -545,10 +566,11 @@
 				B822CA742C6D8E3A00FAA59E /* UIViewController+Extension.swift in Sources */,
 				B822CA7E2C6D997D00FAA59E /* UserDefaultsManager.swift in Sources */,
 				B822CA7C2C6D995800FAA59E /* Header.swift in Sources */,
-				B844C6E32C74F30300B6F783 /* TabPageCollectionViewCell.swift in Sources */,
 				B822CA722C6D8CEF00FAA59E /* MainVM.swift in Sources */,
 				B822CA9C2C72548E00FAA59E /* SignUpError.swift in Sources */,
 				B822CA982C71F94100FAA59E /* TokenError.swift in Sources */,
+				B835F1172C7B87C70006B718 /* UIView+Extension.swift in Sources */,
+				B835F10F2C7B5EC30006B718 /* MainRecipeSectionModel.swift in Sources */,
 				B822CA8D2C6D9D3700FAA59E /* UserParams.swift in Sources */,
 				B822CA912C6DA43800FAA59E /* MoyaLoggingPlugin.swift in Sources */,
 				B822CA6C2C6C9FDA00FAA59E /* SignUpVC.swift in Sources */,
@@ -556,12 +578,14 @@
 				B822CA422C6C760400FAA59E /* BaseVM.swift in Sources */,
 				B835F10A2C7888A10006B718 /* ValidationPhoneNumber.swift in Sources */,
 				B851AA1B2C775C28003901F0 /* TabVC.swift in Sources */,
+				B835F1152C7B72D10006B718 /* IconLabelView.swift in Sources */,
 				B822CA872C6D9B5E00FAA59E /* APIService.swift in Sources */,
 				B822CA892C6D9B6300FAA59E /* PostAPI.swift in Sources */,
 				B822CA602C6C88C600FAA59E /* SignInVC.swift in Sources */,
 				B822CA482C6C764D00FAA59E /* BaseTableViewCell.swift in Sources */,
 				B851AA0C2C7644C3003901F0 /* ProfileDetailSettingVM.swift in Sources */,
 				B851AA062C762F7C003901F0 /* ProfileSettingSectionModel.swift in Sources */,
+				B835F1112C7B5F700006B718 /* MainRecipeCollectionViewCell.swift in Sources */,
 				B822CA9A2C71F9F100FAA59E /* SignInError.swift in Sources */,
 				B822CA022C6C70C000FAA59E /* AppDelegate.swift in Sources */,
 				B851AA082C763ADF003901F0 /* ProfileSettingTableViewCell.swift in Sources */,
@@ -582,7 +606,7 @@
 				B822CA042C6C70C000FAA59E /* SceneDelegate.swift in Sources */,
 				B851AA042C761B74003901F0 /* ProfileSettingVM.swift in Sources */,
 				B822CA962C71DE8200FAA59E /* ValidationEmail.swift in Sources */,
-				B844C6E12C74F2A700B6F783 /* TabBarCollectionViewCell.swift in Sources */,
+				B835F1132C7B63180006B718 /* Recipe.swift in Sources */,
 				B822CA402C6C760000FAA59E /* BaseVC.swift in Sources */,
 				B822CA6E2C6C9FE400FAA59E /* SignUpVM.swift in Sources */,
 				B822CA4A2C6C793400FAA59E /* UIColor+Extension.swift in Sources */,
