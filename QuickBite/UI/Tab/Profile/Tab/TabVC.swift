@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 import Tabman
 import Pageboy
-import SwiftUI
 
 final class TabVC: TabmanViewController {
     enum PostType: CaseIterable {

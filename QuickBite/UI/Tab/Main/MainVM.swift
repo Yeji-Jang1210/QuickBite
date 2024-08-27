@@ -22,18 +22,17 @@ let recipes = [
             Step(title: "5단계", description: "두부와 대파를 넣고 마지막으로 끓인다.")
         ],
         ingredients: [
-            Ingredients(name: "김치", ratio: "200g"),
-            Ingredients(name: "돼지고기", ratio: "150g"),
-            Ingredients(name: "두부", ratio: "1/2모"),
-            Ingredients(name: "대파", ratio: "1대"),
-            Ingredients(name: "고추장", ratio: "1큰술")
+            Ingredient(name: "김치", ratio: "200g"),
+            Ingredient(name: "돼지고기", ratio: "150g"),
+            Ingredient(name: "두부", ratio: "1/2모"),
+            Ingredient(name: "대파", ratio: "1대")
         ],
         sources: [
+            Source(name: "고추장", ratio: "1큰술"),
             Source(name: "멸치 육수", ratio: "500ml")
         ],
         time: "30분",
-        servings: 3, 
-        level: "쉬움"
+        servings: 3
     ),
     Recipe(
         title: "비빔밥",
@@ -46,18 +45,17 @@ let recipes = [
             Step(title: "5단계", description: "계란 후라이를 올려서 비벼 먹는다.")
         ],
         ingredients: [
-            Ingredients(name: "밥", ratio: "1공기"),
-            Ingredients(name: "소고기", ratio: "100g"),
-            Ingredients(name: "시금치", ratio: "50g"),
-            Ingredients(name: "콩나물", ratio: "50g"),
-            Ingredients(name: "고추장", ratio: "2큰술")
+            Ingredient(name: "밥", ratio: "1공기"),
+            Ingredient(name: "소고기", ratio: "100g"),
+            Ingredient(name: "시금치", ratio: "50g"),
+            Ingredient(name: "콩나물", ratio: "50g"),
+            Ingredient(name: "고추장", ratio: "2큰술")
         ],
         sources: [
             Source(name: "참기름", ratio: "1큰술")
         ],
         time: "20분",
-        servings: 2, 
-        level: "쉬움"
+        servings: 2
     ),
     Recipe(
         title: "된장국",
@@ -70,18 +68,17 @@ let recipes = [
             Step(title: "5단계", description: "간을 보고 부족하면 된장을 더 넣는다.")
         ],
         ingredients: [
-            Ingredients(name: "된장", ratio: "2큰술"),
-            Ingredients(name: "애호박", ratio: "1/2개"),
-            Ingredients(name: "두부", ratio: "1/3모"),
-            Ingredients(name: "대파", ratio: "1대"),
-            Ingredients(name: "다진 마늘", ratio: "1작은술")
+            Ingredient(name: "된장", ratio: "2큰술"),
+            Ingredient(name: "애호박", ratio: "1/2개"),
+            Ingredient(name: "두부", ratio: "1/3모"),
+            Ingredient(name: "대파", ratio: "1대"),
+            Ingredient(name: "다진 마늘", ratio: "1작은술")
         ],
         sources: [
             Source(name: "물", ratio: "600ml")
         ],
         time: "15분",
-        servings: 4, 
-        level: "쉬움"
+        servings: 4
     ),
     Recipe(
         title: "불고기",
@@ -94,18 +91,17 @@ let recipes = [
             Step(title: "5단계", description: "불고기를 접시에 담아낸다.")
         ],
         ingredients: [
-            Ingredients(name: "소고기", ratio: "300g"),
-            Ingredients(name: "양파", ratio: "1개"),
-            Ingredients(name: "당근", ratio: "1/2개"),
-            Ingredients(name: "간장", ratio: "3큰술"),
-            Ingredients(name: "설탕", ratio: "1큰술")
+            Ingredient(name: "소고기", ratio: "300g"),
+            Ingredient(name: "양파", ratio: "1개"),
+            Ingredient(name: "당근", ratio: "1/2개"),
+            Ingredient(name: "간장", ratio: "3큰술"),
+            Ingredient(name: "설탕", ratio: "1큰술")
         ],
         sources: [
             Source(name: "참기름", ratio: "1큰술")
         ],
         time: "25분",
-        servings: 3,
-        level: "보통"
+        servings: 3
     ),
     Recipe(
         title: "잡채",
@@ -118,18 +114,17 @@ let recipes = [
             Step(title: "5단계", description: "참기름을 넣고 섞어 접시에 담는다.")
         ],
         ingredients: [
-            Ingredients(name: "당면", ratio: "150g"),
-            Ingredients(name: "소고기", ratio: "100g"),
-            Ingredients(name: "시금치", ratio: "50g"),
-            Ingredients(name: "당근", ratio: "1/2개"),
-            Ingredients(name: "간장", ratio: "3큰술")
+            Ingredient(name: "당면", ratio: "150g"),
+            Ingredient(name: "소고기", ratio: "100g"),
+            Ingredient(name: "시금치", ratio: "50g"),
+            Ingredient(name: "당근", ratio: "1/2개"),
+            Ingredient(name: "간장", ratio: "3큰술")
         ],
         sources: [
             Source(name: "참기름", ratio: "1큰술")
         ],
         time: "30분",
-        servings: 4, 
-        level: "어려움"
+        servings: 4
     )
 ]
 
@@ -137,10 +132,11 @@ let recipes = [
 final class MainVM: BaseVM, BaseVMProvider {
     
     struct Input {
-        
+        let addPostButtonTap: ControlEvent<Void>
     }
     
     struct Output {
+        let addPostButtonTap: ControlEvent<Void>
         let items: Driver<[MainRecipeSectionModel]>
     }
     
@@ -151,6 +147,6 @@ final class MainVM: BaseVM, BaseVMProvider {
             .asDriver(onErrorJustReturn: [])
             
         
-        return Output(items: items)
+        return Output(addPostButtonTap: input.addPostButtonTap, items: items)
     }
 }

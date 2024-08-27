@@ -7,28 +7,73 @@
 
 import Foundation
 
+
+//post - content1 에 저장되는 구조체
+struct AddPostRequestContent: Codable {
+    let steps: [Step]
+    let ingredients: [Ingredient]?
+    let sources: [Source]?
+    let time: String
+    let servings: Int
+}
+
+//서버에서 받아올 때 사용하는 구조체
 struct Recipe: Codable {
     let title: String
     let description: String?
     let steps: [Step]
-    let ingredients: [Ingredients]
+    let ingredients: [Ingredient]
     let sources: [Source]
     let time: String
     let servings: Int
-    let level: String
 }
 
 struct Step: Codable {
     let title: String
     let description: String?
+    let imageData: ImageData?
+    
+    enum CodingKeys: String, CodingKey {
+        case title
+        case description
+    }
+    
+    init(imageData: ImageData? = nil, title: String, description: String?) {
+        self.imageData = imageData
+        self.title = title
+        self.description = description
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(title, forKey: .title)
+        try container.encode(description, forKey: .description)
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.description = try container.decodeIfPresent(String.self, forKey: .description)
+        self.imageData = nil // imageData는 디코딩하지 않음
+    }
 }
 
-struct Ingredients: Codable {
+struct ImageData: Codable {
+    let image: Data
     let name: String
-    let ratio: String
 }
 
-struct Source: Codable {
-    let name: String
-    let ratio: String
+struct Ingredient: BaseRecipeIngredient, Codable {
+    var name: String
+    var ratio: String
+}
+
+struct Source: BaseRecipeIngredient, Codable {
+    var name: String
+    var ratio: String
+}
+
+protocol BaseRecipeIngredient {
+    var name: String { get set }
+    var ratio: String { get set }
 }

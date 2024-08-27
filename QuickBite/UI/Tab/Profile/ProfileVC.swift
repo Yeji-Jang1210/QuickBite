@@ -10,7 +10,6 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import Kingfisher
-import SwiftUI
 
 final class ProfileVC: BaseVC {
     

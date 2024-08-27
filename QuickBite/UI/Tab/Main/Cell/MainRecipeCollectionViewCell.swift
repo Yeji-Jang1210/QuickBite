@@ -51,7 +51,6 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
     }()
     
     private let servingsView = IconLabelView(image: ImageAssets.servings)
-    private let levelView = IconLabelView(image: ImageAssets.level)
     private let timeView = IconLabelView(image: ImageAssets.timer)
     
     private lazy var stackView = {
@@ -90,7 +89,6 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
         contentsView.addSubview(titleLabel)
         contentsView.addSubview(stackView)
         stackView.addArrangedSubview(servingsView)
-        stackView.addArrangedSubview(levelView)
         stackView.addArrangedSubview(timeView)
         
         baseView.addSubview(bookmarkButton)
@@ -152,7 +150,6 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
     func setData(_ recipe: Recipe){
         titleLabel.text = recipe.title
         servingsView.text = "\(recipe.servings)인분"
-        levelView.text = recipe.level
         timeView.text = recipe.time
     }
 }

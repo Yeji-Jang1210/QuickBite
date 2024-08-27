@@ -38,7 +38,7 @@ final class MainVC: BaseVC {
         return object
     }()
     
-    private let dataSource = RxCollectionViewSectionedReloadDataSource<MainRecipeSectionModel>{
+    private let collectionViewDatasource = RxCollectionViewSectionedReloadDataSource<MainRecipeSectionModel>{
         dataSource, collectionView, indexPath, item in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainRecipeCollectionViewCell.identifier, for: indexPath) as! MainRecipeCollectionViewCell
         cell.setData(item)
@@ -46,10 +46,29 @@ final class MainVC: BaseVC {
         return cell
     }
     
+    private let addPostButton = {
+        let object = UIButton()
+        object.backgroundColor = Color.primaryColor
+        object.tintColor = .white
+        object.setImage(ImageAssets.recipes, for: .normal)
+        object.layer.cornerRadius = 24
+        
+        object.layer.shadowColor = UIColor.gray.cgColor
+        object.layer.shadowOpacity = 0.4
+        object.layer.shadowOffset = CGSize(width: 2, height: 2)
+        object.layer.shadowRadius = 3
+        
+        return object
+    }()
+    
     private let viewModel = MainVM()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -58,6 +77,7 @@ final class MainVC: BaseVC {
         view.addSubview(titleLabel)
         view.addSubview(descriptionLabel)
         view.addSubview(collectionView)
+        view.addSubview(addPostButton)
     }
     
     override func configureLayout() {
@@ -78,16 +98,27 @@ final class MainVC: BaseVC {
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(UIScreen.main.bounds.width * 0.75)
         }
+        
+        addPostButton.snp.makeConstraints { make in
+            make.size.equalTo(48)
+            make.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
     }
     
     override func bind() {
         super.bind()
         
-        let input = MainVM.Input()
+        let input = MainVM.Input(addPostButtonTap: addPostButton.rx.tap)
         let output = viewModel.transform(input: input)
         
+        output.addPostButtonTap
+            .bind(with: self){ owner, _ in
+                owner.navigationController?.pushViewController(AddPostVC(title: "레시피 등록", isChild: true), animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         output.items
-            .drive(collectionView.rx.items(dataSource: dataSource))
+            .drive(collectionView.rx.items(dataSource: collectionViewDatasource))
             .disposed(by: disposeBag)
     }
 }

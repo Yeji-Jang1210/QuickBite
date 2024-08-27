@@ -53,6 +53,12 @@ final class BaseTextField: UIView {
         }
     }
     
+    var font: UIFont = Font.regular(.medium) {
+        didSet {
+            textField.font = font
+        }
+    }
+    
     private let separateLine = {
         let object = UIView()
         object.backgroundColor = .lightGray
