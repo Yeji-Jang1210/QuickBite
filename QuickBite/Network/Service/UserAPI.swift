@@ -87,7 +87,7 @@ extension UserService: TargetType {
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.sesacKey.rawValue: APIInfo.key
             ]
-        case .edit(param: let param):
+        case .edit:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.multipart.rawValue,

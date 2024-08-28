@@ -86,7 +86,7 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
             .bind(with: self){ owner, type in
                 switch type {
                 case .logout:
-                    owner.resetToken()
+                    UserDefaultsManager.shared.reset()
                     loginViewWillPresent.accept(())
                 case .withdraw:
                     callwithDraw.accept(())
@@ -103,7 +103,7 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
             .subscribe(with: self){ owner, networkResult in
                 switch networkResult {
                 case .success(_):
-                    owner.resetToken()
+                    UserDefaultsManager.shared.reset()
                     loginViewWillPresent.accept(())
                 case .error(let statusCode):
                     switch statusCode {
@@ -133,7 +133,7 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
             }
             .subscribe(with: self){ owner, networkResult in
                 switch networkResult {
-                case .success(let result):
+                case .success(_):
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
                         rootViewWillPresent.accept(())
                     }
@@ -157,10 +157,5 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
                       loginViewWillPresent: loginViewWillPresent,
                       toastMessage: toastMessage, 
                       rootViewWillPresent: rootViewWillPresent)
-    }
-    
-    func resetToken(){
-        UserDefaultsManager.shared.token = ""
-        UserDefaultsManager.shared.refreshToken = ""
     }
 }

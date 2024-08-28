@@ -129,7 +129,8 @@ final class ProfileVM: BaseVM, BaseVMProvider {
                         content: recipe,
                         createdAt: response.createdAt,
                         creator: response.creator,
-                        files: response.files
+                        files: response.files,
+                        likes: response.likes
                     )
                     
                     return post

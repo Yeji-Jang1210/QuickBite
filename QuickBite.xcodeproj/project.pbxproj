@@ -85,6 +85,8 @@
 		B835F14C2C7E06A20006B718 /* UploadPostError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F14B2C7E06A20006B718 /* UploadPostError.swift */; };
 		B835F14E2C7E06AF0006B718 /* FetchUserPostError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F14D2C7E06AF0006B718 /* FetchUserPostError.swift */; };
 		B835F1502C7E13CA0006B718 /* PostListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F14F2C7E13CA0006B718 /* PostListVM.swift */; };
+		B83B022B2C7F385500E82F97 /* DetailPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83B022A2C7F385500E82F97 /* DetailPostVC.swift */; };
+		B83B022D2C7F388B00E82F97 /* DetailPostVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83B022C2C7F388B00E82F97 /* DetailPostVM.swift */; };
 		B844C6DE2C748ABA00B6F783 /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */; };
 		B851AA022C761B6D003901F0 /* ProfileSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA012C761B6D003901F0 /* ProfileSettingVC.swift */; };
 		B851AA042C761B74003901F0 /* ProfileSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA032C761B74003901F0 /* ProfileSettingVM.swift */; };
@@ -175,6 +177,8 @@
 		B835F14B2C7E06A20006B718 /* UploadPostError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostError.swift; sourceTree = "<group>"; };
 		B835F14D2C7E06AF0006B718 /* FetchUserPostError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserPostError.swift; sourceTree = "<group>"; };
 		B835F14F2C7E13CA0006B718 /* PostListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListVM.swift; sourceTree = "<group>"; };
+		B83B022A2C7F385500E82F97 /* DetailPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPostVC.swift; sourceTree = "<group>"; };
+		B83B022C2C7F388B00E82F97 /* DetailPostVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPostVM.swift; sourceTree = "<group>"; };
 		B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
 		B851AA012C761B6D003901F0 /* ProfileSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVC.swift; sourceTree = "<group>"; };
 		B851AA032C761B74003901F0 /* ProfileSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVM.swift; sourceTree = "<group>"; };
@@ -404,6 +408,7 @@
 			isa = PBXGroup;
 			children = (
 				B822CA752C6D924A00FAA59E /* MainTBC.swift */,
+				B83B02292C7F377400E82F97 /* DetailView */,
 				B822CA332C6C737D00FAA59E /* SignIn */,
 				B822CA322C6C737600FAA59E /* SignUp */,
 				B822CA312C6C737400FAA59E /* Tab */,
@@ -501,6 +506,15 @@
 				B8FFA99A2C7F2A8E004DCD94 /* EditProfileError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		B83B02292C7F377400E82F97 /* DetailView */ = {
+			isa = PBXGroup;
+			children = (
+				B83B022A2C7F385500E82F97 /* DetailPostVC.swift */,
+				B83B022C2C7F388B00E82F97 /* DetailPostVM.swift */,
+			);
+			path = DetailView;
 			sourceTree = "<group>";
 		};
 		B844C6DF2C74F28C00B6F783 /* Cell */ = {
@@ -637,6 +651,7 @@
 				B822CA662C6C8B7200FAA59E /* BaseTextField.swift in Sources */,
 				B822CA4C2C6C796200FAA59E /* Color.swift in Sources */,
 				B835F1302C7C6A7C0006B718 /* StepCollectionViewCell.swift in Sources */,
+				B83B022D2C7F388B00E82F97 /* DetailPostVM.swift in Sources */,
 				B835F1342C7C7B910006B718 /* AddStepVM.swift in Sources */,
 				B835F1262C7C32870006B718 /* BlockTextView.swift in Sources */,
 				B835F10C2C7B5A240006B718 /* CarouselLayout.swift in Sources */,
@@ -689,6 +704,7 @@
 				B822CA182C6C711200FAA59E /* APIInfo.swift in Sources */,
 				B822CA702C6D8CE900FAA59E /* MainVC.swift in Sources */,
 				B822CA5C2C6C7CBA00FAA59E /* Font.swift in Sources */,
+				B83B022B2C7F385500E82F97 /* DetailPostVC.swift in Sources */,
 				B851AA1D2C775DD5003901F0 /* PostListVC.swift in Sources */,
 				B844C6DE2C748ABA00B6F783 /* ProfileVM.swift in Sources */,
 				B822CA642C6C8A3800FAA59E /* Localized.swift in Sources */,

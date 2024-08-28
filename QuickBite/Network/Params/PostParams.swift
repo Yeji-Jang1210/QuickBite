@@ -71,6 +71,14 @@ class PostParams {
         let id: String
     }
     
+    struct LikeRequest: Codable {
+        let isLike: Bool
+        
+        enum CodingKeys: String, CodingKey {
+            case isLike = "like_status"
+        }
+    }
+    
     //MARK: Response
     struct FileUploadResponse: Codable {
         let files: [String]
@@ -94,11 +102,16 @@ class PostParams {
         let createdAt: String
         let creator: Creator
         let files: [String]
+        let likes: [String]
         let next_cursor: String?
     }
     
     struct FetchUserPostsResponse: Codable {
         let data: [PostResponse]
+    }
+    
+    struct LikeResponse: Codable {
+        let like_status: Bool
     }
 }
 

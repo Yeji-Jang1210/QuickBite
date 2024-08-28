@@ -191,8 +191,7 @@ final class SignUpVM: BaseVM, BaseVMProvider {
         .subscribe(with: self){ owner, networkResult in
             switch networkResult {
             case .success(let result):
-                UserDefaultsManager.shared.token = result.accessToken
-                UserDefaultsManager.shared.refreshToken = result.refreshToken
+                UserDefaultsManager.shared.setUserDetauls(result)
                 isLoginSuccess.accept(true)
             case .error(let statusCode):
                 guard let error = SignInError(rawValue: statusCode) else { errorMessage.accept("알수없는 오류")

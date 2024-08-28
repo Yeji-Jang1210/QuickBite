@@ -42,6 +42,13 @@ final class MainVC: BaseVC {
         dataSource, collectionView, indexPath, item in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainRecipeCollectionViewCell.identifier, for: indexPath) as! MainRecipeCollectionViewCell
         cell.setData(item)
+        cell.bookmarkButton.tag = indexPath.row
+        cell.bookmarkButton.rx.tap
+            .bind { _ in
+                cell.bookmarkButton.isSelected.toggle()
+                cell.bookmarkButtonTap.accept(item)
+            }
+            .disposed(by: cell.disposeBag)
         
         return cell
     }
@@ -62,6 +69,7 @@ final class MainVC: BaseVC {
     }()
     
     private var viewModel: MainVM!
+    private let bookmarkButtonTap = PublishRelay<Post>()
     private let callPostAPI = PublishRelay<Void>()
     
     init(title: String = "", isChild: Bool = false, viewModel: MainVM) {

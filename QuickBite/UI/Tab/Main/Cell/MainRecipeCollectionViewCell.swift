@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
     
@@ -42,7 +44,7 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
         return object
     }()
     
-    private let bookmarkButton = {
+    let bookmarkButton = {
         let object = UIButton()
         object.setBackgroundImage(ImageAssets.bookmark, for: .normal)
         object.setBackgroundImage(ImageAssets.bookmarkFill, for: .selected)
@@ -72,8 +74,12 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
+    let bookmarkButtonTap = PublishRelay<Post>()
+    let bookmarkIsSelected = PublishRelay<Bool>()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        bind()
     }
     
     override func configureHierarchy() {
@@ -153,9 +159,39 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
             guard let url = URL(string: "\(APIInfo.baseURL)/v1/\(thumbnailFilePath)") else { return }
             imageView.kf.setImage(with: url)
         }
-
+        
+        bookmarkIsSelected.accept(post.likes.contains(UserDefaultsManager.shared.userId))
+        
         titleLabel.text = post.title
         servingsView.text = "\(post.content.servings)인분"
         timeView.text = "\(post.content.time)분"
+        
+    }
+    
+    func bind(){
+        bookmarkButtonTap
+            .map { [weak self] post -> (String, PostParams.LikeRequest)? in
+                guard let self else { return nil }
+                return (post.post_id, PostParams.LikeRequest(isLike: bookmarkButton.isSelected))
+            }
+            .compactMap{ $0 }
+            .flatMap { (id, param) in
+                PostAPI.shared.networking(service: .like(id: id, param: param), type: PostParams.LikeResponse.self)
+            }
+            .bind(with: self) { owner, networkResult in
+                switch networkResult {
+                case .success(let success):
+                    owner.bookmarkIsSelected.accept(success.like_status)
+                case .error(let statusCode):
+                    print("\(statusCode)")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        bookmarkIsSelected
+            .asDriver(onErrorJustReturn: false)
+            .drive(bookmarkButton.rx.isSelected)
+            .disposed(by: disposeBag)
+            
     }
 }

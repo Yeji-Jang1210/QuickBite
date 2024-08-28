@@ -57,7 +57,8 @@ final class MainVM: BaseVM, BaseVMProvider {
                         content: recipe,
                         createdAt: response.createdAt,
                         creator: response.creator,
-                        files: response.files
+                        files: response.files,
+                        likes: response.likes
                     )
                     
                     return post
@@ -73,35 +74,5 @@ final class MainVM: BaseVM, BaseVMProvider {
         
         
         return Output(addPostButtonTap: input.addPostButtonTap, items: items)
-    }
-    
-    func convertPost(_ data: Observable<[PostParams.PostResponse]>) -> Driver<[PostSectionModel]>{
-        return data
-            .compactMap { responses -> [Post] in
-                let posts: [Post] = responses.compactMap { response in
-                    guard let recipe = try? JSONDecoder().decode(Recipe.self, from: Data(response.content.utf8)) else {
-                        return nil
-                    }
-                    
-                    let post = Post(
-                        post_id: response.post_id,
-                        product_id: response.product_id,
-                        title: response.title,
-                        content: recipe,
-                        createdAt: response.createdAt,
-                        creator: response.creator,
-                        files: response.files
-                    )
-                    
-                    return post
-                }
-                
-                return posts
-            }
-            .map{
-                [PostSectionModel(items: $0)]
-            }
-            .asDriver(onErrorJustReturn: [])
-        
     }
 }

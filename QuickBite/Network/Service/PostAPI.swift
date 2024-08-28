@@ -15,6 +15,7 @@ enum PostService {
     case fetchUserPosts(param: PostParams.FetchUserPostsRequest)
     case fetchPosts(param: PostParams.FetchPosts)
     case fetchSpecificPost(param: PostParams.FetchSpecificPostRequest)
+    case like(id: String, param: PostParams.LikeRequest)
 }
 
 extension PostService: TargetType {
@@ -37,12 +38,14 @@ extension PostService: TargetType {
             return "/v1/posts/\(param.id)"
         case .fetchUserPosts(let param):
             return "/v1/posts/users/\(param.id)"
+        case .like(let id, let param):
+            return "/v1/posts/\(id)/like"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .add, .fileUpload:
+        case .add, .fileUpload, .like:
             return .post
         default:
             return .get
@@ -59,6 +62,8 @@ extension PostService: TargetType {
             return .requestParameters(parameters: param.toParameters(), encoding: URLEncoding.queryString)
         case .fetchUserPosts, .fetchSpecificPost:
             return .requestPlain
+        case .like(let id, let param):
+            return .requestJSONEncodable(param)
         }
     }
     
