@@ -23,16 +23,22 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
     }
     
     struct Input {
+        let profileImageEditButtonTap: ControlEvent<Void>
         let itemSelected: ControlEvent<SettingInfo>
         let alertOkButtonTap: PublishRelay<ProfileInfo>
+        let profileImage: PublishRelay<Data>
+        let profileImageName: PublishRelay<String>
     }
     
     struct Output {
+        let profileImageEditButtonTap: ControlEvent<Void>
+        let imagePath: Driver<String?>
         let infoItems: Driver<[ProfileSettingSectionModel]>
         let selectedItem: PublishRelay<(ProfileInfo, [String: String?])>
         let showAlert: PublishRelay<ProfileInfo>
         let loginViewWillPresent: PublishRelay<Void>
-        let errorMessage: PublishRelay<String>
+        let toastMessage: PublishRelay<String>
+        let rootViewWillPresent: PublishRelay<Void>
     }
     
     func transform(input: Input) -> Output {
@@ -40,11 +46,10 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
         let info = BehaviorRelay(value: user)
         let selectedItem = PublishRelay<(ProfileInfo, [String: String?])>()
         let showAlert = PublishRelay<ProfileInfo>()
-        let logoutSelected = PublishRelay<Bool>()
-        let withDrawSelected = PublishRelay<Bool>()
         let callwithDraw = PublishRelay<Void>()
         let loginViewWillPresent = PublishRelay<Void>()
-        let errorMessage = PublishRelay<String>()
+        let toastMessage = PublishRelay<String>()
+        let rootViewWillPresent = PublishRelay<Void>()
         
         let infoItems = info
             .compactMap { dict in
@@ -57,6 +62,10 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
                  ProfileSettingSectionModel(header: "로그인", items: [SettingInfo(type: .logout, value: ""), SettingInfo(type: .withdraw, value: "")])]
             }
             .asDriver(onErrorJustReturn: [])
+        
+        let imagePath = Observable.just(user["profileImage"])
+            .compactMap { $0 }
+            .asDriver(onErrorJustReturn: nil)
         
         input.itemSelected
             .bind(with: self){ owner, info in
@@ -93,27 +102,61 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
             }
             .subscribe(with: self){ owner, networkResult in
                 switch networkResult {
-                case .success(let _):
+                case .success(_):
                     owner.resetToken()
                     loginViewWillPresent.accept(())
                 case .error(let statusCode):
                     switch statusCode {
                     case 401:
-                        errorMessage.accept("인증할 수 없는 액세스 토큰입니다.")
+                        toastMessage.accept("인증할 수 없는 액세스 토큰입니다.")
                     case 403:
-                        errorMessage.accept("접근 권한이 없습니다.")
+                        toastMessage.accept("접근 권한이 없습니다.")
                     default:
-                        errorMessage.accept("회원 탈퇴에 실패했습니다.")
+                        toastMessage.accept("회원 탈퇴에 실패했습니다.")
                     }
                 }
             }
             .disposed(by: disposeBag)
+        
+        Observable.zip(input.profileImage, input.profileImageName)
+            .map { [weak self] data, name in
+                Userparams.EditRequest(
+                    nick: self?.user[ProfileInfo.nick.rawValue] ?? nil,
+                    phoneNum: self?.user[ProfileInfo.phoneNum.rawValue] ?? nil,
+                    birthDay: self?.user[ProfileInfo.birthday.rawValue] ?? nil,
+                    profile: data,
+                    prorilfeImageName: name
+                )
+            }
+            .flatMap {
+                UserAPI.shared.networking(service: .edit(param: $0), type: Userparams.EditResponse.self)
+            }
+            .subscribe(with: self){ owner, networkResult in
+                switch networkResult {
+                case .success(let result):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                        rootViewWillPresent.accept(())
+                    }
+                case .error(let statusCode):
+                    guard let error = EditProfileError(rawValue: statusCode) else {
+                        toastMessage.accept("알수없는 오류")
+                        return
+                    }
+                    
+                    toastMessage.accept(error.message)
+                }
+            }
+            .disposed(by: disposeBag)
+        
 
-        return Output(infoItems: infoItems,
+        return Output(profileImageEditButtonTap: input.profileImageEditButtonTap, 
+                      imagePath: imagePath,
+                      infoItems: infoItems,
                       selectedItem: selectedItem,
                       showAlert: showAlert,
                       loginViewWillPresent: loginViewWillPresent,
-                      errorMessage: errorMessage)
+                      toastMessage: toastMessage, 
+                      rootViewWillPresent: rootViewWillPresent)
     }
     
     func resetToken(){

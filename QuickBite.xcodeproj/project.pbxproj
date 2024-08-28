@@ -102,6 +102,7 @@
 		B87333122C7F196800B170D5 /* TokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87333112C7F196800B170D5 /* TokenPlugin.swift */; };
 		B87333142C7F1DB800B170D5 /* SignInError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87333132C7F1DB800B170D5 /* SignInError.swift */; };
 		B87C64102C741888000880FC /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87C640F2C741888000880FC /* ProfileImageView.swift */; };
+		B8FFA99B2C7F2A8E004DCD94 /* EditProfileError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFA99A2C7F2A8E004DCD94 /* EditProfileError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -190,6 +191,7 @@
 		B87333112C7F196800B170D5 /* TokenPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenPlugin.swift; sourceTree = "<group>"; };
 		B87333132C7F1DB800B170D5 /* SignInError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInError.swift; sourceTree = "<group>"; };
 		B87C640F2C741888000880FC /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		B8FFA99A2C7F2A8E004DCD94 /* EditProfileError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -496,6 +498,7 @@
 				B87333132C7F1DB800B170D5 /* SignInError.swift */,
 				B822CA972C71F94100FAA59E /* TokenError.swift */,
 				B822CA9B2C72548E00FAA59E /* SignUpError.swift */,
+				B8FFA99A2C7F2A8E004DCD94 /* EditProfileError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 			files = (
 				B835F1012C7788550006B718 /* PostTableViewSectionModel.swift in Sources */,
 				B822CA782C6D92C800FAA59E /* RecipesVC.swift in Sources */,
+				B8FFA99B2C7F2A8E004DCD94 /* EditProfileError.swift in Sources */,
 				B822CA462C6C764600FAA59E /* BaseCollectionViewCell.swift in Sources */,
 				B835F14A2C7E06940006B718 /* UploadFileError.swift in Sources */,
 				B822CA852C6D9B5200FAA59E /* UserAPI.swift in Sources */,

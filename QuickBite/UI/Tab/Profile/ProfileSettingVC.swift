@@ -10,6 +10,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import PhotosUI
 
 enum ProfileInfo: String, CaseIterable {
     case email
@@ -74,9 +75,13 @@ enum ProfileInfo: String, CaseIterable {
 
 final class ProfileSettingVC: BaseVC {
     
+    private var profileImage = PublishRelay<Data>()
+    private var profileImageName = PublishRelay<String>()
     var viewModel: ProfileSettingVM!
     
     private let profileImageView = ProfileImageView(frame: .zero)
+    
+    private let profileImageEditButton = UIButton()
     
     private let profileLabel = {
         let object = UILabel()
@@ -132,6 +137,7 @@ final class ProfileSettingVC: BaseVC {
         
         view.addSubview(profileImageView)
         view.addSubview(profileLabel)
+        view.addSubview(profileImageEditButton)
         view.addSubview(tableView)
         
     }
@@ -150,6 +156,12 @@ final class ProfileSettingVC: BaseVC {
             make.horizontalEdges.equalTo(profileImageView.snp.horizontalEdges)
         }
         
+        profileImageEditButton.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(profileImageView)
+            make.top.equalTo(profileImageView)
+            make.bottom.equalTo(profileLabel)
+        }
+        
         tableView.snp.makeConstraints { make in
             make.top.equalTo(profileLabel.snp.bottom).offset(40)
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -160,12 +172,26 @@ final class ProfileSettingVC: BaseVC {
         super.bind()
         let alertOkButtonTap = PublishRelay<ProfileInfo>()
         
-        let input = ProfileSettingVM.Input(itemSelected: tableView.rx.modelSelected(SettingInfo.self),
-                                           alertOkButtonTap: alertOkButtonTap)
+        let input = ProfileSettingVM.Input(profileImageEditButtonTap: profileImageEditButton.rx.tap,
+                                           itemSelected: tableView.rx.modelSelected(SettingInfo.self),
+                                           alertOkButtonTap: alertOkButtonTap,
+                                           profileImage: profileImage, 
+                                           profileImageName: profileImageName)
         let output = viewModel.transform(input: input)
         
         output.infoItems
             .drive(tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        output.imagePath
+            .drive(with: self) { owner, path in
+                guard let path, let url = URL(string: "\(APIInfo.baseURL)/v1/\(path)") else {
+                    owner.profileImageView.image = ImageAssets.defaultProfile
+                    return
+                }
+                
+                owner.profileImageView.kf.setImage(with: url)
+            }
             .disposed(by: disposeBag)
         
         output.selectedItem
@@ -173,6 +199,18 @@ final class ProfileSettingVC: BaseVC {
                 let vc = ProfileDetailSettingVC(title: userInfo.0.title, isChild: true, info: userInfo)
                 owner.navigationController?.pushViewController(vc, animated: true)
             })
+            .disposed(by: disposeBag)
+        
+        output.profileImageEditButtonTap
+            .bind(with: self) { owner, _ in
+                var configuration = PHPickerConfiguration()
+                configuration.selectionLimit = 1
+                configuration.filter = .images
+                
+                let picker = PHPickerViewController(configuration: configuration)
+                picker.delegate = owner
+                owner.present(picker, animated: true)
+            }
             .disposed(by: disposeBag)
         
         output.showAlert
@@ -190,7 +228,7 @@ final class ProfileSettingVC: BaseVC {
             }
             .disposed(by: disposeBag)
         
-        output.errorMessage
+        output.toastMessage
             .asDriver(onErrorJustReturn: "")
             .drive(with: self){ owner, msg in
                 owner.showToastMsg(msg: msg)
@@ -203,6 +241,41 @@ final class ProfileSettingVC: BaseVC {
                 owner.changeRootViewController(UINavigationController(rootViewController: SignInVC()))
             }
             .disposed(by: disposeBag)
+        
+        output.rootViewWillPresent
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self){ owner, _ in
+                owner.navigationController?.popToRootViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
+extension ProfileSettingVC: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        
+        picker.dismiss(animated: true)
+        
+        guard let result = results.first?.itemProvider else { return }
+        
+        result.loadObject(ofClass: UIImage.self) { [weak self] (object, error) in
+            if let image = object as? UIImage {
+                DispatchQueue.main.async {
+                    if let data = image.pngData() {
+                        self?.profileImage.accept(data)
+                    }
+                }
+            }
+        }
+        
+        result.loadFileRepresentation(forTypeIdentifier: "public.item") { [weak self] url, error in
+            if error != nil {
+                    print("error \(error!)");
+                 } else {
+                     if let url = url {
+                         self?.profileImageName.accept(url.lastPathComponent)
+                     }
+                 }
+        }
+    }
+}

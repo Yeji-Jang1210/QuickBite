@@ -13,7 +13,7 @@ final class ProfileImageView: UIImageView {
         super.init(frame: frame)
         backgroundColor = .systemGray6
         contentMode = .scaleAspectFill
-        image = ImageAssets.defaultProfile
+        clipsToBounds = true
     }
     
     @available(*, unavailable)

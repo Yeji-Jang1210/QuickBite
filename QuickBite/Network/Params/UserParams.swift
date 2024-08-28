@@ -32,6 +32,39 @@ class Userparams {
         let phoneNum: String?
         let birthDay: String?
         let profile: Data?
+        let profileImageName: String?
+        
+        init(nick: String?, phoneNum: String?, birthDay: String?, profile: Data?, prorilfeImageName: String?) {
+            self.nick = nick
+            self.phoneNum = phoneNum
+            self.birthDay = birthDay
+            self.profile = profile
+            self.profileImageName = prorilfeImageName
+        }
+        
+        func encode(to encoder: any Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encode(nick, forKey: .nick)
+            try container.encode(phoneNum, forKey: .phoneNum)
+            try container.encode(birthDay, forKey: .birthDay)
+            try container.encode(profile, forKey: .profile)
+        }
+        
+        enum CodingKeys: CodingKey {
+            case nick
+            case phoneNum
+            case birthDay
+            case profile
+        }
+        
+        init(from decoder: any Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            self.nick = try container.decodeIfPresent(String.self, forKey: .nick)
+            self.phoneNum = try container.decodeIfPresent(String.self, forKey: .phoneNum)
+            self.birthDay = try container.decodeIfPresent(String.self, forKey: .birthDay)
+            self.profile = try container.decodeIfPresent(Data.self, forKey: .profile)
+            self.profileImageName = nil
+        }
         
         func convertMultiPartFormData() -> [MultipartFormData] {
             let parameters: [String : String?] = [
@@ -48,8 +81,8 @@ class Userparams {
                 }
             }
             
-            if let profile = profile {
-                multipartFormData.append(MultipartFormData(provider: .data(profile), name: "profile", fileName: "profile.png", mimeType: "image/png"))
+            if let profile = profile, let profileImageName = profileImageName {
+                multipartFormData.append(MultipartFormData(provider: .data(profile), name: "profile", fileName: profileImageName, mimeType: "image/png"))
             }
             
             return multipartFormData

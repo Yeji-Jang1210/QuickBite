@@ -83,7 +83,8 @@ final class ProfileDetailSettingVM: BaseVM, BaseVMProvider {
                     nick: self?.value[ProfileInfo.nick.rawValue] ?? nil,
                     phoneNum: self?.value[ProfileInfo.phoneNum.rawValue] ?? nil,
                     birthDay: self?.value[ProfileInfo.birthday.rawValue] ?? nil,
-                    profile: nil
+                    profile: nil,
+                    prorilfeImageName: nil
                 )
             }
             .flatMap {
@@ -98,18 +99,12 @@ final class ProfileDetailSettingVM: BaseVM, BaseVMProvider {
                         rootViewWillPresent.accept(())
                     }
                 case .error(let statusCode):
-                    switch statusCode {
-                    case 400:
-                        toastMessage.accept("인증할 수 없는 액세스 토큰입니다.")
-                    case 402:
-                        toastMessage.accept("공백이 포함된 닉네임은 사용할 수 없습니다.")
-                    case 403:
-                        toastMessage.accept("접근 권한이 없습니다.")
-                    case 409:
-                        toastMessage.accept("이미 사용중인 닉네임입니다.")
-                    default:
-                        toastMessage.accept("알수 없는 오류입니다.")
+                    guard let error = EditProfileError(rawValue: statusCode) else {
+                        toastMessage.accept("알수없는 오류")
+                        return
                     }
+                    
+                    toastMessage.accept(error.message)
                 }
             }
             .disposed(by: disposeBag)

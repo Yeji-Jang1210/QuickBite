@@ -194,11 +194,12 @@ final class ProfileVC: BaseVC {
         
         output.imagePath
             .drive(with: self) { owner, path in
-                guard let path, let url = URL(string: path) else {
+                guard let path, let url = URL(string: "\(APIInfo.baseURL)/v1/\(path)") else {
                     owner.profileImageView.image = ImageAssets.defaultProfile
                     return
                 }
                 
+                KingfisherManager.shared.defaultOptions = [.requestModifier(TokenPlugin(token: UserDefaultsManager.shared.token))]
                 owner.profileImageView.kf.setImage(with: url)
             }
             .disposed(by: disposeBag)
