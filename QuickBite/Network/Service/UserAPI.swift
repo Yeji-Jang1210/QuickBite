@@ -125,7 +125,10 @@ class UserAPI {
                         single(.success(.error(response.statusCode)))
                     }
                 case .failure(let error):
-                    return print("error - \(error)")
+                    if let statusCode = error.response?.statusCode {
+                        single(.success(.error(statusCode)))
+                    }
+                    print("error - \(error)")
                 }
             }
             

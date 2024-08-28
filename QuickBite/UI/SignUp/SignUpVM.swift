@@ -195,10 +195,10 @@ final class SignUpVM: BaseVM, BaseVMProvider {
                 UserDefaultsManager.shared.refreshToken = result.refreshToken
                 isLoginSuccess.accept(true)
             case .error(let statusCode):
-                guard let error = LoginError(rawValue: statusCode) else { errorMessage.accept("알수없는 오류")
+                guard let error = SignInError(rawValue: statusCode) else { errorMessage.accept("알수없는 오류")
                     return
                 }
-                errorMessage.accept(error.description)
+                errorMessage.accept(error.message)
             }
         }
         .disposed(by: disposeBag)

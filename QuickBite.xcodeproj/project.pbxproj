@@ -61,7 +61,6 @@
 		B822CA932C6DE76100FAA59E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA922C6DE76100FAA59E /* User.swift */; };
 		B822CA962C71DE8200FAA59E /* ValidationEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA952C71DE8200FAA59E /* ValidationEmail.swift */; };
 		B822CA982C71F94100FAA59E /* TokenError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA972C71F94100FAA59E /* TokenError.swift */; };
-		B822CA9A2C71F9F100FAA59E /* SignInError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA992C71F9F100FAA59E /* SignInError.swift */; };
 		B822CA9C2C72548E00FAA59E /* SignUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822CA9B2C72548E00FAA59E /* SignUpError.swift */; };
 		B835F1012C7788550006B718 /* PostTableViewSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1002C7788550006B718 /* PostTableViewSectionModel.swift */; };
 		B835F1082C78882F0006B718 /* ValidationBirthday.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1072C78882F0006B718 /* ValidationBirthday.swift */; };
@@ -101,6 +100,7 @@
 		B851AA232C776034003901F0 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA222C776034003901F0 /* Post.swift */; };
 		B87333102C7EEEDD00B170D5 /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873330F2C7EEEDD00B170D5 /* AuthInterceptor.swift */; };
 		B87333122C7F196800B170D5 /* TokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87333112C7F196800B170D5 /* TokenPlugin.swift */; };
+		B87333142C7F1DB800B170D5 /* SignInError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87333132C7F1DB800B170D5 /* SignInError.swift */; };
 		B87C64102C741888000880FC /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87C640F2C741888000880FC /* ProfileImageView.swift */; };
 /* End PBXBuildFile section */
 
@@ -150,7 +150,6 @@
 		B822CA922C6DE76100FAA59E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B822CA952C71DE8200FAA59E /* ValidationEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationEmail.swift; sourceTree = "<group>"; };
 		B822CA972C71F94100FAA59E /* TokenError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenError.swift; sourceTree = "<group>"; };
-		B822CA992C71F9F100FAA59E /* SignInError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInError.swift; sourceTree = "<group>"; };
 		B822CA9B2C72548E00FAA59E /* SignUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpError.swift; sourceTree = "<group>"; };
 		B835F1002C7788550006B718 /* PostTableViewSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewSectionModel.swift; sourceTree = "<group>"; };
 		B835F1072C78882F0006B718 /* ValidationBirthday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationBirthday.swift; sourceTree = "<group>"; };
@@ -189,6 +188,7 @@
 		B851AA222C776034003901F0 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		B873330F2C7EEEDD00B170D5 /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		B87333112C7F196800B170D5 /* TokenPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenPlugin.swift; sourceTree = "<group>"; };
+		B87333132C7F1DB800B170D5 /* SignInError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInError.swift; sourceTree = "<group>"; };
 		B87C640F2C741888000880FC /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -236,7 +236,6 @@
 			isa = PBXGroup;
 			children = (
 				B835F1482C7E06870006B718 /* Error */,
-				B822CA942C71DE6C00FAA59E /* Enum */,
 				B822CA502C6C7BCA00FAA59E /* Font */,
 				B822CA372C6C73D300FAA59E /* Network */,
 				B822CA3B2C6C73F700FAA59E /* Model */,
@@ -440,16 +439,6 @@
 			path = Params;
 			sourceTree = "<group>";
 		};
-		B822CA942C71DE6C00FAA59E /* Enum */ = {
-			isa = PBXGroup;
-			children = (
-				B822CA972C71F94100FAA59E /* TokenError.swift */,
-				B822CA992C71F9F100FAA59E /* SignInError.swift */,
-				B822CA9B2C72548E00FAA59E /* SignUpError.swift */,
-			);
-			path = Enum;
-			sourceTree = "<group>";
-		};
 		B835F1062C78881F0006B718 /* Validation */ = {
 			isa = PBXGroup;
 			children = (
@@ -504,6 +493,9 @@
 				B835F1492C7E06940006B718 /* UploadFileError.swift */,
 				B835F14B2C7E06A20006B718 /* UploadPostError.swift */,
 				B835F14D2C7E06AF0006B718 /* FetchUserPostError.swift */,
+				B87333132C7F1DB800B170D5 /* SignInError.swift */,
+				B822CA972C71F94100FAA59E /* TokenError.swift */,
+				B822CA9B2C72548E00FAA59E /* SignUpError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -679,12 +671,12 @@
 				B851AA0C2C7644C3003901F0 /* ProfileDetailSettingVM.swift in Sources */,
 				B851AA062C762F7C003901F0 /* ProfileSettingSectionModel.swift in Sources */,
 				B835F1112C7B5F700006B718 /* MainRecipeCollectionViewCell.swift in Sources */,
-				B822CA9A2C71F9F100FAA59E /* SignInError.swift in Sources */,
 				B87333122C7F196800B170D5 /* TokenPlugin.swift in Sources */,
 				B822CA022C6C70C000FAA59E /* AppDelegate.swift in Sources */,
 				B835F1362C7CD54D0006B718 /* PostParams.swift in Sources */,
 				B835F1382C7D50460006B718 /* StepperView.swift in Sources */,
 				B851AA082C763ADF003901F0 /* ProfileSettingTableViewCell.swift in Sources */,
+				B87333142C7F1DB800B170D5 /* SignInError.swift in Sources */,
 				B822CA762C6D924A00FAA59E /* MainTBC.swift in Sources */,
 				B851AA212C775F83003901F0 /* PostSectionModel.swift in Sources */,
 				B835F1082C78882F0006B718 /* ValidationBirthday.swift in Sources */,

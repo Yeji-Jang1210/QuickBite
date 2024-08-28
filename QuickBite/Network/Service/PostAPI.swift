@@ -108,7 +108,7 @@ class PostAPI {
                         single(.success(.error(response.statusCode)))
                     }
                 case .failure(let error):
-                    return print("error - \(error)")
+                    single(.success(.error(error.errorCode)))
                 }
             }
             
