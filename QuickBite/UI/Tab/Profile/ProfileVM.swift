@@ -23,11 +23,16 @@ final class ProfileVM: BaseVM, BaseVMProvider {
         let birthdayIsEmpty: Driver<Bool>
         let imagePath: Driver<String?>
         let presentProfileSetting: PublishRelay<[String:String?]>
+        let sectionModels: Driver<[PostSectionModel]>
+        let errorMessage: Driver<String>
     }
     
     func transform(input: Input) -> Output {
         
         let presentProfileSetting = PublishRelay<[String:String?]>()
+        let callErrorMessage = PublishRelay<String>()
+        let callPostAPI = PublishRelay<String>()
+        let postData = PublishRelay<[PostParams.PostResponse]>()
         
         let user = input.callProfileAPI
             .flatMap {
@@ -36,6 +41,7 @@ final class ProfileVM: BaseVM, BaseVMProvider {
             .compactMap { networkResult in
                 switch networkResult {
                 case .success(let result):
+                    callPostAPI.accept(result.userId)
                     return result
                 case .error(let statusCode):
                     print("\(statusCode)")
@@ -43,7 +49,8 @@ final class ProfileVM: BaseVM, BaseVMProvider {
                 return nil
             }
             .asDriver(onErrorJustReturn: Userparams.LoadResponse(userId: "", email: "", nick: "", phoneNum: "", birthDay: "", profileImage: "", posts: []))
-                 
+            
+        
         let nickname = user
             .compactMap{ $0.nick }
             .asDriver(onErrorJustReturn: "")
@@ -83,11 +90,65 @@ final class ProfileVM: BaseVM, BaseVMProvider {
             }
             .disposed(by: disposeBag)
         
+        let errorMessage = callErrorMessage.asDriver(onErrorJustReturn: "")
+        
+        callPostAPI
+            .debug("call user post api")
+            .map {
+                return PostParams.FetchUserPostsRequest(id: $0)
+            }
+            .flatMap {
+                PostAPI.shared.networking(service: .fetchUserPosts(param: $0), type: PostParams.FetchUserPostsResponse.self)
+            }
+            .bind { networkResult in
+                switch networkResult {
+                case .success(let success):
+                    postData.accept(success.data)
+                case .error(let statusCode):
+                    guard let error = FetchUserPostError(rawValue: statusCode) else {
+                        callErrorMessage.accept("알수없는 오류")
+                        return
+                    }
+                    
+                    callErrorMessage.accept(error.message)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        let post = postData
+            .compactMap { responses -> [Post] in
+                let posts: [Post] = responses.compactMap { response in
+                    guard let recipe = try? JSONDecoder().decode(Recipe.self, from: Data(response.content.utf8)) else {
+                        return nil
+                    }
+                    
+                    let post = Post(
+                        post_id: response.post_id,
+                        product_id: response.product_id,
+                        title: response.title,
+                        content: recipe,
+                        createdAt: response.createdAt,
+                        creator: response.creator,
+                        files: response.files
+                    )
+                    
+                    return post
+                }
+                
+                return posts
+            }
+            .map{
+                [PostSectionModel(items: $0)]
+            }
+            .asDriver(onErrorJustReturn: [])
+        
         return Output(nickname: nickname,
                       email: email,
                       birthday: birthday, 
                       birthdayIsEmpty: birthdayIsEmpty,
                       imagePath: imagePath,
-                      presentProfileSetting: presentProfileSetting)
+                      presentProfileSetting: presentProfileSetting, 
+                      sectionModels: post,
+                      errorMessage: errorMessage)
     }
 }

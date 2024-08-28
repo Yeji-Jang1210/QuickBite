@@ -12,26 +12,40 @@ import RxSwift
 enum PostService {
     case add(param: PostParams.AddPostRequest)
     case fileUpload(param: PostParams.FileUploadRequest)
+    case fetchUserPosts(param: PostParams.FetchUserPostsRequest)
+    case fetchPosts(param: PostParams.FetchPosts)
+    case fetchSpecificPost(param: PostParams.FetchSpecificPostRequest)
 }
 
 extension PostService: TargetType {
+    
+    var validationType: ValidationType {
+        return .successCodes
+    }
+    
     var baseURL: URL {
         return APIService.shared.baseURL
     }
     
     var path: String {
         switch self {
-        case .add:
+        case .add, .fetchPosts:
             return "/v1/posts"
         case .fileUpload:
             return "/v1/posts/files"
+        case .fetchSpecificPost(let param):
+            return "/v1/posts/\(param.id)"
+        case .fetchUserPosts(let param):
+            return "/v1/posts/users/\(param.id)"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        default:
+        case .add, .fileUpload:
             return .post
+        default:
+            return .get
         }
     }
     
@@ -41,11 +55,20 @@ extension PostService: TargetType {
             return .requestJSONEncodable(param)
         case .fileUpload(let param):
             return .uploadMultipart(param.convertMultiPartFormData())
+        case .fetchPosts(param: let param):
+            return .requestParameters(parameters: param.toParameters(), encoding: URLEncoding.queryString)
+        case .fetchUserPosts, .fetchSpecificPost:
+            return .requestPlain
         }
     }
     
     var headers: [String : String]? {
         switch self {
+        case .fetchPosts, .fetchSpecificPost:
+            return [
+                Header.authorization.rawValue: UserDefaultsManager.shared.token,
+                Header.sesacKey.rawValue: APIInfo.key
+            ]
         case .fileUpload:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
@@ -66,7 +89,7 @@ class PostAPI {
     private init(){}
     static let shared = PostAPI()
     
-    let provider = MoyaProvider<PostService>(plugins: [MoyaLoggingPlugin()])
+    let provider = MoyaProvider<PostService>(session: Session(interceptor: AuthInterceptor.shared), plugins: [MoyaLoggingPlugin()])
     
     func networking<T: Codable>(service: PostService, type: T.Type) -> Single<NetworkResult<T>> {
         return Single<NetworkResult<T>>.create { [weak self] single in

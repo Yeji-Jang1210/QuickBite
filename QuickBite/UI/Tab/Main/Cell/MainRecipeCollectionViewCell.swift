@@ -38,7 +38,7 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
     
     private let titleLabel = {
         let object = UILabel()
-        object.font = Font.regular(.medium)
+        object.font = Font.regular(.smallLarge)
         return object
     }()
     
@@ -119,6 +119,7 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalTo(titleImageView)
             make.leading.equalTo(titleImageView.snp.trailing).offset(8)
+            make.trailing.equalToSuperview().inset(12)
         }
         
         stackView.snp.makeConstraints { make in
@@ -147,9 +148,14 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
         backView.layer.shadowOpacity = 0.4
     }
     
-    func setData(_ recipe: Recipe){
-        titleLabel.text = recipe.title
-        servingsView.text = "\(recipe.servings)인분"
-        timeView.text = recipe.time
+    func setData(_ post: Post){
+        if let thumbnailFilePath = post.files.last {
+            guard let url = URL(string: "\(APIInfo.baseURL)/v1/\(thumbnailFilePath)") else { return }
+            imageView.kf.setImage(with: url)
+        }
+
+        titleLabel.text = post.title
+        servingsView.text = "\(post.content.servings)인분"
+        timeView.text = "\(post.content.time)분"
     }
 }

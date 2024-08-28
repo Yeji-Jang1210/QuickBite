@@ -107,8 +107,6 @@ final class ProfileDetailSettingVM: BaseVM, BaseVMProvider {
                         toastMessage.accept("접근 권한이 없습니다.")
                     case 409:
                         toastMessage.accept("이미 사용중인 닉네임입니다.")
-                    case 419:
-                        toastMessage.accept("액세스 토큰이 만료되었습니다.")
                     default:
                         toastMessage.accept("알수 없는 오류입니다.")
                     }

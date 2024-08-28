@@ -94,7 +94,8 @@ final class ProfileVC: BaseVC {
         return object
     }()
     
-    private lazy var tabVC = TabVC()
+    private var tabVC = TabVC()
+    
     private let callProfileAPI = PublishRelay<Void>()
     private var viewModel: ProfileVM!
     
@@ -206,6 +207,13 @@ final class ProfileVC: BaseVC {
             .bind(with: self) { owner, user in
                 let vc = ProfileSettingVC(title: "프로필 수정", isChild: true, viewModel: ProfileSettingVM(user))
                 owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.sectionModels
+            .drive(with: self){ owner, model in
+                let vc = owner.tabVC.viewControllers.first as! PostListVC
+                vc.items.accept(model)
             }
             .disposed(by: disposeBag)
     }

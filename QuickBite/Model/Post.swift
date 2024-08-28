@@ -8,5 +8,11 @@
 import Foundation
 
 struct Post: Codable {
-    let id: Int
+    let post_id: String
+    let product_id: String
+    let title: String
+    let content: Recipe
+    let createdAt: String
+    let creator: Creator
+    let files: [String]
 }

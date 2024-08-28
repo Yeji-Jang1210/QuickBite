@@ -60,6 +60,11 @@ class Userparams {
     struct TokenRequest: Codable {
         var refreshToken: String
         var token: String
+        
+        init(){
+            refreshToken = UserDefaultsManager.shared.refreshToken
+            token = UserDefaultsManager.shared.token
+        }
     }
     
     struct LoginResponse: Codable {

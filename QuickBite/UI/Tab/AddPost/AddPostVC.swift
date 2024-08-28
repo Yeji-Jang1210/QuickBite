@@ -451,9 +451,16 @@ final class AddPostVC: BaseVC {
             .drive(saveButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        output.errorMessage
+        output.toastMessage
             .drive(with: self){ owner, msg in
                 owner.showToastMsg(msg: msg)
+            }
+            .disposed(by: disposeBag)
+        
+        output.addPostSucceess
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self) { owner, _ in
+                owner.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
             

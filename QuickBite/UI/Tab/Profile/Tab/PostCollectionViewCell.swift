@@ -7,12 +7,14 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 final class PostCollectionViewCell: BaseCollectionViewCell {
     let postImageView = {
         let object = UIImageView()
         object.backgroundColor = .systemGray4
         object.contentMode = .scaleAspectFill
+        object.clipsToBounds = true
         return object
     }()
     
@@ -31,5 +33,14 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
             make.edges.equalToSuperview()
         }
     }
+    
+    func setImage(_ path: String){
+        let urlString = "\(APIInfo.baseURL)/v1/\(path)"
+        print(urlString)
+        guard let url = URL(string: urlString) else { return }
+        print(url)
+        postImageView.kf.setImage(with: url)
+    }
 }
+
 

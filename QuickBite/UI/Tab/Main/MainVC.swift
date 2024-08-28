@@ -38,7 +38,7 @@ final class MainVC: BaseVC {
         return object
     }()
     
-    private let collectionViewDatasource = RxCollectionViewSectionedReloadDataSource<MainRecipeSectionModel>{
+    private let collectionViewDatasource = RxCollectionViewSectionedReloadDataSource<PostSectionModel>{
         dataSource, collectionView, indexPath, item in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainRecipeCollectionViewCell.identifier, for: indexPath) as! MainRecipeCollectionViewCell
         cell.setData(item)
@@ -61,10 +61,21 @@ final class MainVC: BaseVC {
         return object
     }()
     
-    private let viewModel = MainVM()
+    private var viewModel: MainVM!
+    private let callPostAPI = PublishRelay<Void>()
+    
+    init(title: String = "", isChild: Bool = false, viewModel: MainVM) {
+        super.init(title: title, isChild: isChild)
+        self.viewModel = viewModel
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        callPostAPI.accept(())
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,7 +119,8 @@ final class MainVC: BaseVC {
     override func bind() {
         super.bind()
         
-        let input = MainVM.Input(addPostButtonTap: addPostButton.rx.tap)
+        let input = MainVM.Input(callPostAPI: callPostAPI,
+                                 addPostButtonTap: addPostButton.rx.tap)
         let output = viewModel.transform(input: input)
         
         output.addPostButtonTap

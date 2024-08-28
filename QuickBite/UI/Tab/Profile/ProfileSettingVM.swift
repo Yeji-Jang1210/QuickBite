@@ -102,9 +102,6 @@ final class ProfileSettingVM: BaseVM, BaseVMProvider {
                         errorMessage.accept("인증할 수 없는 액세스 토큰입니다.")
                     case 403:
                         errorMessage.accept("접근 권한이 없습니다.")
-                    case 419:
-                        errorMessage.accept("액세스 토큰이 만료되었습니다.")
-                        loginViewWillPresent.accept(())
                     default:
                         errorMessage.accept("회원 탈퇴에 실패했습니다.")
                     }

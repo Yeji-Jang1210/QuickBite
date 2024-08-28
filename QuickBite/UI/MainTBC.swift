@@ -33,7 +33,7 @@ class MainTBC: UITabBarController {
         var vc: UIViewController {
             switch self {
             case .main:
-                return UINavigationController(rootViewController: MainVC())
+                return UINavigationController(rootViewController: MainVC( viewModel: MainVM()))
             case .recipes:
                 return UINavigationController(rootViewController: RecipesVC())
             case .profile:
@@ -61,33 +61,6 @@ class MainTBC: UITabBarController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        isTokenValid()
-    }
-    
-    //toastMessage view가 바뀌어도 나타나도록 수정 필요
-    
-    func isTokenValid() {
-        let token = Userparams.TokenRequest(refreshToken: UserDefaultsManager.shared.refreshToken, token: UserDefaultsManager.shared.token)
-        UserAPI.shared.networking(service: .refreshToken(param: token), type: Userparams.TokenResponse.self)
-            .debug("토큰 갱신")
-            .subscribe(with: self) { owner, networkResult in
-                switch networkResult {
-                case .success(let result):
-                    UserDefaultsManager.shared.token = result.accessToken
-                case .error(let statusCode):
-                    guard let error = TokenError(rawValue: statusCode) else {
-                        owner.showToastMsg(msg: "알수없는 오류")
-                        owner.changeRootViewController(SignInVC())
-                        return
-                    }
-                    
-                    DispatchQueue.main.async {
-                        owner.showToastMsg(msg: error.message)
-                        owner.changeRootViewController(UINavigationController(rootViewController: SignInVC()))
-                    }
-                }
-            }
-            .disposed(by: disposeBag)
     }
     
     func showToastMsg(msg: String){

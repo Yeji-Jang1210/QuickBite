@@ -25,7 +25,7 @@ final class TabVC: TabmanViewController {
         }
     }
     
-    private var viewControllers: [UIViewController] = []
+    var viewControllers: [UIViewController] = []
     
     private lazy var bar = {
         let object = TMBarView<TMConstrainedHorizontalBarLayout, TMTabItemBarButton, TMLineBarIndicator>()
@@ -44,7 +44,7 @@ final class TabVC: TabmanViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewControllers = [PostVC(), PostVC()]
+        viewControllers = [PostListVC(), PostListVC()]
         self.dataSource = self
         
         addBar(bar, dataSource: self, at: .top)

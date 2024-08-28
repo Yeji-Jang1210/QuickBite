@@ -1,5 +1,5 @@
 //
-//  PostVC.swift
+//  PostListVC.swift
 //  QuickBite
 //
 //  Created by 장예지 on 8/22/24.
@@ -10,8 +10,9 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import Kingfisher
 
-final class PostVC: BaseVC {
+final class PostListVC: BaseVC {
     
     private lazy var collectionView = {
         let object = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -21,10 +22,15 @@ final class PostVC: BaseVC {
     
     private let dataSource = RxCollectionViewSectionedReloadDataSource<PostSectionModel> { dataSource, collectionView, indexPath, item in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PostCollectionViewCell.identifier, for: indexPath) as! PostCollectionViewCell
-        //set First Post Image
+        if let imagePath = item.files.last {
+            cell.setImage(imagePath)
+        }
+        
         return cell
     }
     
+    var items = PublishRelay<[PostSectionModel]>()
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -37,19 +43,15 @@ final class PostVC: BaseVC {
     override func configureLayout() {
         super.configureLayout()
         collectionView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(2)
+            make.horizontalEdges.equalToSuperview()
             make.verticalEdges.equalToSuperview()
         }
     }
     
     override func bind() {
         super.bind()
-        
-        let data = Observable<[PostSectionModel]>.just(
-            [PostSectionModel(items: Array(1...10).map{ Post(id: $0)})]
-        )
-        
-        data
+      
+        items
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -58,7 +60,7 @@ final class PostVC: BaseVC {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/3), heightDimension: .fractionalHeight(1))
         
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 1, leading: 1, bottom: 1, trailing: 1)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1/3))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])

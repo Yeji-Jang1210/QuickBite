@@ -44,16 +44,18 @@ final class AddPostVM: BaseVM, BaseVMProvider {
         let clearSourceTextField: Signal<Void>
         let timeText: Driver<String>
         let isAllAlowed: Driver<Bool>
-        let errorMessage: Driver<String>
+        let toastMessage: Driver<String>
+        let addPostSucceess: PublishRelay<Void>
     }
     
     func transform(input: Input) -> Output {
         
         let clearIngredientFieldsRelay = PublishRelay<Void>()
         let clearSourceFieldsRelay = PublishRelay<Void>()
-        let receiveErrorMessage = PublishRelay<String>()
+        let toastMessage = PublishRelay<String>()
         let imageFileName = PublishRelay<[String]>()
         let addPost = PublishRelay<Void>()
+        let addPostSucceess = PublishRelay<Void>()
         
         let stepItems = steps
             .map {[StepSectionModel(items: $0)]}
@@ -164,25 +166,27 @@ final class AddPostVM: BaseVM, BaseVMProvider {
                     imageFileName.accept(result.files)
                 case .error(let statusCode):
                     guard let error = UploadFileError(rawValue: statusCode) else {
-                        receiveErrorMessage.accept("알수없는 오류입니다.")
+                        toastMessage.accept("알수없는 오류입니다.")
                         return
                     }
-                    receiveErrorMessage.accept(error.message)
+                    toastMessage.accept(error.message)
                 }
             }
             .disposed(by: disposeBag)
         
         addPost
-            .flatMap { _ -> Observable<AddPostRequestContent> in
-                Observable.zip(self.steps.asObservable(),
+            .flatMap { _ -> Observable<Recipe> in
+                Observable.zip(
+                    input.descriptionText.asObservable(),
+                    self.steps.asObservable(),
                                                        self.ingredients.asObservable(),
                                                        self.sources.asObservable(),
                                                        timeText.asObservable(),
                                                        input.servingsValue.asObservable())
-                    .compactMap { steps, ingredients, sources, time, servings in
+                    .compactMap { description, steps, ingredients, sources, time, servings in
                         let step = steps.compactMap{ $0 }
                         
-                        return AddPostRequestContent(steps: step, ingredients: ingredients, sources: sources, time: time, servings: servings)
+                        return Recipe(description: description, steps: step, ingredients: ingredients, sources: sources, time: time, servings: servings)
                     }
             }
             .flatMap { param -> Observable<String> in
@@ -207,19 +211,22 @@ final class AddPostVM: BaseVM, BaseVMProvider {
             }
             .bind{ networkResult in
                 switch networkResult {
-                case .success(let result):
-                    print(result)
+                case .success(_):
+                    toastMessage.accept("저장되었습니다.")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        addPostSucceess.accept(())
+                    }
                 case .error(let statusCode):
                     guard let error = UploadPostError(rawValue: statusCode) else {
-                        receiveErrorMessage.accept("알수없는 오류입니다.")
+                        toastMessage.accept("알수없는 오류입니다.")
                         return
                     }
-                    receiveErrorMessage.accept(error.message)
+                    toastMessage.accept(error.message)
                 }
             }
             .disposed(by: disposeBag)
 
-        let errorMessage = receiveErrorMessage.asDriver(onErrorJustReturn: "")
+        let errorMessage = toastMessage.asDriver(onErrorJustReturn: "")
         
         return Output(titleText: input.titleText,
                       stepItems: stepItems,
@@ -230,6 +237,7 @@ final class AddPostVM: BaseVM, BaseVMProvider {
                       clearSourceTextField: clearSourceFields,
                       timeText: timeText,
                       isAllAlowed: isAllAlowed, 
-                      errorMessage: errorMessage)
+                      toastMessage: errorMessage, 
+                      addPostSucceess: addPostSucceess)
     }
 }

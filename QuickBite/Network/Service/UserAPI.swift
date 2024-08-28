@@ -20,6 +20,11 @@ enum UserService {
 }
 
 extension UserService: TargetType {
+    
+    var validationType: ValidationType {
+        return .successCodes
+    }
+    
     var baseURL: URL {
         return APIService.shared.baseURL
     }
@@ -101,7 +106,7 @@ class UserAPI {
     private init(){}
     static let shared = UserAPI()
     
-    let provider = MoyaProvider<UserService>(plugins: [MoyaLoggingPlugin()])
+    let provider = MoyaProvider<UserService>(session: Session(interceptor: AuthInterceptor.shared), plugins: [MoyaLoggingPlugin()])
     
     func networking<T: Codable>(service: UserService, type: T.Type) -> Single<NetworkResult<T>> {
         return Single<NetworkResult<T>>.create { [weak self] single in

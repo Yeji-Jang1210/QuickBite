@@ -82,6 +82,10 @@
 		B835F1342C7C7B910006B718 /* AddStepVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1332C7C7B910006B718 /* AddStepVM.swift */; };
 		B835F1362C7CD54D0006B718 /* PostParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1352C7CD54D0006B718 /* PostParams.swift */; };
 		B835F1382C7D50460006B718 /* StepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1372C7D50460006B718 /* StepperView.swift */; };
+		B835F14A2C7E06940006B718 /* UploadFileError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F1492C7E06940006B718 /* UploadFileError.swift */; };
+		B835F14C2C7E06A20006B718 /* UploadPostError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F14B2C7E06A20006B718 /* UploadPostError.swift */; };
+		B835F14E2C7E06AF0006B718 /* FetchUserPostError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F14D2C7E06AF0006B718 /* FetchUserPostError.swift */; };
+		B835F1502C7E13CA0006B718 /* PostListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B835F14F2C7E13CA0006B718 /* PostListVM.swift */; };
 		B844C6DE2C748ABA00B6F783 /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */; };
 		B851AA022C761B6D003901F0 /* ProfileSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA012C761B6D003901F0 /* ProfileSettingVC.swift */; };
 		B851AA042C761B74003901F0 /* ProfileSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA032C761B74003901F0 /* ProfileSettingVM.swift */; };
@@ -91,10 +95,12 @@
 		B851AA0C2C7644C3003901F0 /* ProfileDetailSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA0B2C7644C3003901F0 /* ProfileDetailSettingVM.swift */; };
 		B851AA182C775AFE003901F0 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = B851AA172C775AFE003901F0 /* Tabman */; };
 		B851AA1B2C775C28003901F0 /* TabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA1A2C775C28003901F0 /* TabVC.swift */; };
-		B851AA1D2C775DD5003901F0 /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA1C2C775DD5003901F0 /* PostVC.swift */; };
+		B851AA1D2C775DD5003901F0 /* PostListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA1C2C775DD5003901F0 /* PostListVC.swift */; };
 		B851AA1F2C775EE7003901F0 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA1E2C775EE7003901F0 /* PostCollectionViewCell.swift */; };
 		B851AA212C775F83003901F0 /* PostSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA202C775F83003901F0 /* PostSectionModel.swift */; };
 		B851AA232C776034003901F0 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA222C776034003901F0 /* Post.swift */; };
+		B87333102C7EEEDD00B170D5 /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873330F2C7EEEDD00B170D5 /* AuthInterceptor.swift */; };
+		B87333122C7F196800B170D5 /* TokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87333112C7F196800B170D5 /* TokenPlugin.swift */; };
 		B87C64102C741888000880FC /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87C640F2C741888000880FC /* ProfileImageView.swift */; };
 /* End PBXBuildFile section */
 
@@ -165,6 +171,10 @@
 		B835F1332C7C7B910006B718 /* AddStepVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepVM.swift; sourceTree = "<group>"; };
 		B835F1352C7CD54D0006B718 /* PostParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostParams.swift; sourceTree = "<group>"; };
 		B835F1372C7D50460006B718 /* StepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
+		B835F1492C7E06940006B718 /* UploadFileError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileError.swift; sourceTree = "<group>"; };
+		B835F14B2C7E06A20006B718 /* UploadPostError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostError.swift; sourceTree = "<group>"; };
+		B835F14D2C7E06AF0006B718 /* FetchUserPostError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserPostError.swift; sourceTree = "<group>"; };
+		B835F14F2C7E13CA0006B718 /* PostListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListVM.swift; sourceTree = "<group>"; };
 		B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
 		B851AA012C761B6D003901F0 /* ProfileSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVC.swift; sourceTree = "<group>"; };
 		B851AA032C761B74003901F0 /* ProfileSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVM.swift; sourceTree = "<group>"; };
@@ -173,10 +183,12 @@
 		B851AA092C7644BB003901F0 /* ProfileDetailSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailSettingVC.swift; sourceTree = "<group>"; };
 		B851AA0B2C7644C3003901F0 /* ProfileDetailSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailSettingVM.swift; sourceTree = "<group>"; };
 		B851AA1A2C775C28003901F0 /* TabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabVC.swift; sourceTree = "<group>"; };
-		B851AA1C2C775DD5003901F0 /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
+		B851AA1C2C775DD5003901F0 /* PostListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListVC.swift; sourceTree = "<group>"; };
 		B851AA1E2C775EE7003901F0 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
 		B851AA202C775F83003901F0 /* PostSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSectionModel.swift; sourceTree = "<group>"; };
 		B851AA222C776034003901F0 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		B873330F2C7EEEDD00B170D5 /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
+		B87333112C7F196800B170D5 /* TokenPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenPlugin.swift; sourceTree = "<group>"; };
 		B87C640F2C741888000880FC /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -223,6 +235,7 @@
 		B822CA002C6C70C000FAA59E /* QuickBite */ = {
 			isa = PBXGroup;
 			children = (
+				B835F1482C7E06870006B718 /* Error */,
 				B822CA942C71DE6C00FAA59E /* Enum */,
 				B822CA502C6C7BCA00FAA59E /* Font */,
 				B822CA372C6C73D300FAA59E /* Network */,
@@ -312,6 +325,7 @@
 				B822CA7D2C6D997D00FAA59E /* UserDefaultsManager.swift */,
 				B822CA862C6D9B5E00FAA59E /* APIService.swift */,
 				B822CA902C6DA43800FAA59E /* MoyaLoggingPlugin.swift */,
+				B873330F2C7EEEDD00B170D5 /* AuthInterceptor.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -339,6 +353,7 @@
 				B822CA5B2C6C7CBA00FAA59E /* Font.swift */,
 				B822CA632C6C8A3800FAA59E /* Localized.swift */,
 				B822CA672C6C8BA100FAA59E /* ImageAssets.swift */,
+				B87333112C7F196800B170D5 /* TokenPlugin.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -483,6 +498,16 @@
 			path = DataSource;
 			sourceTree = "<group>";
 		};
+		B835F1482C7E06870006B718 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				B835F1492C7E06940006B718 /* UploadFileError.swift */,
+				B835F14B2C7E06A20006B718 /* UploadPostError.swift */,
+				B835F14D2C7E06AF0006B718 /* FetchUserPostError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
 		B844C6DF2C74F28C00B6F783 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,10 +521,11 @@
 			isa = PBXGroup;
 			children = (
 				B851AA1A2C775C28003901F0 /* TabVC.swift */,
-				B851AA1C2C775DD5003901F0 /* PostVC.swift */,
+				B851AA1C2C775DD5003901F0 /* PostListVC.swift */,
 				B851AA1E2C775EE7003901F0 /* PostCollectionViewCell.swift */,
 				B851AA202C775F83003901F0 /* PostSectionModel.swift */,
 				B835F1002C7788550006B718 /* PostTableViewSectionModel.swift */,
+				B835F14F2C7E13CA0006B718 /* PostListVM.swift */,
 			);
 			path = Tab;
 			sourceTree = "<group>";
@@ -608,7 +634,9 @@
 				B835F1012C7788550006B718 /* PostTableViewSectionModel.swift in Sources */,
 				B822CA782C6D92C800FAA59E /* RecipesVC.swift in Sources */,
 				B822CA462C6C764600FAA59E /* BaseCollectionViewCell.swift in Sources */,
+				B835F14A2C7E06940006B718 /* UploadFileError.swift in Sources */,
 				B822CA852C6D9B5200FAA59E /* UserAPI.swift in Sources */,
+				B87333102C7EEEDD00B170D5 /* AuthInterceptor.swift in Sources */,
 				B822CA6A2C6C9C8200FAA59E /* SignInVM.swift in Sources */,
 				B822CA662C6C8B7200FAA59E /* BaseTextField.swift in Sources */,
 				B822CA4C2C6C796200FAA59E /* Color.swift in Sources */,
@@ -632,11 +660,14 @@
 				B835F1292C7C47340006B718 /* RecipeIngredientView.swift in Sources */,
 				B835F1172C7B87C70006B718 /* UIView+Extension.swift in Sources */,
 				B835F10F2C7B5EC30006B718 /* MainRecipeSectionModel.swift in Sources */,
+				B835F1502C7E13CA0006B718 /* PostListVM.swift in Sources */,
+				B835F14E2C7E06AF0006B718 /* FetchUserPostError.swift in Sources */,
 				B822CA8D2C6D9D3700FAA59E /* UserParams.swift in Sources */,
 				B822CA912C6DA43800FAA59E /* MoyaLoggingPlugin.swift in Sources */,
 				B835F11C2C7B94730006B718 /* AddPostVC.swift in Sources */,
 				B822CA6C2C6C9FDA00FAA59E /* SignUpVC.swift in Sources */,
 				B851AA1F2C775EE7003901F0 /* PostCollectionViewCell.swift in Sources */,
+				B835F14C2C7E06A20006B718 /* UploadPostError.swift in Sources */,
 				B822CA422C6C760400FAA59E /* BaseVM.swift in Sources */,
 				B835F10A2C7888A10006B718 /* ValidationPhoneNumber.swift in Sources */,
 				B851AA1B2C775C28003901F0 /* TabVC.swift in Sources */,
@@ -649,6 +680,7 @@
 				B851AA062C762F7C003901F0 /* ProfileSettingSectionModel.swift in Sources */,
 				B835F1112C7B5F700006B718 /* MainRecipeCollectionViewCell.swift in Sources */,
 				B822CA9A2C71F9F100FAA59E /* SignInError.swift in Sources */,
+				B87333122C7F196800B170D5 /* TokenPlugin.swift in Sources */,
 				B822CA022C6C70C000FAA59E /* AppDelegate.swift in Sources */,
 				B835F1362C7CD54D0006B718 /* PostParams.swift in Sources */,
 				B835F1382C7D50460006B718 /* StepperView.swift in Sources */,
@@ -661,7 +693,7 @@
 				B822CA182C6C711200FAA59E /* APIInfo.swift in Sources */,
 				B822CA702C6D8CE900FAA59E /* MainVC.swift in Sources */,
 				B822CA5C2C6C7CBA00FAA59E /* Font.swift in Sources */,
-				B851AA1D2C775DD5003901F0 /* PostVC.swift in Sources */,
+				B851AA1D2C775DD5003901F0 /* PostListVC.swift in Sources */,
 				B844C6DE2C748ABA00B6F783 /* ProfileVM.swift in Sources */,
 				B822CA642C6C8A3800FAA59E /* Localized.swift in Sources */,
 				B822CA622C6C88F100FAA59E /* BaseButton.swift in Sources */,

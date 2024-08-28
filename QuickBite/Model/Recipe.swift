@@ -9,21 +9,11 @@ import Foundation
 
 
 //post - content1 에 저장되는 구조체
-struct AddPostRequestContent: Codable {
+struct Recipe: Codable {
+    let description: String?
     let steps: [Step]
     let ingredients: [Ingredient]?
     let sources: [Source]?
-    let time: String
-    let servings: Int
-}
-
-//서버에서 받아올 때 사용하는 구조체
-struct Recipe: Codable {
-    let title: String
-    let description: String?
-    let steps: [Step]
-    let ingredients: [Ingredient]
-    let sources: [Source]
     let time: String
     let servings: Int
 }
