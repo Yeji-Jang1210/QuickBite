@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import Toast
 
 final class MainVC: BaseVC {
     
@@ -37,21 +38,6 @@ final class MainVC: BaseVC {
         object.showsHorizontalScrollIndicator = false
         return object
     }()
-    
-    private let collectionViewDatasource = RxCollectionViewSectionedReloadDataSource<PostSectionModel>{
-        dataSource, collectionView, indexPath, item in
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainRecipeCollectionViewCell.identifier, for: indexPath) as! MainRecipeCollectionViewCell
-        cell.setData(item)
-        cell.bookmarkButton.tag = indexPath.row
-        cell.bookmarkButton.rx.tap
-            .bind { _ in
-                cell.bookmarkButton.isSelected.toggle()
-                cell.bookmarkButtonTap.accept(item)
-            }
-            .disposed(by: cell.disposeBag)
-        
-        return cell
-    }
     
     private let addPostButton = {
         let object = UIButton()
@@ -130,6 +116,22 @@ final class MainVC: BaseVC {
         let input = MainVM.Input(callPostAPI: callPostAPI,
                                  addPostButtonTap: addPostButton.rx.tap)
         let output = viewModel.transform(input: input)
+        
+        let collectionViewDatasource = RxCollectionViewSectionedReloadDataSource<PostSectionModel>{
+            dataSource, collectionView, indexPath, item in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainRecipeCollectionViewCell.identifier, for: indexPath) as! MainRecipeCollectionViewCell
+            cell.setData(item)
+            cell.bookmarkButton.rx.tap
+                .bind(with: self) { owner, _ in
+                    owner.viewModel.callBookmarkAPI(post: item, isSelected: cell.bookmarkButton.isSelected){ result in
+                        owner.view.makeToast(result ? "저장되었습니다." : "삭제되었습니다.")
+                        owner.callPostAPI.accept(())
+                    }
+                }
+                .disposed(by: cell.disposeBag)
+            
+            return cell
+        }
         
         output.addPostButtonTap
             .bind(with: self){ owner, _ in

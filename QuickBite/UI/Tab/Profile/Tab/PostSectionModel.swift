@@ -9,15 +9,18 @@ import Foundation
 import RxDataSources
 
 struct PostSectionModel {
-    var items: [Post]
     
-    init(items: [Post]) {
+    typealias Item = Post
+    
+    var items: [Item]
+    
+    init(items: [Item]) {
         self.items = items
     }
 }
 
 extension PostSectionModel: SectionModelType {
-    init(original: PostSectionModel, items: [Post]) {
+    init(original: PostSectionModel, items: [Item]) {
         self = original
         self.items = items
     }

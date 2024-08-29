@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import RxCocoa
 
 final class IconLabelView: UIView {
     private let imageView = {

@@ -104,6 +104,8 @@
 		B87333122C7F196800B170D5 /* TokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87333112C7F196800B170D5 /* TokenPlugin.swift */; };
 		B87333142C7F1DB800B170D5 /* SignInError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87333132C7F1DB800B170D5 /* SignInError.swift */; };
 		B87C64102C741888000880FC /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87C640F2C741888000880FC /* ProfileImageView.swift */; };
+		B890F78E2C7FEBD7003EAEBE /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B890F78D2C7FEBD7003EAEBE /* BookmarkViewModel.swift */; };
+		B890F7902C7FEC6A003EAEBE /* BookmarkSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B890F78F2C7FEC6A003EAEBE /* BookmarkSectionModel.swift */; };
 		B8FFA99B2C7F2A8E004DCD94 /* EditProfileError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFA99A2C7F2A8E004DCD94 /* EditProfileError.swift */; };
 /* End PBXBuildFile section */
 
@@ -195,6 +197,8 @@
 		B87333112C7F196800B170D5 /* TokenPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenPlugin.swift; sourceTree = "<group>"; };
 		B87333132C7F1DB800B170D5 /* SignInError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInError.swift; sourceTree = "<group>"; };
 		B87C640F2C741888000880FC /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		B890F78D2C7FEBD7003EAEBE /* BookmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
+		B890F78F2C7FEC6A003EAEBE /* BookmarkSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkSectionModel.swift; sourceTree = "<group>"; };
 		B8FFA99A2C7F2A8E004DCD94 /* EditProfileError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -461,6 +465,8 @@
 			children = (
 				B835F10E2C7B5EC30006B718 /* MainRecipeSectionModel.swift */,
 				B835F1102C7B5F700006B718 /* MainRecipeCollectionViewCell.swift */,
+				B890F78D2C7FEBD7003EAEBE /* BookmarkViewModel.swift */,
+				B890F78F2C7FEC6A003EAEBE /* BookmarkSectionModel.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -685,6 +691,7 @@
 				B835F1152C7B72D10006B718 /* IconLabelView.swift in Sources */,
 				B822CA872C6D9B5E00FAA59E /* APIService.swift in Sources */,
 				B822CA892C6D9B6300FAA59E /* PostAPI.swift in Sources */,
+				B890F78E2C7FEBD7003EAEBE /* BookmarkViewModel.swift in Sources */,
 				B822CA602C6C88C600FAA59E /* SignInVC.swift in Sources */,
 				B822CA482C6C764D00FAA59E /* BaseTableViewCell.swift in Sources */,
 				B851AA0C2C7644C3003901F0 /* ProfileDetailSettingVM.swift in Sources */,
@@ -704,6 +711,7 @@
 				B822CA182C6C711200FAA59E /* APIInfo.swift in Sources */,
 				B822CA702C6D8CE900FAA59E /* MainVC.swift in Sources */,
 				B822CA5C2C6C7CBA00FAA59E /* Font.swift in Sources */,
+				B890F7902C7FEC6A003EAEBE /* BookmarkSectionModel.swift in Sources */,
 				B83B022B2C7F385500E82F97 /* DetailPostVC.swift in Sources */,
 				B851AA1D2C775DD5003901F0 /* PostListVC.swift in Sources */,
 				B844C6DE2C748ABA00B6F783 /* ProfileVM.swift in Sources */,

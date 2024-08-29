@@ -52,7 +52,7 @@ final class AuthInterceptor: RequestInterceptor {
                 case .error(_):
                     //로그읺 화면 띄우기
                     //NotificationCenter.default.post(name: "refreshTokenExpired", object: nil, userInfo: ["showLoginModel": true]) 이런식으로..
-                    completion(.doNotRetryWithError(error))
+                    completion(.doNotRetry)
                 }
             }
             .disposed(by: disposeBag)
