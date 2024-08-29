@@ -16,6 +16,7 @@ enum PostService {
     case fetchPosts(param: PostParams.FetchPosts)
     case fetchSpecificPost(param: PostParams.FetchSpecificPostRequest)
     case like(id: String, param: PostParams.LikeRequest)
+    case fetchUserLikesPost(param: PostParams.FetchUserLikePostRequest)
 }
 
 extension PostService: TargetType {
@@ -38,8 +39,10 @@ extension PostService: TargetType {
             return "/v1/posts/\(param.id)"
         case .fetchUserPosts(let param):
             return "/v1/posts/users/\(param.id)"
-        case .like(let id, let param):
+        case .like(let id, _):
             return "/v1/posts/\(id)/like"
+        case .fetchUserLikesPost:
+            return "/v1/posts/likes/me"
         }
     }
     
@@ -62,8 +65,10 @@ extension PostService: TargetType {
             return .requestParameters(parameters: param.toParameters(), encoding: URLEncoding.queryString)
         case .fetchUserPosts, .fetchSpecificPost:
             return .requestPlain
-        case .like(let id, let param):
+        case .like(_, let param):
             return .requestJSONEncodable(param)
+        case .fetchUserLikesPost(param: let param):
+            return .requestParameters(parameters: param.toParameters(), encoding: URLEncoding.queryString)
         }
     }
     

@@ -29,10 +29,21 @@ final class PostListVC: BaseVC {
         return cell
     }
     
-    var items = PublishRelay<[PostSectionModel]>()
-
+    let callPostAPI = PublishRelay<Void>()
+    var viewModel: PostListVM!
+    
+    init(viewModel: PostListVM){
+        super.init()
+        self.viewModel = viewModel
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        callPostAPI.accept(())
     }
     
     override func configureHierarchy() {
@@ -51,7 +62,10 @@ final class PostListVC: BaseVC {
     override func bind() {
         super.bind()
       
-        items
+        let input = PostListVM.Input(callPostAPI: callPostAPI)
+        let output = viewModel.transform(input: input)
+        
+        output.sectionModels
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }

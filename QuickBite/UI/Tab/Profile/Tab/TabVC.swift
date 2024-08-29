@@ -10,22 +10,23 @@ import SnapKit
 import Tabman
 import Pageboy
 
-final class TabVC: TabmanViewController {
-    enum PostType: CaseIterable {
-        case userPost
-        case bookMark
-        
-        var icon: UIImage? {
-            switch self {
-            case .userPost:
-                return ImageAssets.pencilLine
-            case .bookMark:
-                return ImageAssets.bookmarkFill
-            }
+enum PostType: CaseIterable {
+    case userPost
+    case bookmark
+    
+    var icon: UIImage? {
+        switch self {
+        case .userPost:
+            return ImageAssets.pencilLine
+        case .bookmark:
+            return ImageAssets.bookmarkFill
         }
     }
+}
+
+final class TabVC: TabmanViewController {
     
-    var viewControllers: [UIViewController] = []
+    private var viewControllers: [UIViewController] = [PostListVC(viewModel: PostListVM(type: .userPost)), PostListVC(viewModel: PostListVM(type: .bookmark))]
     
     private lazy var bar = {
         let object = TMBarView<TMConstrainedHorizontalBarLayout, TMTabItemBarButton, TMLineBarIndicator>()
@@ -44,9 +45,7 @@ final class TabVC: TabmanViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewControllers = [PostListVC(), PostListVC()]
         self.dataSource = self
-        
         addBar(bar, dataSource: self, at: .top)
     }
 }

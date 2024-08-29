@@ -210,12 +210,5 @@ final class ProfileVC: BaseVC {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
-        
-        output.sectionModels
-            .drive(with: self){ owner, model in
-                let vc = owner.tabVC.viewControllers.first as! PostListVC
-                vc.items.accept(model)
-            }
-            .disposed(by: disposeBag)
     }
 }

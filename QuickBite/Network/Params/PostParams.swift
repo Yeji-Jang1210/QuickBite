@@ -79,6 +79,27 @@ class PostParams {
         }
     }
     
+    struct FetchUserLikePostRequest: Codable {
+        let next: String? = ""
+        let limit: String = "100"
+        
+        enum CodingKeys: String, CodingKey {
+            case next
+            case limit
+        }
+        
+        func toParameters() -> [String: Any] {
+            var params = [String: Any]()
+            
+            if let next = next {
+                params["next"] = next
+            }
+            params["limit"] = limit
+            return params
+        }
+        
+    }
+    
     //MARK: Response
     struct FileUploadResponse: Codable {
         let files: [String]
