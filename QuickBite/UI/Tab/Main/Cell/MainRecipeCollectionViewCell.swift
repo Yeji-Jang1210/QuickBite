@@ -58,6 +58,7 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
     
     private let servingsView = IconLabelView(image: ImageAssets.servings)
     private let timeView = IconLabelView(image: ImageAssets.timer)
+    private let bookmarkCountView = IconLabelView(image: ImageAssets.heart)
     
     private lazy var stackView = {
         let object = UIStackView()
@@ -99,7 +100,7 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
         contentsView.addSubview(stackView)
         stackView.addArrangedSubview(servingsView)
         stackView.addArrangedSubview(timeView)
-        
+        stackView.addArrangedSubview(bookmarkCountView)
         baseView.addSubview(bookmarkButton)
     }
     
@@ -176,6 +177,7 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
         titleLabel.text = post.title
         servingsView.text = "\(post.content.servings)인분"
         timeView.text = "\(post.content.time)분"
+        bookmarkCountView.text = post.likes.count.formatted()
         
     }
 }

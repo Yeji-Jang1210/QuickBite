@@ -20,6 +20,7 @@ struct ImageAssets {
     static let bookmark = UIImage(systemName: "bookmark")
     static let bookmarkFill = UIImage(systemName: "bookmark.fill")
     static let pencilLine = UIImage(systemName: "pencil.line")
+    static let heart = UIImage(systemName: "heart")
     
     static let titleImage = UIImage(named: "titleImage")
     static let defaultProfile = UIImage(named: "default_profile")
