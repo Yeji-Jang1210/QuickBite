@@ -120,8 +120,6 @@ final class DetailPostContentVC: BaseVC {
         let object = UIStackView()
         object.axis = .vertical
         object.spacing = 8
-        [IngredientStackView(name: "달걀", ratio: "1알"),
-         IngredientStackView(name: "소고기", ratio: "500g")].map { object.addArrangedSubview($0)}
         return object
     }()
     
@@ -136,8 +134,6 @@ final class DetailPostContentVC: BaseVC {
         let object = UIStackView()
         object.axis = .vertical
         object.spacing = 8
-        [IngredientStackView(name: "소금", ratio: "한꼬집"),
-         IngredientStackView(name: "고추장", ratio: "두큰술")].map { object.addArrangedSubview($0)}
         return object
     }()
     
