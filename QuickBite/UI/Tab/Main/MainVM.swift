@@ -14,11 +14,13 @@ final class MainVM: BaseVM, BaseVMProvider {
     struct Input {
         let callPostAPI: PublishRelay<Void>
         let addPostButtonTap: ControlEvent<Void>
+        let modelSelected: ControlEvent<Post>
     }
     
     struct Output {
         let addPostButtonTap: ControlEvent<Void>
         let items: Driver<[PostSectionModel]>
+        let modelSelected: ControlEvent<Post>
     }
     
     func transform(input: Input) -> Output {
@@ -69,7 +71,9 @@ final class MainVM: BaseVM, BaseVMProvider {
             }
             .asDriver(onErrorJustReturn: [])
         
-        return Output(addPostButtonTap: input.addPostButtonTap, items: items)
+        return Output(addPostButtonTap: input.addPostButtonTap,
+                      items: items,
+                      modelSelected: input.modelSelected)
     }
     
     func callBookmarkAPI(post: Post, isSelected: Bool, completion: @escaping (Bool) -> Void){

@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import Toast
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,17 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
-        
-        print(UserDefaultsManager.shared.token)
-        print(UserDefaultsManager.shared.refreshToken)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshTokenExpiredHandler), name: .refreshTokenExpired, object: nil)
         
         if !UserDefaultsManager.shared.token.isEmpty {
             window?.rootViewController = MainTBC()
         } else {
             window?.rootViewController = UINavigationController(rootViewController: SignInVC())
         }
-        
-//        window?.rootViewController = UINavigationController(rootViewController: SignInVC())
         
         //show
         window?.makeKeyAndVisible()
@@ -61,6 +58,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+    
+    @objc func refreshTokenExpiredHandler(){
+        window?.rootViewController?.view.makeToast("로그인 세션이 만료되었습니다.")
+        window?.rootViewController = SignInVC()
+    }
 }
 

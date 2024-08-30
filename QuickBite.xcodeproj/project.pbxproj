@@ -106,7 +106,14 @@
 		B87C64102C741888000880FC /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87C640F2C741888000880FC /* ProfileImageView.swift */; };
 		B890F78E2C7FEBD7003EAEBE /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B890F78D2C7FEBD7003EAEBE /* BookmarkViewModel.swift */; };
 		B890F7902C7FEC6A003EAEBE /* BookmarkSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B890F78F2C7FEC6A003EAEBE /* BookmarkSectionModel.swift */; };
+		B8AF81B12C80A6CB00C3EBF9 /* DetailPostContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF81B02C80A6CB00C3EBF9 /* DetailPostContentVC.swift */; };
+		B8AF81B52C80B86C00C3EBF9 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF81B42C80B86C00C3EBF9 /* CircleButton.swift */; };
 		B8FFA99B2C7F2A8E004DCD94 /* EditProfileError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFA99A2C7F2A8E004DCD94 /* EditProfileError.swift */; };
+		B8FFD8502C80C24E00F21F99 /* UIWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFD84F2C80C24E00F21F99 /* UIWindow+Extension.swift */; };
+		B8FFD8522C80C90D00F21F99 /* DetailPostContentVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFD8512C80C90D00F21F99 /* DetailPostContentVM.swift */; };
+		B8FFD8542C81906B00F21F99 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFD8532C81906B00F21F99 /* Notification+Extension.swift */; };
+		B8FFD8562C81949A00F21F99 /* VerticalImageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFD8552C81949A00F21F99 /* VerticalImageLabel.swift */; };
+		B8FFD8582C81977000F21F99 /* IngredientStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFD8572C81977000F21F99 /* IngredientStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -199,7 +206,14 @@
 		B87C640F2C741888000880FC /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		B890F78D2C7FEBD7003EAEBE /* BookmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
 		B890F78F2C7FEC6A003EAEBE /* BookmarkSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkSectionModel.swift; sourceTree = "<group>"; };
+		B8AF81B02C80A6CB00C3EBF9 /* DetailPostContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPostContentVC.swift; sourceTree = "<group>"; };
+		B8AF81B42C80B86C00C3EBF9 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		B8FFA99A2C7F2A8E004DCD94 /* EditProfileError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileError.swift; sourceTree = "<group>"; };
+		B8FFD84F2C80C24E00F21F99 /* UIWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
+		B8FFD8512C80C90D00F21F99 /* DetailPostContentVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPostContentVM.swift; sourceTree = "<group>"; };
+		B8FFD8532C81906B00F21F99 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
+		B8FFD8552C81949A00F21F99 /* VerticalImageLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalImageLabel.swift; sourceTree = "<group>"; };
+		B8FFD8572C81977000F21F99 /* IngredientStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,6 +364,9 @@
 				B835F1142C7B72D10006B718 /* IconLabelView.swift */,
 				B835F1252C7C32870006B718 /* BlockTextView.swift */,
 				B835F1372C7D50460006B718 /* StepperView.swift */,
+				B8AF81B42C80B86C00C3EBF9 /* CircleButton.swift */,
+				B8FFD8552C81949A00F21F99 /* VerticalImageLabel.swift */,
+				B8FFD8572C81977000F21F99 /* IngredientStackView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -374,6 +391,8 @@
 				B822CA492C6C793400FAA59E /* UIColor+Extension.swift */,
 				B822CA732C6D8E3A00FAA59E /* UIViewController+Extension.swift */,
 				B835F1162C7B87C70006B718 /* UIView+Extension.swift */,
+				B8FFD84F2C80C24E00F21F99 /* UIWindow+Extension.swift */,
+				B8FFD8532C81906B00F21F99 /* Notification+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -519,6 +538,8 @@
 			children = (
 				B83B022A2C7F385500E82F97 /* DetailPostVC.swift */,
 				B83B022C2C7F388B00E82F97 /* DetailPostVM.swift */,
+				B8AF81B02C80A6CB00C3EBF9 /* DetailPostContentVC.swift */,
+				B8FFD8512C80C90D00F21F99 /* DetailPostContentVM.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -646,6 +667,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8FFD8502C80C24E00F21F99 /* UIWindow+Extension.swift in Sources */,
+				B8FFD8582C81977000F21F99 /* IngredientStackView.swift in Sources */,
 				B835F1012C7788550006B718 /* PostTableViewSectionModel.swift in Sources */,
 				B822CA782C6D92C800FAA59E /* RecipesVC.swift in Sources */,
 				B8FFA99B2C7F2A8E004DCD94 /* EditProfileError.swift in Sources */,
@@ -658,6 +681,7 @@
 				B822CA4C2C6C796200FAA59E /* Color.swift in Sources */,
 				B835F1302C7C6A7C0006B718 /* StepCollectionViewCell.swift in Sources */,
 				B83B022D2C7F388B00E82F97 /* DetailPostVM.swift in Sources */,
+				B8AF81B12C80A6CB00C3EBF9 /* DetailPostContentVC.swift in Sources */,
 				B835F1342C7C7B910006B718 /* AddStepVM.swift in Sources */,
 				B835F1262C7C32870006B718 /* BlockTextView.swift in Sources */,
 				B835F10C2C7B5A240006B718 /* CarouselLayout.swift in Sources */,
@@ -692,8 +716,10 @@
 				B822CA872C6D9B5E00FAA59E /* APIService.swift in Sources */,
 				B822CA892C6D9B6300FAA59E /* PostAPI.swift in Sources */,
 				B890F78E2C7FEBD7003EAEBE /* BookmarkViewModel.swift in Sources */,
+				B8AF81B52C80B86C00C3EBF9 /* CircleButton.swift in Sources */,
 				B822CA602C6C88C600FAA59E /* SignInVC.swift in Sources */,
 				B822CA482C6C764D00FAA59E /* BaseTableViewCell.swift in Sources */,
+				B8FFD8522C80C90D00F21F99 /* DetailPostContentVM.swift in Sources */,
 				B851AA0C2C7644C3003901F0 /* ProfileDetailSettingVM.swift in Sources */,
 				B851AA062C762F7C003901F0 /* ProfileSettingSectionModel.swift in Sources */,
 				B835F1112C7B5F700006B718 /* MainRecipeCollectionViewCell.swift in Sources */,
@@ -705,8 +731,10 @@
 				B87333142C7F1DB800B170D5 /* SignInError.swift in Sources */,
 				B822CA762C6D924A00FAA59E /* MainTBC.swift in Sources */,
 				B851AA212C775F83003901F0 /* PostSectionModel.swift in Sources */,
+				B8FFD8542C81906B00F21F99 /* Notification+Extension.swift in Sources */,
 				B835F1082C78882F0006B718 /* ValidationBirthday.swift in Sources */,
 				B87C64102C741888000880FC /* ProfileImageView.swift in Sources */,
+				B8FFD8562C81949A00F21F99 /* VerticalImageLabel.swift in Sources */,
 				B822CA932C6DE76100FAA59E /* User.swift in Sources */,
 				B822CA182C6C711200FAA59E /* APIInfo.swift in Sources */,
 				B822CA702C6D8CE900FAA59E /* MainVC.swift in Sources */,

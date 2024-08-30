@@ -15,5 +15,5 @@ struct Post: Codable {
     let createdAt: String
     let creator: Creator
     let files: [String]
-    let likes: [String]
+    var likes: [String]
 }

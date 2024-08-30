@@ -58,7 +58,10 @@ class BaseVC: UIViewController {
     func showToastMsg(msg: String){
         view.hideAllToasts()
         DispatchQueue.main.async {
-            self.view.makeToast(msg)
+            if let vc = UIApplication.shared.keyWindow?.visibleViewController as? UIViewController {
+                vc.view.makeToast(msg)
+            }
+            
         }
     }
     

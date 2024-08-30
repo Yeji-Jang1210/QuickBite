@@ -7,10 +7,12 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
+import PhotosUI
+
 import RxSwift
 import RxCocoa
 import RxDataSources
-import PhotosUI
 
 enum ProfileInfo: String, CaseIterable {
     case email
@@ -189,7 +191,7 @@ final class ProfileSettingVC: BaseVC {
                     owner.profileImageView.image = ImageAssets.defaultProfile
                     return
                 }
-                
+                KingfisherManager.shared.defaultOptions = [.requestModifier(TokenPlugin(token: UserDefaultsManager.shared.token))]
                 owner.profileImageView.kf.setImage(with: url)
             }
             .disposed(by: disposeBag)

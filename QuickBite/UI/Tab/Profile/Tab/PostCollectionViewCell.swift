@@ -35,6 +35,7 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
     }
     
     func setImage(_ path: String){
+        KingfisherManager.shared.defaultOptions = [.requestModifier(TokenPlugin(token: UserDefaultsManager.shared.token))]
         let urlString = "\(APIInfo.baseURL)/v1/\(path)"
         guard let url = URL(string: urlString) else { return }
         postImageView.kf.setImage(with: url)

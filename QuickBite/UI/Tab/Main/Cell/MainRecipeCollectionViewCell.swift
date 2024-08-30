@@ -7,8 +7,11 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
+
 import RxSwift
 import RxCocoa
+
 
 final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
     
@@ -17,7 +20,7 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
     private let imageView = {
         let object = UIImageView()
         object.contentMode = .scaleAspectFill
-        object.backgroundColor = .systemGray4
+        object.backgroundColor = .systemGray6
         object.clipsToBounds = true
         object.layer.cornerRadius = 8
         return object
@@ -157,7 +160,15 @@ final class MainRecipeCollectionViewCell: BaseCollectionViewCell {
     func setData(_ post: Post){
         if let thumbnailFilePath = post.files.last {
             guard let url = URL(string: "\(APIInfo.baseURL)/v1/\(thumbnailFilePath)") else { return }
-            imageView.kf.setImage(with: url)
+            KingfisherManager.shared.defaultOptions = [.requestModifier(TokenPlugin(token: UserDefaultsManager.shared.token))]
+            let processor = DownsamplingImageProcessor(size: imageView.frame.size)
+            imageView.kf.indicatorType = .activity
+            imageView.kf.setImage(with: url,
+                                  placeholder: nil,
+                                  options: [.transition(.none), .forceTransition, .processor(processor)],
+                                  completionHandler: nil)
+            
+            
         }
         
         bookmarkButton.isSelected = post.likes.contains(UserDefaultsManager.shared.userId)

@@ -198,7 +198,6 @@ final class ProfileVC: BaseVC {
                     owner.profileImageView.image = ImageAssets.defaultProfile
                     return
                 }
-                
                 KingfisherManager.shared.defaultOptions = [.requestModifier(TokenPlugin(token: UserDefaultsManager.shared.token))]
                 owner.profileImageView.kf.setImage(with: url)
             }

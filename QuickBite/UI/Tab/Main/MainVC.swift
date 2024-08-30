@@ -114,7 +114,8 @@ final class MainVC: BaseVC {
         super.bind()
         
         let input = MainVM.Input(callPostAPI: callPostAPI,
-                                 addPostButtonTap: addPostButton.rx.tap)
+                                 addPostButtonTap: addPostButton.rx.tap,
+                                 modelSelected: collectionView.rx.modelSelected(Post.self))
         let output = viewModel.transform(input: input)
         
         let collectionViewDatasource = RxCollectionViewSectionedReloadDataSource<PostSectionModel>{
@@ -142,5 +143,13 @@ final class MainVC: BaseVC {
         output.items
             .drive(collectionView.rx.items(dataSource: collectionViewDatasource))
             .disposed(by: disposeBag)
+        
+        output.modelSelected
+            .bind(with: self){ owner, post in
+                let vc = DetailPostVC(viewModel: DetailPostVM(post: post))
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
     }
 }

@@ -117,6 +117,25 @@ final class StepCollectionViewCell: BaseCollectionViewCell {
         if let image = step.imageData?.image {
             imageView.image = UIImage(data: image)
         }
+        
+        stepTextLabel.text = step.title
+        descriptionLabel.text = step.description
+        addButton.isHidden = true
+    }
+    
+    func setDetailPostData(index: Int, _ data: Step?, files: [String]){
+        stepLevelLabel.text = "STEP \(index+1)"
+        guard let step = data else {
+            addButton.isHidden = false
+            stepTextLabel.text = "제목을 입력해 주세요."
+            descriptionLabel.text = "단계별 설명을 입력해주세요."
+            return
+        }
+        
+        if let image = step.imageData?.image {
+            imageView.image = UIImage(data: image)
+        }
+        
         stepTextLabel.text = step.title
         descriptionLabel.text = step.description
         addButton.isHidden = true

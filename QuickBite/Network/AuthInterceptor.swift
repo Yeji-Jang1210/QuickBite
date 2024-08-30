@@ -44,14 +44,11 @@ final class AuthInterceptor: RequestInterceptor {
             .subscribe(with: self) { owner, networkResult in
                 switch networkResult {
                 case .success(let result):
-                    
-                    KingfisherManager.shared.defaultOptions = [.requestModifier(TokenPlugin(token: result.accessToken))]
                     UserDefaultsManager.shared.token = result.accessToken
                     print("😊AccessToken: \(UserDefaultsManager.shared.token)")
                     completion(.retryWithDelay(1))
                 case .error(_):
-                    //로그읺 화면 띄우기
-                    //NotificationCenter.default.post(name: "refreshTokenExpired", object: nil, userInfo: ["showLoginModel": true]) 이런식으로..
+                    NotificationCenter.default.post(name: .refreshTokenExpired, object: nil, userInfo: ["showLoginModel": true])
                     completion(.doNotRetry)
                 }
             }
