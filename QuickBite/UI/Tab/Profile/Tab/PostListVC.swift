@@ -35,6 +35,7 @@ final class PostListVC: BaseVC {
     init(viewModel: PostListVM){
         super.init()
         self.viewModel = viewModel
+        
     }
     
     override func viewDidLoad() {
@@ -43,6 +44,7 @@ final class PostListVC: BaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
         callPostAPI.accept(())
     }
     
@@ -62,11 +64,18 @@ final class PostListVC: BaseVC {
     override func bind() {
         super.bind()
       
-        let input = PostListVM.Input(callPostAPI: callPostAPI)
+        let input = PostListVM.Input(callPostAPI: callPostAPI, 
+                                     modelSelected: collectionView.rx.modelSelected(Post.self))
         let output = viewModel.transform(input: input)
         
         output.sectionModels
             .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        output.modelSelected
+            .bind(with: self){ owner, post in
+                NotificationCenter.default.post(name: .pushDetailView, object: post)
+            }
             .disposed(by: disposeBag)
     }
     

@@ -12,11 +12,13 @@ import RxCocoa
 final class PostListVM: BaseVM, BaseVMProvider {
     struct Input {
         let callPostAPI: PublishRelay<Void>
+        let modelSelected: ControlEvent<Post>
     }
     
     struct Output {
         let sectionModels: Observable<[PostSectionModel]>
         let toastMessage: PublishRelay<String>
+        let modelSelected: ControlEvent<Post>
     }
     
     var type: PostType!
@@ -87,6 +89,8 @@ final class PostListVM: BaseVM, BaseVMProvider {
                 [PostSectionModel(items: $0)]
             }
         
-        return Output(sectionModels: post, toastMessage: toastMessage)
+        return Output(sectionModels: post, 
+                      toastMessage: toastMessage,
+                      modelSelected: input.modelSelected)
     }
 }

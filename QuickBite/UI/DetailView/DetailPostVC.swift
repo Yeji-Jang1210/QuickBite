@@ -42,18 +42,12 @@ final class DetailPostVC: BaseVC {
     
     convenience init(viewModel: DetailPostVM!) {
         self.init()
-        navigationController?.navigationBar.isHidden = false
         self.viewModel = viewModel
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+        navigationController?.navigationBar.isHidden = true
     }
     
     override func configureHierarchy() {

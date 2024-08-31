@@ -102,6 +102,7 @@ final class ProfileVC: BaseVC {
     init(title: String = "", isChild: Bool = false, viewModel: ProfileVM) {
         super.init(title: title, isChild: isChild)
         self.viewModel = viewModel
+        NotificationCenter.default.addObserver(self, selector: #selector(pushDetailView), name: .pushDetailView, object: nil)
     }
     
     override func viewDidLoad() {
@@ -209,5 +210,13 @@ final class ProfileVC: BaseVC {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
+    }
+    
+    @objc
+    func pushDetailView(_ notification: Notification){
+        if let post = notification.object as? Post {
+            let vc = DetailPostVC(viewModel: DetailPostVM(post: post))
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }

@@ -34,7 +34,7 @@ class PostParams {
     }
     
     struct FetchPosts: Codable {
-        let next: String? = ""
+        let next: String
         let limit: String?
         var product_id = "quickBite"
         
@@ -47,9 +47,7 @@ class PostParams {
         func toParameters() -> [String: Any] {
             var params = [String: Any]()
             
-            if let next = next {
-                params["next"] = next
-            }
+            params["next"] = next
             
             if let limit = limit {
                 params["limit"] = limit
@@ -124,11 +122,11 @@ class PostParams {
         let creator: Creator
         let files: [String]
         let likes: [String]
-        let next_cursor: String?
     }
     
     struct FetchUserPostsResponse: Codable {
         let data: [PostResponse]
+        let next_cursor: String
     }
     
     struct LikeResponse: Codable {

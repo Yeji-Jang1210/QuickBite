@@ -16,7 +16,7 @@ class BaseVC: UIViewController {
     
     let disposeBag = DisposeBag()
     
-    init(title: String = "", isChild: Bool = false){
+    init(title: String? = nil, isChild: Bool = false){
         super.init(nibName: nil, bundle: nil)
         self.isChild = isChild
         self.navigationItem.title = title
@@ -29,14 +29,13 @@ class BaseVC: UIViewController {
     
     override func viewDidLoad() {
         view.backgroundColor = .white
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : Color.primaryColor, .font: Font.boldFont(.smallLarge)]
-        
+
         if isChild {
+            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : Color.primaryColor, .font: Font.boldFont(.smallLarge)]
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: ImageAssets.leftArrow, style: .done, target: self, action: #selector(dismissButtonTapped))
             navigationItem.leftBarButtonItem?.tintColor = Color.primaryColor
         }
 
-        
         configureHierarchy()
         configureLayout()
         configureUI()
