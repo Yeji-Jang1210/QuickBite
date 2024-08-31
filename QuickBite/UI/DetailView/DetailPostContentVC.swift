@@ -57,7 +57,7 @@ final class DetailPostContentVC: BaseVC {
         object.font = Font.semiBold(.smallLarge)
         return object
     }()
-
+    
     private let descriptionLabel = {
         let object = UILabel()
         object.numberOfLines = 2
@@ -157,13 +157,20 @@ final class DetailPostContentVC: BaseVC {
         return object
     }()
     
-    private let stepDataSource = RxCollectionViewSectionedReloadDataSource<StepSectionModel>{
+    private let stepDataSource = RxCollectionViewSectionedReloadDataSource<DetailSectionModel>{
         dataSource, collectionView, indexPath, item in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StepCollectionViewCell.identifier, for: indexPath) as! StepCollectionViewCell
-            
-        cell.setData(index: indexPath.row, item)
+        
+        cell.setDetailPostData(index: indexPath.row, item)
         return cell
     }
+    
+    private let pageControl = {
+        let object = UIPageControl()
+        object.pageIndicatorTintColor = .systemGray6
+        object.currentPageIndicatorTintColor = Color.primaryColor
+        return object
+    }()
     
     private var viewModel: DetailPostContentVM!
     
@@ -182,7 +189,6 @@ final class DetailPostContentVC: BaseVC {
         
         view.addSubview(scrollView)
         scrollView.addSubview(contentsView)
-        //view.addSubview(contentsView)
         contentsView.addSubview(titleLabel)
         contentsView.addSubview(stackView)
         contentsView.addSubview(creatorLabel)
@@ -195,7 +201,7 @@ final class DetailPostContentVC: BaseVC {
         contentsView.addSubview(sourcesStackView)
         contentsView.addSubview(stepTitleLabel)
         contentsView.addSubview(stepCollectionView)
-        
+        contentsView.addSubview(pageControl)
     }
     
     override func configureLayout() {
@@ -271,16 +277,22 @@ final class DetailPostContentVC: BaseVC {
         stepCollectionView.snp.makeConstraints { make in
             make.top.equalTo(stepTitleLabel.snp.bottom).offset(20)
             make.horizontalEdges.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-40)
             make.height.equalTo(400)
         }
-
+        
+        pageControl.snp.makeConstraints { make in
+            make.top.equalTo(stepCollectionView.snp.bottom)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-40)
+        }
     }
     
     override func bind() {
         super.bind()
         
-        let input = DetailPostContentVM.Input(expandableButtonTap: expandableButton.rx.tap)
+        let input = DetailPostContentVM.Input(expandableButtonTap: expandableButton.rx.tap,
+        pageContentOffset: stepCollectionView.rx.contentOffset,
+        pageValueChanged: pageControl.rx.controlEvent(.valueChanged))
         let output = viewModel.transform(input: input)
         
         output.expandableButtonIsSelected
@@ -319,7 +331,7 @@ final class DetailPostContentVC: BaseVC {
                 }
             }
             .disposed(by: disposeBag)
-            
+        
         output.creatorProfilePath
             .drive(with: self){ owner, path in
                 if let path, let url = URL(string: "\(APIInfo.baseURL)/v1/\(path)") {
@@ -327,9 +339,9 @@ final class DetailPostContentVC: BaseVC {
                     let processor = DownsamplingImageProcessor(size: owner.creatorImageView.frame.size)
                     owner.creatorImageView.kf.indicatorType = .activity
                     owner.creatorImageView.kf.setImage(with: url,
-                                          placeholder: nil,
-                                          options: [.transition(.none), .forceTransition, .processor(processor)],
-                                          completionHandler: nil)
+                                                       placeholder: nil,
+                                                       options: [.transition(.none), .forceTransition, .processor(processor)],
+                                                       completionHandler: nil)
                 } else {
                     owner.creatorImageView.image = ImageAssets.defaultProfile
                 }
@@ -338,6 +350,30 @@ final class DetailPostContentVC: BaseVC {
         
         output.stepDataSource
             .drive(stepCollectionView.rx.items(dataSource: stepDataSource))
+            .disposed(by: disposeBag)
+        
+        output.steps
+            .map { $0.count }
+            .drive(pageControl.rx.numberOfPages)
+            .disposed(by: disposeBag)
+        
+        output.pageContentOffset
+            .flatMap {
+                return Observable.just(Int($0.x / 300))
+            }
+            .bind(with: self){ owner, page in
+                owner.pageControl.currentPage = page
+                owner.pageControl.setCurrentPageIndicatorImage(ImageAssets.main, forPage: page)
+            }
+            .disposed(by: disposeBag)
+    
+        output.pageValueChanged
+            .withLatestFrom(Observable.just(pageControl.currentPage))
+            .subscribe(onNext: { [weak self] page in
+                guard let self = self else { return }
+                let indexPath = IndexPath(item: page, section: 0)
+                self.stepCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            })
             .disposed(by: disposeBag)
     }
 }

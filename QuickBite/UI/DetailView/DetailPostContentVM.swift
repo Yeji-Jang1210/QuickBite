@@ -12,6 +12,8 @@ import RxCocoa
 final class DetailPostContentVM: BaseVM, BaseVMProvider{
     struct Input {
         let expandableButtonTap: ControlEvent<Void>
+        let pageContentOffset: ControlProperty<CGPoint>
+        let pageValueChanged: ControlEvent<()>
     }
     
     struct Output {
@@ -27,7 +29,11 @@ final class DetailPostContentVM: BaseVM, BaseVMProvider{
         let bookmarkText: Driver<String>
         let ingredients: Driver<[Ingredient]>
         let sources: Driver<[Source]>
-        let stepDataSource: Driver<[StepSectionModel]>
+        let stepDataSource: Driver<[DetailSectionModel]>
+        let steps: Driver<[Step]>
+        
+        let pageContentOffset: ControlProperty<CGPoint>
+        let pageValueChanged: ControlEvent<()>
     }
     
     private var post = BehaviorRelay<Post?>(value: nil)
@@ -67,8 +73,19 @@ final class DetailPostContentVM: BaseVM, BaseVMProvider{
         
         //이미지 파일 어떻게 넘겨줄지 생각하기
         let stepDataSource = post
-            .map{ [StepSectionModel(items: $0.content.steps)]  }
+            .map{ post in
+                var detailSteps: [DetailStep] = []
+                
+                for (index, step) in post.content.steps.enumerated() {
+                    detailSteps.append(DetailStep(step: step, filePath: post.files[index]))
+                }
+                
+                return detailSteps
+            }
+            .map{ [DetailSectionModel(items: $0)]  }
             .asDriver(onErrorJustReturn: [])
+        
+        let steps = post.map{ $0.content.steps }.asDriver(onErrorJustReturn: [])
         
         return Output(expandableButtonIsSelected: isExpandable,
                       descriptionNumberOfLines: descriptionNumberOfLines,
@@ -81,7 +98,10 @@ final class DetailPostContentVM: BaseVM, BaseVMProvider{
                       bookmarkText: bookmarkText,
                       ingredients: ingredients,
                       sources: sources,
-                      stepDataSource: stepDataSource)
+                      stepDataSource: stepDataSource,
+                      steps: steps,
+                      pageContentOffset: input.pageContentOffset,
+                      pageValueChanged: input.pageValueChanged)
     }
     
     @objc

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 final class StepCollectionViewCell: BaseCollectionViewCell {
     let imageView = {
@@ -123,21 +124,27 @@ final class StepCollectionViewCell: BaseCollectionViewCell {
         addButton.isHidden = true
     }
     
-    func setDetailPostData(index: Int, _ data: Step?, files: [String]){
+    func setDetailPostData(index: Int, _ data: DetailStep?){
         stepLevelLabel.text = "STEP \(index+1)"
-        guard let step = data else {
+        guard let data = data else {
             addButton.isHidden = false
             stepTextLabel.text = "제목을 입력해 주세요."
             descriptionLabel.text = "단계별 설명을 입력해주세요."
             return
         }
         
-        if let image = step.imageData?.image {
-            imageView.image = UIImage(data: image)
+        if let path = data.filePath, let url = URL(string: "\(APIInfo.baseURL)/v1/\(path)"){
+            KingfisherManager.shared.defaultOptions = [.requestModifier(TokenPlugin(token: UserDefaultsManager.shared.token))]
+            let processor = DownsamplingImageProcessor(size: imageView.frame.size)
+            imageView.kf.indicatorType = .activity
+            imageView.kf.setImage(with: url,
+                                  placeholder: nil,
+                                  options: [.transition(.none), .forceTransition, .processor(processor)],
+                                  completionHandler: nil)
         }
         
-        stepTextLabel.text = step.title
-        descriptionLabel.text = step.description
+        stepTextLabel.text = data.step.title
+        descriptionLabel.text = data.step.description
         addButton.isHidden = true
     }
 }
