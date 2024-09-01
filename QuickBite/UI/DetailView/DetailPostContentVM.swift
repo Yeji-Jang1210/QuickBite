@@ -41,7 +41,6 @@ final class DetailPostContentVM: BaseVM, BaseVMProvider{
     convenience init(post: Post){
         self.init()
         self.post.accept(post)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateBookmarkCount), name: .updateBookmarkCount, object: nil)
     }
     
     func transform(input: Input) -> Output {
@@ -62,7 +61,7 @@ final class DetailPostContentVM: BaseVM, BaseVMProvider{
         let description = post.map { $0.content.description }.compactMap{ $0 }.asDriver(onErrorJustReturn: "")
         let creatorProfilePath = post.map { $0.creator.profileImage }.asDriver(onErrorJustReturn: nil)
         let creatorNickname = post.map { $0.creator.nick }.asDriver(onErrorJustReturn: "")
-        let timeText = post.map { $0.content.time }.asDriver(onErrorJustReturn: "")
+        let timeText = post.map { "\($0.content.time)분" }.asDriver(onErrorJustReturn: "")
         let servingsText = post.map { "\($0.content.servings)인분" }.asDriver(onErrorJustReturn: "")
         let ingredients = post.map { $0.content.ingredients }.compactMap{$0}.asDriver(onErrorJustReturn: [])
         let sources = post.map { $0.content.sources }.compactMap{$0}.asDriver(onErrorJustReturn: [])
@@ -102,22 +101,5 @@ final class DetailPostContentVM: BaseVM, BaseVMProvider{
                       steps: steps,
                       pageContentOffset: input.pageContentOffset,
                       pageValueChanged: input.pageValueChanged)
-    }
-    
-    @objc
-    func updateBookmarkCount(_ notification: Notification){
-        if let updatePost = post.value {
-            var post = updatePost
-            
-            if notification.object as! Bool {
-                post.likes.append(UserDefaultsManager.shared.userId)
-            } else {
-                if let index = post.likes.firstIndex(of: UserDefaultsManager.shared.userId) {
-                    post.likes.remove(at: index)
-                }
-            }
-            
-            self.post.accept(post)
-        }
     }
 }

@@ -28,6 +28,12 @@ final class BaseButton: UIButton {
             self.setTitle(title, for: .normal)
         }
     }
+    
+    var font: UIFont = Font.regular(.medium) {
+        didSet {
+            self.titleLabel?.font = font
+        }
+    }
 
     init() {
         super.init(frame: .zero)

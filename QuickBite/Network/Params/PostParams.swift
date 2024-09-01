@@ -122,6 +122,7 @@ class PostParams {
         let creator: Creator
         let files: [String]
         let likes: [String]
+        let buyers: [String]
     }
     
     struct FetchUserPostsResponse: Codable {

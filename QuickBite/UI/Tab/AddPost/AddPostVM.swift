@@ -14,6 +14,7 @@ final class AddPostVM: BaseVM, BaseVMProvider {
     private let steps = BehaviorRelay<[Step?]>(value: Array(repeating: nil, count: 1))
     private let ingredients = BehaviorRelay<[Ingredient]>(value: [])
     private let sources = BehaviorRelay<[Source]>(value: [])
+    private let isLoading = PublishRelay<Bool>()
     
     struct Input {
         let titleText: ControlProperty<String>
@@ -46,6 +47,7 @@ final class AddPostVM: BaseVM, BaseVMProvider {
         let isAllAlowed: Driver<Bool>
         let toastMessage: Driver<String>
         let addPostSucceess: PublishRelay<Void>
+        let loadAnimation: Driver<Bool>
     }
     
     func transform(input: Input) -> Output {
@@ -153,8 +155,10 @@ final class AddPostVM: BaseVM, BaseVMProvider {
         input.saveButtonTap
             .debug("저장버튼")
             .withLatestFrom(steps)
-            .flatMap { steps in
-                Observable.just(PostParams.FileUploadRequest(files: steps.compactMap{$0?.imageData}))
+            .flatMap { [weak self] steps in
+                self?.isLoading.accept(true)
+                
+                return Observable.just(PostParams.FileUploadRequest(files: steps.compactMap{$0?.imageData}))
             }
             .flatMap {
                 PostAPI.shared.networking(service: .fileUpload(param: $0), type: PostParams.FileUploadResponse.self)
@@ -209,24 +213,28 @@ final class AddPostVM: BaseVM, BaseVMProvider {
             .flatMap {
                 PostAPI.shared.networking(service: .add(param: $0), type: PostParams.AddPostResponse.self)
             }
-            .bind{ networkResult in
+            .bind(with: self){ owner, networkResult in
                 switch networkResult {
                 case .success(_):
+                    owner.isLoading.accept(false)
                     toastMessage.accept("저장되었습니다.")
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         addPostSucceess.accept(())
                     }
                 case .error(let statusCode):
                     guard let error = UploadPostError(rawValue: statusCode) else {
+                        owner.isLoading.accept(false)
                         toastMessage.accept("알수없는 오류입니다.")
                         return
                     }
+                    owner.isLoading.accept(false)
                     toastMessage.accept(error.message)
                 }
             }
             .disposed(by: disposeBag)
 
         let errorMessage = toastMessage.asDriver(onErrorJustReturn: "")
+        let loadAnimation = isLoading.asDriver(onErrorJustReturn: false)
         
         return Output(titleText: input.titleText,
                       stepItems: stepItems,
@@ -238,6 +246,7 @@ final class AddPostVM: BaseVM, BaseVMProvider {
                       timeText: timeText,
                       isAllAlowed: isAllAlowed, 
                       toastMessage: errorMessage, 
-                      addPostSucceess: addPostSucceess)
+                      addPostSucceess: addPostSucceess, 
+                      loadAnimation: loadAnimation)
     }
 }

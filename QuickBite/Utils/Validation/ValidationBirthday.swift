@@ -52,16 +52,19 @@ enum ValidationBirthday {
     }
     
     static func format(_ date: String) -> String {
-        let yearStartIndex = date.index(date.startIndex, offsetBy: 4)
-        let year = "\(date[date.startIndex..<yearStartIndex])"
-        
-        let monthStartIndex = date.index(date.startIndex, offsetBy: 4) //5
-        let month = "\(date[monthStartIndex..<date.index(monthStartIndex, offsetBy: 2)])"
+        if !date.isEmpty {
+            let yearStartIndex = date.index(date.startIndex, offsetBy: 4)
+            let year = "\(date[date.startIndex..<yearStartIndex])"
+            
+            let monthStartIndex = date.index(date.startIndex, offsetBy: 4) //5
+            let month = "\(date[monthStartIndex..<date.index(monthStartIndex, offsetBy: 2)])"
 
 
-        let dayStartIndex = date.index(monthStartIndex, offsetBy: 2)
-        let day = "\(date[dayStartIndex..<date.index(dayStartIndex, offsetBy:2)])"
-        
-        return Localized.birthday_format(year: year, month: month, day: day).text
+            let dayStartIndex = date.index(monthStartIndex, offsetBy: 2)
+            let day = "\(date[dayStartIndex..<date.index(dayStartIndex, offsetBy:2)])"
+            
+            return Localized.birthday_format(year: year, month: month, day: day).text
+        }
+        return ""
     }
 }

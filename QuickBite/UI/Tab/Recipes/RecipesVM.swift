@@ -72,7 +72,8 @@ final class RecipesVM: BaseVM, BaseVMProvider {
                         createdAt: response.createdAt,
                         creator: response.creator,
                         files: response.files,
-                        likes: response.likes
+                        likes: response.likes,
+                        buyers: response.buyers
                     )
                     
                     return post

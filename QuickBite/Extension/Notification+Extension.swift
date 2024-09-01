@@ -11,4 +11,5 @@ extension Notification.Name {
     static let refreshTokenExpired = Notification.Name("refreshTokenExpired")
     static let updateBookmarkCount = Notification.Name("updateBookmarkCount")
     static let pushDetailView = Notification.Name("pushDetailView")
+    static let paymentMealKit = Notification.Name("paymentMealKit")
 }

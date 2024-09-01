@@ -138,7 +138,7 @@ final class SignInVC: BaseVC {
         output.isLoginValidStatus
             .filter { !$0 }
             .drive(with: self) { owner, _ in
-                owner.showToastMsg(msg: "아이디 또는 비밀번호를 입력해주세요.")
+                owner.showToastMsg(msg: Localized.login_invalid.text)
             }
             .disposed(by: disposeBag)
         

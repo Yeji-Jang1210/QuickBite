@@ -28,6 +28,7 @@ final class DetailPostVM: BaseVM, BaseVMProvider {
     private var post: Post!
     
     init(post: Post){
+        super.init()
         self.post = post
     }
     
@@ -60,7 +61,8 @@ final class DetailPostVM: BaseVM, BaseVMProvider {
         return Output(presentVC: post,
                       dismissButtonTap: input.dismissButtonTap,
                       backgroundImageURL: backgroundImageURL,
-                      bookmarkButtonIsSelected: isSelectedBookmark, toastMessage: toastMessage)
+                      bookmarkButtonIsSelected: isSelectedBookmark, 
+                      toastMessage: toastMessage)
     }
     
     func callBookmarkAPI(isSelected: Bool, completion: @escaping (Bool) -> Void){
@@ -84,6 +86,4 @@ final class DetailPostVM: BaseVM, BaseVMProvider {
             }
             .disposed(by: disposeBag)
     }
-    
-    
 }

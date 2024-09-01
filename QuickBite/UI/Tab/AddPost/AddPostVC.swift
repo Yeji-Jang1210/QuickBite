@@ -10,6 +10,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import Lottie
 
 enum TimeType: CaseIterable {
     case minute
@@ -26,6 +27,20 @@ enum TimeType: CaseIterable {
 }
 
 final class AddPostVC: BaseVC {
+    
+    private let loadAnimation: LottieAnimationView = {
+        let object = LottieAnimationView(name: "loading")
+        object.loopMode = .loop
+        return object
+    }()
+    
+    private lazy var container: UIView = {
+        let object = UIView()
+        object.backgroundColor = UIColor.white.withAlphaComponent(0.4)
+        object.addSubview(loadAnimation)
+        object.isHidden = true
+        return object
+    }()
     
     private lazy var scrollView = {
         let object = UIScrollView()
@@ -200,6 +215,8 @@ final class AddPostVC: BaseVC {
     override func configureHierarchy() {
         super.configureHierarchy()
         view.addSubview(scrollView)
+        view.addSubview(container)
+        
         scrollView.addSubview(contentsView)
         
         contentsView.addSubview(firstTitleLabel)
@@ -227,6 +244,16 @@ final class AddPostVC: BaseVC {
     
     override func configureLayout() {
         super.configureLayout()
+        
+        container.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        loadAnimation.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.5)
+            make.height.equalTo(loadAnimation.snp.width)
+        }
         
         scrollView.snp.makeConstraints { make in
             make.width.equalToSuperview()
@@ -461,6 +488,17 @@ final class AddPostVC: BaseVC {
             .asDriver(onErrorJustReturn: ())
             .drive(with: self) { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.loadAnimation
+            .drive(with: self){ owner, isLoading in
+                owner.container.isHidden = !isLoading
+                if isLoading {
+                    owner.loadAnimation.play()
+                } else {
+                    owner.loadAnimation.stop()
+                }
             }
             .disposed(by: disposeBag)
             

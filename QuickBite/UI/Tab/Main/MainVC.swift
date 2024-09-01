@@ -10,12 +10,14 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import Toast
+import iamport_ios
+import WebKit
 
 final class MainVC: BaseVC {
     
     private var titleLabel = {
         let object = UILabel()
-        object.text = "오늘의 레시피"
+        object.text = Localized.todayRecipes.title
         object.font = Font.semiBold(.large)
         object.textColor = Color.primaryColor
         return object
@@ -23,8 +25,16 @@ final class MainVC: BaseVC {
     
     private var descriptionLabel = {
         let object = UILabel()
-        object.text = "따끈따끈한 레시피들을 둘러보세요 🤤"
+        object.text = Localized.todayRecipes.description
         object.font = Font.regular(.small)
+        return object
+    }()
+    
+    private var paymentTitleLabel = {
+        let object = UILabel()
+        object.font = Font.semiBold(.medium)
+        object.text = Localized.main_payment.text
+        object.textColor = Color.primaryColor
         return object
     }()
     
@@ -36,6 +46,18 @@ final class MainVC: BaseVC {
         object.register(MainRecipeCollectionViewCell.self, forCellWithReuseIdentifier: MainRecipeCollectionViewCell.identifier)
         object.decelerationRate = .fast
         object.showsHorizontalScrollIndicator = false
+        return object
+    }()
+    
+    private lazy var mealKitCollectionView = {
+        let width =  (UIScreen.main.bounds.width - 56) / 2
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: width, height: width * 1.2)
+        layout.scrollDirection = .horizontal
+        
+        let object = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        object.register(MealKitPaymentCollectionViewCell.self, forCellWithReuseIdentifier: MealKitPaymentCollectionViewCell.identifier)
+        object.showsVerticalScrollIndicator = false
         return object
     }()
     
@@ -54,10 +76,18 @@ final class MainVC: BaseVC {
         return object
     }()
     
+    private lazy var webView = {
+        let object = WKWebView()
+        object.backgroundColor = UIColor.clear
+        return object
+    }()
+    
     private var viewModel: MainVM!
     private let bookmarkButtonTap = PublishRelay<Post>()
     private let callPostAPI = PublishRelay<Void>()
-    
+    private let callMealKitPostAPI = PublishRelay<Void>()
+    private let passPaymentInfo = PublishRelay<Post>()
+
     init(title: String = "", isChild: Bool = false, viewModel: MainVM) {
         super.init(title: title, isChild: isChild)
         self.viewModel = viewModel
@@ -70,6 +100,7 @@ final class MainVC: BaseVC {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         callPostAPI.accept(())
+        callMealKitPostAPI.accept(())
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,7 +113,9 @@ final class MainVC: BaseVC {
         view.addSubview(titleLabel)
         view.addSubview(descriptionLabel)
         view.addSubview(collectionView)
+        view.addSubview(mealKitCollectionView)
         view.addSubview(addPostButton)
+        view.addSubview(paymentTitleLabel)
     }
     
     override func configureLayout() {
@@ -108,12 +141,26 @@ final class MainVC: BaseVC {
             make.size.equalTo(48)
             make.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
+        
+        paymentTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom)
+                .offset(30)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+        }
+        
+        mealKitCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(paymentTitleLabel.snp.top).offset(-10)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     
     override func bind() {
         super.bind()
         
-        let input = MainVM.Input(callPostAPI: callPostAPI,
+        let input = MainVM.Input(callPostAPI: callPostAPI, 
+                                 callMealKitPostAPI: callMealKitPostAPI,
+                                 passPaymentInfo: passPaymentInfo,
                                  addPostButtonTap: addPostButton.rx.tap,
                                  modelSelected: collectionView.rx.modelSelected(Post.self))
         let output = viewModel.transform(input: input)
@@ -125,8 +172,9 @@ final class MainVC: BaseVC {
             cell.bookmarkButton.rx.tap
                 .bind(with: self) { owner, _ in
                     owner.viewModel.callBookmarkAPI(post: item, isSelected: cell.bookmarkButton.isSelected){ result in
-                        owner.view.makeToast(result ? "저장되었습니다." : "삭제되었습니다.")
+                        owner.showToastMsg(msg: result ? Localized.isSave.text : Localized.isDelete.text)
                         owner.callPostAPI.accept(())
+                        owner.callMealKitPostAPI.accept(())
                     }
                 }
                 .disposed(by: cell.disposeBag)
@@ -134,9 +182,22 @@ final class MainVC: BaseVC {
             return cell
         }
         
+        let mealKitDatasource = RxCollectionViewSectionedReloadDataSource<PostSectionModel>{
+            dataSource, collectionView, indexPath, item in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MealKitPaymentCollectionViewCell.identifier, for: indexPath) as! MealKitPaymentCollectionViewCell
+            
+            cell.setData(item)
+            cell.paymentButton.rx.tap
+                .bind(with: self) { owner, _ in
+                    owner.passPaymentInfo.accept(item)
+                }
+                .disposed(by: cell.disposeBag)
+            return cell
+        }
+        
         output.addPostButtonTap
             .bind(with: self){ owner, _ in
-                owner.navigationController?.pushViewController(AddPostVC(title: "레시피 등록", isChild: true), animated: true)
+                owner.navigationController?.pushViewController(AddPostVC(title: Localized.add_post_title.title, isChild: true), animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -151,5 +212,46 @@ final class MainVC: BaseVC {
             }
             .disposed(by: disposeBag)
         
+        output.mealKitItems
+            .drive(mealKitCollectionView.rx.items(dataSource: mealKitDatasource))
+            .disposed(by: disposeBag)
+        
+        output.payment
+            .bind(with: self) { owner, result in
+                if let nav = owner.navigationController {
+                    nav.navigationBar.isHidden = false
+                    Iamport.shared.payment(navController: nav,
+                                           userCode: APIInfo.userCode,
+                                                  payment: result.0) { iamportResponse in
+                        if let response = iamportResponse {
+                            print(">>>>> payment imp_uid: \(response.imp_uid ?? "no value")")
+                            print(">>>>> payment postid: \(result.1)")
+                            dump(response)
+                            owner.viewModel.validatePaymentResponse(response, result.1)
+                        }
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.toastMessage
+            .bind(with: self) { owner, msg in
+                owner.showToastMsg(msg: msg)
+            }
+            .disposed(by: disposeBag)
+        
+    }
+    
+    func createLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.7))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = .fixed(8)
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 8
+        section.contentInsets = .init(top: 0, leading: 8, bottom: 0, trailing: 8)
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
     }
 }

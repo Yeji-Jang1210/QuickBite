@@ -68,8 +68,8 @@ final class DetailPostContentVC: BaseVC {
     
     private let expandableButton = {
         let object = UIButton()
-        object.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-        object.setImage(UIImage(systemName: "chevron.up"), for: .selected)
+        object.setImage(ImageAssets.downChevron, for: .normal)
+        object.setImage(ImageAssets.upChevron, for: .selected)
         object.tintColor = .darkGray
         return object
     }()
@@ -281,9 +281,9 @@ final class DetailPostContentVC: BaseVC {
         }
         
         pageControl.snp.makeConstraints { make in
-            make.top.equalTo(stepCollectionView.snp.bottom)
+            make.top.equalTo(stepCollectionView.snp.bottom).offset(-20)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-40)
+            make.bottom.equalToSuperview().offset(-20)
         }
     }
     
@@ -292,7 +292,7 @@ final class DetailPostContentVC: BaseVC {
         
         let input = DetailPostContentVM.Input(expandableButtonTap: expandableButton.rx.tap,
         pageContentOffset: stepCollectionView.rx.contentOffset,
-        pageValueChanged: pageControl.rx.controlEvent(.valueChanged))
+                                              pageValueChanged: pageControl.rx.controlEvent(.valueChanged))
         let output = viewModel.transform(input: input)
         
         output.expandableButtonIsSelected

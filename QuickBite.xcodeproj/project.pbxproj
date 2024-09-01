@@ -108,6 +108,10 @@
 		B890F7902C7FEC6A003EAEBE /* BookmarkSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B890F78F2C7FEC6A003EAEBE /* BookmarkSectionModel.swift */; };
 		B8AF81B12C80A6CB00C3EBF9 /* DetailPostContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF81B02C80A6CB00C3EBF9 /* DetailPostContentVC.swift */; };
 		B8AF81B52C80B86C00C3EBF9 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF81B42C80B86C00C3EBF9 /* CircleButton.swift */; };
+		B8FE8AE32C84786E00D7218F /* MealKitPaymentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FE8AE22C84786E00D7218F /* MealKitPaymentCollectionViewCell.swift */; };
+		B8FE8AE52C84A88200D7218F /* PaymentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FE8AE42C84A88200D7218F /* PaymentError.swift */; };
+		B8FE8AE82C84AD9800D7218F /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = B8FE8AE72C84AD9800D7218F /* loading.json */; };
+		B8FE8AEB2C84ADC800D7218F /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B8FE8AEA2C84ADC800D7218F /* Lottie */; };
 		B8FFA99B2C7F2A8E004DCD94 /* EditProfileError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFA99A2C7F2A8E004DCD94 /* EditProfileError.swift */; };
 		B8FFD8502C80C24E00F21F99 /* UIWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFD84F2C80C24E00F21F99 /* UIWindow+Extension.swift */; };
 		B8FFD8522C80C90D00F21F99 /* DetailPostContentVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFD8512C80C90D00F21F99 /* DetailPostContentVM.swift */; };
@@ -117,6 +121,9 @@
 		B8FFD85A2C82DF0A00F21F99 /* DetailSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFD8592C82DF0A00F21F99 /* DetailSectionModel.swift */; };
 		B8FFD85E2C82EEA700F21F99 /* RecipesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFD85D2C82EEA700F21F99 /* RecipesVM.swift */; };
 		B8FFD8612C82F01A00F21F99 /* RecipesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFD8602C82F01A00F21F99 /* RecipesCollectionViewCell.swift */; };
+		B8FFD8682C84631D00F21F99 /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = B8FFD8672C84631D00F21F99 /* iamport-ios */; };
+		B8FFD86A2C846DC300F21F99 /* PaymentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFD8692C846DC300F21F99 /* PaymentAPI.swift */; };
+		B8FFD86C2C846E4900F21F99 /* PaymentParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FFD86B2C846E4900F21F99 /* PaymentParams.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -211,6 +218,9 @@
 		B890F78F2C7FEC6A003EAEBE /* BookmarkSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkSectionModel.swift; sourceTree = "<group>"; };
 		B8AF81B02C80A6CB00C3EBF9 /* DetailPostContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPostContentVC.swift; sourceTree = "<group>"; };
 		B8AF81B42C80B86C00C3EBF9 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
+		B8FE8AE22C84786E00D7218F /* MealKitPaymentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealKitPaymentCollectionViewCell.swift; sourceTree = "<group>"; };
+		B8FE8AE42C84A88200D7218F /* PaymentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentError.swift; sourceTree = "<group>"; };
+		B8FE8AE72C84AD9800D7218F /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		B8FFA99A2C7F2A8E004DCD94 /* EditProfileError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileError.swift; sourceTree = "<group>"; };
 		B8FFD84F2C80C24E00F21F99 /* UIWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
 		B8FFD8512C80C90D00F21F99 /* DetailPostContentVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPostContentVM.swift; sourceTree = "<group>"; };
@@ -220,6 +230,8 @@
 		B8FFD8592C82DF0A00F21F99 /* DetailSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSectionModel.swift; sourceTree = "<group>"; };
 		B8FFD85D2C82EEA700F21F99 /* RecipesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesVM.swift; sourceTree = "<group>"; };
 		B8FFD8602C82F01A00F21F99 /* RecipesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesCollectionViewCell.swift; sourceTree = "<group>"; };
+		B8FFD8692C846DC300F21F99 /* PaymentAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentAPI.swift; sourceTree = "<group>"; };
+		B8FFD86B2C846E4900F21F99 /* PaymentParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentParams.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,7 +240,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B822CA2B2C6C71ED00FAA59E /* Differentiator in Frameworks */,
+				B8FE8AEB2C84ADC800D7218F /* Lottie in Frameworks */,
 				B822CA282C6C71D800FAA59E /* RxSwift in Frameworks */,
+				B8FFD8682C84631D00F21F99 /* iamport-ios in Frameworks */,
 				B822CA262C6C71D800FAA59E /* RxRelay in Frameworks */,
 				B822CA212C6C71C500FAA59E /* Toast in Frameworks */,
 				B822CA1E2C6C71BD00FAA59E /* Kingfisher in Frameworks */,
@@ -265,6 +279,7 @@
 		B822CA002C6C70C000FAA59E /* QuickBite */ = {
 			isa = PBXGroup;
 			children = (
+				B8FE8AE62C84AD8000D7218F /* Resource */,
 				B835F1482C7E06870006B718 /* Error */,
 				B822CA502C6C7BCA00FAA59E /* Font */,
 				B822CA372C6C73D300FAA59E /* Network */,
@@ -464,6 +479,7 @@
 			children = (
 				B822CA842C6D9B5200FAA59E /* UserAPI.swift */,
 				B822CA882C6D9B6300FAA59E /* PostAPI.swift */,
+				B8FFD8692C846DC300F21F99 /* PaymentAPI.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -473,6 +489,7 @@
 			children = (
 				B822CA8C2C6D9D3700FAA59E /* UserParams.swift */,
 				B835F1352C7CD54D0006B718 /* PostParams.swift */,
+				B8FFD86B2C846E4900F21F99 /* PaymentParams.swift */,
 			);
 			path = Params;
 			sourceTree = "<group>";
@@ -494,6 +511,7 @@
 				B835F1102C7B5F700006B718 /* MainRecipeCollectionViewCell.swift */,
 				B890F78D2C7FEBD7003EAEBE /* BookmarkViewModel.swift */,
 				B890F78F2C7FEC6A003EAEBE /* BookmarkSectionModel.swift */,
+				B8FE8AE22C84786E00D7218F /* MealKitPaymentCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -537,6 +555,7 @@
 				B822CA972C71F94100FAA59E /* TokenError.swift */,
 				B822CA9B2C72548E00FAA59E /* SignUpError.swift */,
 				B8FFA99A2C7F2A8E004DCD94 /* EditProfileError.swift */,
+				B8FE8AE42C84A88200D7218F /* PaymentError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -573,6 +592,14 @@
 				B835F14F2C7E13CA0006B718 /* PostListVM.swift */,
 			);
 			path = Tab;
+			sourceTree = "<group>";
+		};
+		B8FE8AE62C84AD8000D7218F /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				B8FE8AE72C84AD9800D7218F /* loading.json */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		B8FFD85F2C82EFA500F21F99 /* Cell */ = {
@@ -612,6 +639,8 @@
 				B822CA4E2C6C7A1800FAA59E /* SnapKit */,
 				B822CA802C6D9A8700FAA59E /* Moya */,
 				B851AA172C775AFE003901F0 /* Tabman */,
+				B8FFD8672C84631D00F21F99 /* iamport-ios */,
+				B8FE8AEA2C84ADC800D7218F /* Lottie */,
 			);
 			productName = QuickBite;
 			productReference = B822C9FE2C6C70C000FAA59E /* QuickBite.app */;
@@ -651,6 +680,8 @@
 				B822CA4D2C6C7A1800FAA59E /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B822CA7F2C6D9A8700FAA59E /* XCRemoteSwiftPackageReference "Moya" */,
 				B851AA162C775AFE003901F0 /* XCRemoteSwiftPackageReference "Tabman" */,
+				B8FFD8662C84631D00F21F99 /* XCRemoteSwiftPackageReference "iamport-ios" */,
+				B8FE8AE92C84ADC800D7218F /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = B822C9FF2C6C70C000FAA59E /* Products */;
 			projectDirPath = "";
@@ -674,6 +705,7 @@
 				B822CA5A2C6C7BD800FAA59E /* MaruBuri-Light.otf in Resources */,
 				B822CA582C6C7BD800FAA59E /* MaruBuri-ExtraLight.otf in Resources */,
 				B822CA572C6C7BD800FAA59E /* MaruBuri-Regular.otf in Resources */,
+				B8FE8AE82C84AD9800D7218F /* loading.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -719,16 +751,19 @@
 				B835F1292C7C47340006B718 /* RecipeIngredientView.swift in Sources */,
 				B835F1172C7B87C70006B718 /* UIView+Extension.swift in Sources */,
 				B835F10F2C7B5EC30006B718 /* MainRecipeSectionModel.swift in Sources */,
+				B8FFD86A2C846DC300F21F99 /* PaymentAPI.swift in Sources */,
 				B835F1502C7E13CA0006B718 /* PostListVM.swift in Sources */,
 				B835F14E2C7E06AF0006B718 /* FetchUserPostError.swift in Sources */,
 				B822CA8D2C6D9D3700FAA59E /* UserParams.swift in Sources */,
 				B822CA912C6DA43800FAA59E /* MoyaLoggingPlugin.swift in Sources */,
 				B835F11C2C7B94730006B718 /* AddPostVC.swift in Sources */,
 				B822CA6C2C6C9FDA00FAA59E /* SignUpVC.swift in Sources */,
+				B8FE8AE32C84786E00D7218F /* MealKitPaymentCollectionViewCell.swift in Sources */,
 				B851AA1F2C775EE7003901F0 /* PostCollectionViewCell.swift in Sources */,
 				B835F14C2C7E06A20006B718 /* UploadPostError.swift in Sources */,
 				B822CA422C6C760400FAA59E /* BaseVM.swift in Sources */,
 				B835F10A2C7888A10006B718 /* ValidationPhoneNumber.swift in Sources */,
+				B8FE8AE52C84A88200D7218F /* PaymentError.swift in Sources */,
 				B851AA1B2C775C28003901F0 /* TabVC.swift in Sources */,
 				B835F1152C7B72D10006B718 /* IconLabelView.swift in Sources */,
 				B822CA872C6D9B5E00FAA59E /* APIService.swift in Sources */,
@@ -751,6 +786,7 @@
 				B822CA762C6D924A00FAA59E /* MainTBC.swift in Sources */,
 				B851AA212C775F83003901F0 /* PostSectionModel.swift in Sources */,
 				B8FFD8542C81906B00F21F99 /* Notification+Extension.swift in Sources */,
+				B8FFD86C2C846E4900F21F99 /* PaymentParams.swift in Sources */,
 				B835F1082C78882F0006B718 /* ValidationBirthday.swift in Sources */,
 				B87C64102C741888000880FC /* ProfileImageView.swift in Sources */,
 				B8FFD8562C81949A00F21F99 /* VerticalImageLabel.swift in Sources */,
@@ -921,9 +957,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuickBite/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "한끼뚝딱";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진을 업로드 하기 위한 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -952,9 +990,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuickBite/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "한끼뚝딱";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사진을 업로드 하기 위한 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1068,6 +1108,22 @@
 				minimumVersion = 3.2.0;
 			};
 		};
+		B8FE8AE92C84ADC800D7218F /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
+			};
+		};
+		B8FFD8662C84631D00F21F99 /* XCRemoteSwiftPackageReference "iamport-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iamport/iamport-ios?tab=readme-ov-file";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1130,6 +1186,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B851AA162C775AFE003901F0 /* XCRemoteSwiftPackageReference "Tabman" */;
 			productName = Tabman;
+		};
+		B8FE8AEA2C84ADC800D7218F /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B8FE8AE92C84ADC800D7218F /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		B8FFD8672C84631D00F21F99 /* iamport-ios */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B8FFD8662C84631D00F21F99 /* XCRemoteSwiftPackageReference "iamport-ios" */;
+			productName = "iamport-ios";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
