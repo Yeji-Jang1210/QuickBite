@@ -24,7 +24,7 @@ final class SignInVM: BaseVM, BaseVMProvider {
         let isLoginSucceeded: PublishRelay<Bool>
         let signUpButtonTapped: ControlEvent<Void>
     }
-    
+
     func transform(input: Input) -> Output {
         
         let isLoginValid = PublishRelay<Bool>()
@@ -46,18 +46,23 @@ final class SignInVM: BaseVM, BaseVMProvider {
             .filter { $0 }
             .withLatestFrom(Observable.combineLatest(input.emailText, input.passwordText))
             .map { Userparams.LoginRequest(email: $0, password: $1)}
-            .flatMap{ param in
-                UserAPI.shared.networking(service: .login(param: param), type: Userparams.LoginResponse.self)
+            .flatMap{ [weak self] param in
+                LottieIndicator.shared.show()
+                return UserAPI.shared.networking(service: .login(param: param), type: Userparams.LoginResponse.self)
             }
             .subscribe(with: self) { owner, networkResult in
                 switch networkResult {
                 case .success(let result):
                     UserDefaultsManager.shared.setUserDetauls(result)
+                    LottieIndicator.shared.show()
                     isLoginSucceeded.accept(true)
                 case .error(let statusCode):
-                    guard let error = SignInError(rawValue: statusCode) else { errorMessage.accept("알수없는 오류")
+                    guard let error = SignInError(rawValue: statusCode) else {
+                        LottieIndicator.shared.show()
+                        errorMessage.accept("알수없는 오류")
                         return
                     }
+                    LottieIndicator.shared.show()
                     errorMessage.accept(error.message)
                 }
             }

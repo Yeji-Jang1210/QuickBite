@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import Lottie
+
 import RxSwift
 import RxCocoa
 
@@ -90,7 +92,7 @@ final class SignInVC: BaseVC {
     
     override func configureLayout() {
         super.configureLayout()
-        
+    
         titleImageView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(40)
             make.bottom.equalTo(stackView.snp.top).offset(-40)
@@ -161,7 +163,5 @@ final class SignInVC: BaseVC {
                 owner.navigationController?.pushViewController(SignUpVC(title: Localized.signup.title, isChild: true), animated: true)
             }
             .disposed(by: disposeBag)
-        
-        
     }
 }

@@ -14,7 +14,6 @@ final class AddPostVM: BaseVM, BaseVMProvider {
     private let steps = BehaviorRelay<[Step?]>(value: Array(repeating: nil, count: 1))
     private let ingredients = BehaviorRelay<[Ingredient]>(value: [])
     private let sources = BehaviorRelay<[Source]>(value: [])
-    private let isLoading = PublishRelay<Bool>()
     
     struct Input {
         let titleText: ControlProperty<String>
@@ -47,7 +46,6 @@ final class AddPostVM: BaseVM, BaseVMProvider {
         let isAllAlowed: Driver<Bool>
         let toastMessage: Driver<String>
         let addPostSucceess: PublishRelay<Void>
-        let loadAnimation: Driver<Bool>
     }
     
     func transform(input: Input) -> Output {
@@ -156,7 +154,7 @@ final class AddPostVM: BaseVM, BaseVMProvider {
             .debug("저장버튼")
             .withLatestFrom(steps)
             .flatMap { [weak self] steps in
-                self?.isLoading.accept(true)
+                LottieIndicator.shared.show()
                 
                 return Observable.just(PostParams.FileUploadRequest(files: steps.compactMap{$0?.imageData}))
             }
@@ -216,25 +214,24 @@ final class AddPostVM: BaseVM, BaseVMProvider {
             .bind(with: self){ owner, networkResult in
                 switch networkResult {
                 case .success(_):
-                    owner.isLoading.accept(false)
+                    LottieIndicator.shared.dismiss()
                     toastMessage.accept("저장되었습니다.")
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         addPostSucceess.accept(())
                     }
                 case .error(let statusCode):
                     guard let error = UploadPostError(rawValue: statusCode) else {
-                        owner.isLoading.accept(false)
+                        LottieIndicator.shared.dismiss()
                         toastMessage.accept("알수없는 오류입니다.")
                         return
                     }
-                    owner.isLoading.accept(false)
+                    LottieIndicator.shared.dismiss()
                     toastMessage.accept(error.message)
                 }
             }
             .disposed(by: disposeBag)
 
         let errorMessage = toastMessage.asDriver(onErrorJustReturn: "")
-        let loadAnimation = isLoading.asDriver(onErrorJustReturn: false)
         
         return Output(titleText: input.titleText,
                       stepItems: stepItems,
@@ -246,7 +243,6 @@ final class AddPostVM: BaseVM, BaseVMProvider {
                       timeText: timeText,
                       isAllAlowed: isAllAlowed, 
                       toastMessage: errorMessage, 
-                      addPostSucceess: addPostSucceess, 
-                      loadAnimation: loadAnimation)
+                      addPostSucceess: addPostSucceess)
     }
 }

@@ -77,19 +77,23 @@ final class SignUpVM: BaseVM, BaseVMProvider {
             .withLatestFrom(input.emailText)
             .map{ Userparams.ValidationEmailRequest(email: $0) }
             .flatMap { param in
-                UserAPI.shared.networking(service: .validationEmail(param: param), type: Userparams.StatusMessageResponse.self)
+                LottieIndicator.shared.show()
+                return UserAPI.shared.networking(service: .validationEmail(param: param), type: Userparams.StatusMessageResponse.self)
             }
             .subscribe(with: self){ owner, networkResult in
                 switch networkResult {
                 case .success(let result):
                     emailValidMessage.accept(result.message)
+                    LottieIndicator.shared.dismiss()
                     emailIsValid.accept(true)
                 case .error(let statusCode):
                     guard let error = ValidationEmailError(rawValue: statusCode) else {
+                        LottieIndicator.shared.dismiss()
                         emailIsValid.accept(false)
                         errorMessage.accept("알수없는 오류")
                         return
                     }
+                    LottieIndicator.shared.dismiss()
                     emailIsValid.accept(false)
                     emailValidMessage.accept(error.message)
                 }
@@ -170,7 +174,8 @@ final class SignUpVM: BaseVM, BaseVMProvider {
                }
         }
         .flatMapLatest { param in
-            UserAPI.shared.networking(service: .signUp(param: param), type: Userparams.SignupResponse.self)
+            LottieIndicator.shared.show()
+            return UserAPI.shared.networking(service: .signUp(param: param), type: Userparams.SignupResponse.self)
         }
         .withLatestFrom(input.passwordText){ (networkResult, pwd) in
             switch networkResult {
@@ -178,6 +183,7 @@ final class SignUpVM: BaseVM, BaseVMProvider {
                 return Userparams.LoginRequest(email: result.email, password: pwd)
             case .error(let statusCode):
                 if let error = SignUpError(rawValue: statusCode) {
+                    LottieIndicator.shared.dismiss()
                     errorMessage.accept(error.message)
                 }
             }
@@ -192,11 +198,15 @@ final class SignUpVM: BaseVM, BaseVMProvider {
             switch networkResult {
             case .success(let result):
                 UserDefaultsManager.shared.setUserDetauls(result)
+                LottieIndicator.shared.dismiss()
                 isLoginSuccess.accept(true)
             case .error(let statusCode):
-                guard let error = SignInError(rawValue: statusCode) else { errorMessage.accept("알수없는 오류")
+                guard let error = SignInError(rawValue: statusCode) else {
+                    LottieIndicator.shared.dismiss()
+                    errorMessage.accept("알수없는 오류")
                     return
                 }
+                LottieIndicator.shared.dismiss()
                 errorMessage.accept(error.message)
             }
         }
