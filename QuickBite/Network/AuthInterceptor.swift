@@ -33,7 +33,8 @@ final class AuthInterceptor: RequestInterceptor {
         print(">>>>>retry 진입")
         
         guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 419 else {
-            completion(.doNotRetryWithError(error))
+            NotificationCenter.default.post(name: .refreshTokenExpired, object: nil, userInfo: ["showLoginModel": true])
+            completion(.doNotRetry)
             return
         }
         

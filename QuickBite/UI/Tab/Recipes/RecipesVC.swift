@@ -15,10 +15,13 @@ final class RecipesVC: BaseVC {
     private lazy var collectionView = {
         let object = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         object.register(RecipesCollectionViewCell.self, forCellWithReuseIdentifier: RecipesCollectionViewCell.identifier)
+        object.register(RecipesReusableHeaderView.self,
+                        forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                        withReuseIdentifier: RecipesReusableHeaderView.identifier)
         return object
     }()
     
-    private let datasource = RxCollectionViewSectionedReloadDataSource<PostSectionModel>{
+    private let datasource = RxCollectionViewSectionedReloadDataSource<PostSectionModel>(configureCell: {
         dataSource, collectionView, indexPath, item in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecipesCollectionViewCell.identifier, for: indexPath) as! RecipesCollectionViewCell
         
@@ -27,6 +30,14 @@ final class RecipesVC: BaseVC {
         }
         cell.setCount(item.likes.count)
         return cell
+    }) { dataSource, collectionView, kind, indexPath in
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RecipesReusableHeaderView.identifier, for: indexPath) as! RecipesReusableHeaderView
+            return header
+        default:
+            fatalError()
+        }
     }
     
     private let viewModel = RecipesVM()
@@ -106,12 +117,19 @@ final class RecipesVC: BaseVC {
     func createLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.5))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
         group.interItemSpacing = .fixed(8)
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                 elementKind: UICollectionView.elementKindSectionHeader,
+                                                                 alignment: .top)
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 8
         section.contentInsets = .init(top: 0, leading: 8, bottom: 0, trailing: 8)
+        section.boundarySupplementaryItems = [header]
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
