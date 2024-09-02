@@ -15,6 +15,15 @@ import WebKit
 
 final class MainVC: BaseVC {
     
+    private lazy var scrollView = {
+        let object = UIScrollView()
+        object.showsHorizontalScrollIndicator = false
+        object.addSubview(contentsView)
+        return object
+    }()
+    
+    private let contentsView = UIView()
+    
     private var titleLabel = {
         let object = UILabel()
         object.text = Localized.todayRecipes.title
@@ -50,13 +59,9 @@ final class MainVC: BaseVC {
     }()
     
     private lazy var mealKitCollectionView = {
-        let width =  (UIScreen.main.bounds.width - 56) / 2
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: width, height: width * 1.2)
-        layout.scrollDirection = .horizontal
-        
-        let object = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let object = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         object.register(MealKitPaymentCollectionViewCell.self, forCellWithReuseIdentifier: MealKitPaymentCollectionViewCell.identifier)
+        object.showsHorizontalScrollIndicator = false
         object.showsVerticalScrollIndicator = false
         return object
     }()
@@ -110,30 +115,43 @@ final class MainVC: BaseVC {
     
     override func configureHierarchy() {
         super.configureHierarchy()
-        view.addSubview(titleLabel)
-        view.addSubview(descriptionLabel)
-        view.addSubview(collectionView)
-        view.addSubview(mealKitCollectionView)
+        view.addSubview(scrollView)
         view.addSubview(addPostButton)
-        view.addSubview(paymentTitleLabel)
+        scrollView.addSubview(contentsView)
+        
+        contentsView.addSubview(titleLabel)
+        contentsView.addSubview(descriptionLabel)
+        contentsView.addSubview(collectionView)
+        contentsView.addSubview(mealKitCollectionView)
+        contentsView.addSubview(paymentTitleLabel)
     }
     
     override func configureLayout() {
         super.configureLayout()
         
+        scrollView.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.verticalEdges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        contentsView.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.verticalEdges.equalToSuperview()
+        }
+        
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalToSuperview().offset(20)
+            make.centerX.equalToSuperview()
         }
         
         descriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(12)
-            make.centerX.equalTo(view.safeAreaLayoutGuide)
+            make.centerX.equalToSuperview()
         }
         
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(20)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.equalToSuperview()
             make.height.equalTo(UIScreen.main.bounds.width * 0.75)
         }
         
@@ -145,13 +163,14 @@ final class MainVC: BaseVC {
         paymentTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(collectionView.snp.bottom)
                 .offset(30)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.leading.equalToSuperview().offset(20)
         }
         
         mealKitCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(paymentTitleLabel.snp.top).offset(-10)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(paymentTitleLabel.snp.bottom).offset(20)
+            make.horizontalEdges.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().offset(-40)
+            make.height.equalTo(470)
         }
     }
     
@@ -243,11 +262,13 @@ final class MainVC: BaseVC {
     }
     
     func createLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.7))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
         group.interItemSpacing = .fixed(8)
+        
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 8
         section.contentInsets = .init(top: 0, leading: 8, bottom: 0, trailing: 8)
