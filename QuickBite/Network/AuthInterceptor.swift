@@ -33,8 +33,7 @@ final class AuthInterceptor: RequestInterceptor {
         print(">>>>>retry 진입")
         
         guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 419 else {
-            NotificationCenter.default.post(name: .refreshTokenExpired, object: nil, userInfo: ["showLoginModel": true])
-            completion(.doNotRetry)
+            completion(.doNotRetryWithError(error))
             return
         }
         
@@ -49,7 +48,9 @@ final class AuthInterceptor: RequestInterceptor {
                     print("😊AccessToken: \(UserDefaultsManager.shared.token)")
                     completion(.retryWithDelay(1))
                 case .error(_):
-                    NotificationCenter.default.post(name: .refreshTokenExpired, object: nil, userInfo: ["showLoginModel": true])
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: .refreshTokenExpired, object: nil, userInfo: ["showLoginModel": true])
+                    }
                     completion(.doNotRetry)
                 }
             }

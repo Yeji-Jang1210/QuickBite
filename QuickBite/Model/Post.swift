@@ -17,4 +17,5 @@ struct Post: Codable {
     let files: [String]
     var likes: [String]
     let buyers: [String]
+    let price: Int?
 }

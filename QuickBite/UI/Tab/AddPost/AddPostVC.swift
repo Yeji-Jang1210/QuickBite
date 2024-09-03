@@ -94,7 +94,7 @@ final class AddPostVC: BaseVC {
     private let stepDataSource = RxCollectionViewSectionedReloadDataSource<StepSectionModel>{
         dataSource, collectionView, indexPath, item in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StepCollectionViewCell.identifier, for: indexPath) as! StepCollectionViewCell
-            
+        
         cell.setData(index: indexPath.row, item)
         return cell
     }
@@ -176,6 +176,33 @@ final class AddPostVC: BaseVC {
         return object
     }()
     
+    private let priceTextLabel = {
+        let object = UILabel()
+        object.text = "🏷️ 금액을 설정해주세요"
+        object.font = Font.semiBold(.medium)
+        object.textColor = Color.primaryColor
+        return object
+    }()
+    
+    private let priceTextField = {
+        let object = BaseTextField()
+        object.imageIsHidden = true
+        return object
+    }()
+    
+    private let priceDescriptionLabel = {
+        let object = UILabel()
+        object.text = "원"
+        object.font = Font.semiBold(.medium)
+        return object
+    }()
+    
+    private lazy var priceInputView = {
+        let object = UIView()
+        [priceTextField, priceDescriptionLabel].map { object.addSubview($0)}
+        return object
+    }()
+    
     private let saveButton = {
         let object = UIBarButtonItem(title: "확인", style: .plain, target: nil, action: nil)
         object.setTitleTextAttributes([.font: Font.boldFont(.medium),
@@ -225,6 +252,9 @@ final class AddPostVC: BaseVC {
         contentsView.addSubview(servingsStepperView)
         contentsView.addSubview(timeLabel)
         contentsView.addSubview(timeInputView)
+        
+        contentsView.addSubview(priceTextLabel)
+        contentsView.addSubview(priceInputView)
     }
     
     override func configureLayout() {
@@ -325,7 +355,6 @@ final class AddPostVC: BaseVC {
         timeInputView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(timeLabel.snp.bottom).offset(12)
-            make.bottom.equalToSuperview()
         }
         
         timeTextField.snp.makeConstraints { make in
@@ -335,6 +364,27 @@ final class AddPostVC: BaseVC {
         
         minuteLabel.snp.makeConstraints { make in
             make.leading.equalTo(timeTextField.snp.trailing).offset(12)
+            make.trailing.centerY.equalToSuperview()
+        }
+        
+        priceTextLabel.snp.makeConstraints { make in
+            make.top.equalTo(timeInputView.snp.bottom).offset(40)
+            make.horizontalEdges.equalToSuperview()
+        }
+        
+        priceInputView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(priceTextLabel.snp.bottom).offset(12)
+            make.bottom.equalToSuperview()
+        }
+        
+        priceTextField.snp.makeConstraints { make in
+            make.width.equalTo(80)
+            make.leading.verticalEdges.equalToSuperview()
+        }
+        
+        priceDescriptionLabel.snp.makeConstraints { make in
+            make.leading.equalTo(priceTextField.snp.trailing).offset(12)
             make.trailing.centerY.equalToSuperview()
         }
         
@@ -366,7 +416,8 @@ final class AddPostVC: BaseVC {
                                     timeText: timeTextField.text.orEmpty,
                                     deleteSources: deleteSources,
                                     appendStep: appendStep,
-                                    saveButtonTap: saveButton.rx.tap)
+                                    saveButtonTap: saveButton.rx.tap, 
+                                    priceText: priceTextField.text.orEmpty)
         
         let output = viewModel.transform(input: input)
         
@@ -463,6 +514,10 @@ final class AddPostVC: BaseVC {
             .drive(with: self) { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
             }
+            .disposed(by: disposeBag)
+        
+        output.priceInputIsHidden
+            .drive(priceTextLabel.rx.isHidden, priceInputView.rx.isHidden)
             .disposed(by: disposeBag)
     }
 }

@@ -85,7 +85,8 @@ final class MainVM: BaseVM, BaseVMProvider {
                         creator: response.creator,
                         files: response.files,
                         likes: response.likes,
-                        buyers: response.buyers
+                        buyers: response.buyers,
+                        price: response.price
                     )
                     
                     return post
@@ -114,7 +115,8 @@ final class MainVM: BaseVM, BaseVMProvider {
                         creator: response.creator,
                         files: response.files,
                         likes: response.likes,
-                        buyers: response.buyers
+                        buyers: response.buyers,
+                        price: response.price
                     )
                     
                     return post

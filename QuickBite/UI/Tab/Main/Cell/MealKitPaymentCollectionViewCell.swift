@@ -20,7 +20,6 @@ final class MealKitPaymentCollectionViewCell: BaseCollectionViewCell {
     
     private let titleLabel = {
         let object = UILabel()
-        object.text = "[밀키트] 맛있는 부대찌개"
         object.numberOfLines = 2
         object.font = Font.semiBold(.small)
         object.textColor = Color.primaryColor
@@ -29,7 +28,6 @@ final class MealKitPaymentCollectionViewCell: BaseCollectionViewCell {
     
     private let priceLabel = {
         let object = UILabel()
-        object.text = "100원"
         object.font = Font.regular(.small)
         return object
     }()
@@ -100,6 +98,10 @@ final class MealKitPaymentCollectionViewCell: BaseCollectionViewCell {
         if let path = post.files.last, let url = URL(string:  "\(APIInfo.baseURL)/v1/\(path)") {
             KingfisherManager.shared.defaultOptions = [.requestModifier(TokenPlugin(token: UserDefaultsManager.shared.token))]
             imageView.kf.setImage(with: url)
+        }
+        
+        if let price = post.price {
+            priceLabel.text = "\(price.formatted())원"
         }
         
         bookmarkLabelView.text = post.likes.count.formatted()

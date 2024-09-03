@@ -32,6 +32,7 @@ final class AddPostVM: BaseVM, BaseVMProvider {
         let deleteSources: PublishRelay<Int>
         let appendStep: PublishRelay<(Step?, Int)>
         let saveButtonTap: ControlEvent<Void>
+        let priceText: ControlProperty<String>
     }
     
     struct Output {
@@ -46,6 +47,7 @@ final class AddPostVM: BaseVM, BaseVMProvider {
         let isAllAlowed: Driver<Bool>
         let toastMessage: Driver<String>
         let addPostSucceess: PublishRelay<Void>
+        let priceInputIsHidden: Driver<Bool>
     }
     
     func transform(input: Input) -> Output {
@@ -153,9 +155,8 @@ final class AddPostVM: BaseVM, BaseVMProvider {
         input.saveButtonTap
             .debug("저장버튼")
             .withLatestFrom(steps)
-            .flatMap { [weak self] steps in
+            .flatMap { steps in
                 LottieIndicator.shared.show()
-                
                 return Observable.just(PostParams.FileUploadRequest(files: steps.compactMap{$0?.imageData}))
             }
             .flatMap {
@@ -201,12 +202,12 @@ final class AddPostVM: BaseVM, BaseVMProvider {
                 return Observable.empty()
             }
             .flatMap { jsonString in
-                Observable.zip(input.titleText, imageFileName){
-                    return ($0, jsonString, $1)
+                Observable.zip(input.titleText, imageFileName, input.priceText){
+                    return ($0, jsonString, $1, $2)
                 }
             }
             .compactMap {
-                PostParams.AddPostRequest(title: $0, content: $1, files: $2)
+                PostParams.AddPostRequest(title: $0, content: $1, files: $2, price: Int($3))
             }
             .flatMap {
                 PostAPI.shared.networking(service: .add(param: $0), type: PostParams.AddPostResponse.self)
@@ -233,6 +234,9 @@ final class AddPostVM: BaseVM, BaseVMProvider {
 
         let errorMessage = toastMessage.asDriver(onErrorJustReturn: "")
         
+        let priceInfoIsHidden = Observable.just(UserDefaultsManager.shared.userId != APIInfo.paymentUserId)
+            .asDriver(onErrorJustReturn: true)
+        
         return Output(titleText: input.titleText,
                       stepItems: stepItems,
                       stepItemSelected: stepItemSelected,
@@ -243,6 +247,7 @@ final class AddPostVM: BaseVM, BaseVMProvider {
                       timeText: timeText,
                       isAllAlowed: isAllAlowed, 
                       toastMessage: errorMessage, 
-                      addPostSucceess: addPostSucceess)
+                      addPostSucceess: addPostSucceess,
+                      priceInputIsHidden: priceInfoIsHidden)
     }
 }

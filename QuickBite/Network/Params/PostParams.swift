@@ -31,6 +31,7 @@ class PostParams {
         let content: String
         var product_id: String = "quickBite"
         let files: [String]?
+        let price: Int?
     }
     
     struct FetchPosts: Codable {
@@ -111,6 +112,7 @@ class PostParams {
         let createdAt: String
         let creator: Creator
         let files: [String]
+        let price: Int?
     }
     
     struct PostResponse: Codable {
@@ -123,6 +125,7 @@ class PostParams {
         let files: [String]
         let likes: [String]
         let buyers: [String]
+        let price: Int?
     }
     
     struct FetchUserPostsResponse: Codable {
