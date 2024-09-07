@@ -15,6 +15,7 @@ enum UserService {
     case validationEmail(param: Userparams.ValidationEmailRequest)
     case refreshToken(param: Userparams.TokenRequest)
     case load
+    case otherUserProfile(userId: String)
     case edit(param: Userparams.EditRequest)
     case withdraw
 }
@@ -43,6 +44,8 @@ extension UserService: TargetType {
             return "v1/users/withdraw"
         case .load, .edit:
             return "/v1/users/me/profile"
+        case .otherUserProfile(let userId):
+            return "/v1/users/\(userId)/profile"
         }
     }
     
@@ -50,7 +53,7 @@ extension UserService: TargetType {
         switch self {
         case .login, .signUp, .validationEmail:
             return .post
-        case .refreshToken, .withdraw, .load:
+        case .refreshToken, .withdraw, .load, .otherUserProfile:
             return .get
         case .edit:
             return .put
@@ -67,7 +70,7 @@ extension UserService: TargetType {
             return .requestJSONEncodable(param)
         case .edit(let param):
             return .uploadMultipart(param.convertMultiPartFormData())
-        case .refreshToken, .withdraw, .load:
+        default:
             return .requestPlain
         }
     }
@@ -82,15 +85,15 @@ extension UserService: TargetType {
                 Header.sesacKey.rawValue: APIInfo.key,
                 Header.refresh.rawValue: param.refreshToken
             ]
-        case .withdraw, .load:
-            return [
-                Header.authorization.rawValue: UserDefaultsManager.shared.token,
-                Header.sesacKey.rawValue: APIInfo.key
-            ]
         case .edit:
             return [
                 Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.contentType.rawValue: Header.multipart.rawValue,
+                Header.sesacKey.rawValue: APIInfo.key
+            ]
+        default:
+            return [
+                Header.authorization.rawValue: UserDefaultsManager.shared.token,
                 Header.sesacKey.rawValue: APIInfo.key
             ]
         }

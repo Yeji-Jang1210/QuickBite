@@ -164,10 +164,10 @@ final class SignUpVM: BaseVM, BaseVMProvider {
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .flatMapLatest { _ in
             Observable.zip(input.emailText,
-                                                   input.passwordText,
-                                                   input.nicknameText,
-                                                   input.phoneNumberText,
-                                                   input.birthdayText)
+                           input.passwordText,
+                           input.nicknameText,
+                           input.phoneNumberText,
+                           input.birthdayText)
                .compactMap { email, password, nick, phoneNum, birthDay -> Userparams.JoinRequest in
                    let user = Userparams.JoinRequest(email: email, password: password, nick: nick, phoneNum: phoneNum, birthDay: birthDay)
                    return user

@@ -100,6 +100,8 @@ class Userparams {
         }
     }
     
+    
+//MARK: - Response
     struct LoginResponse: Codable {
         let email: String
         let userId: String
@@ -175,6 +177,20 @@ class Userparams {
             case nick
             case phoneNum
             case birthDay
+            case profileImage
+            case posts
+        }
+    }
+    
+    struct OtherUserResponse: Codable {
+        let userId: String
+        let nick: String
+        let profileImage: String?
+        let posts: [String]
+        
+        enum CodingKeys: String, CodingKey {
+            case userId = "user_id"
+            case nick
             case profileImage
             case posts
         }

@@ -37,7 +37,7 @@ class MainTBC: UITabBarController {
             case .recipes:
                 return UINavigationController(rootViewController: RecipesVC())
             case .profile:
-                return UINavigationController(rootViewController: ProfileVC(viewModel: ProfileVM()))
+                return UINavigationController(rootViewController: ProfileVC(viewModel: ProfileVM(type: .isUser)))
             }
         }
     }

@@ -18,7 +18,7 @@ final class DetailPostVM: BaseVM, BaseVMProvider {
     }
     
     struct Output {
-        let presentVC: Observable<Post>
+        let presentVC: Driver<Post?>
         let dismissButtonTap: ControlEvent<Void>
         let backgroundImageURL: Driver<URL?>
         let bookmarkButtonIsSelected: Driver<Bool>
@@ -58,7 +58,13 @@ final class DetailPostVM: BaseVM, BaseVMProvider {
         let isSelectedBookmark = isSelectBookmark.asDriver(onErrorJustReturn: false)
         let toastMessage = receiveToastMessage.asDriver(onErrorJustReturn: "")
         
-        return Output(presentVC: post,
+        let presentVC = input.presentVC
+            .withLatestFrom(post)
+            .map{ $0 }
+            .asDriver(onErrorJustReturn: nil)
+            
+        
+        return Output(presentVC: presentVC,
                       dismissButtonTap: input.dismissButtonTap,
                       backgroundImageURL: backgroundImageURL,
                       bookmarkButtonIsSelected: isSelectedBookmark, 

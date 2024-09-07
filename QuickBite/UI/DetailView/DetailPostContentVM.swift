@@ -12,6 +12,7 @@ import RxCocoa
 final class DetailPostContentVM: BaseVM, BaseVMProvider{
     struct Input {
         let expandableButtonTap: ControlEvent<Void>
+        let creatorButtonTap: ControlEvent<Void>
         let pageContentOffset: ControlProperty<CGPoint>
         let pageValueChanged: ControlEvent<()>
     }
@@ -22,6 +23,7 @@ final class DetailPostContentVM: BaseVM, BaseVMProvider{
         
         let titleText: Driver<String>
         let descriptionText: Driver<String>
+        let creatorButtonTap: Driver<String>
         let creatorProfilePath: Driver<String?>
         let creatorNicknameText: Driver<String>
         let timeText: Driver<String>
@@ -86,10 +88,16 @@ final class DetailPostContentVM: BaseVM, BaseVMProvider{
         
         let steps = post.map{ $0.content.steps }.asDriver(onErrorJustReturn: [])
         
+        let creatorButtonTap = input.creatorButtonTap
+            .withLatestFrom(post)
+            .map { $0.creator.user_id }
+            .asDriver(onErrorJustReturn: "")
+        
         return Output(expandableButtonIsSelected: isExpandable,
                       descriptionNumberOfLines: descriptionNumberOfLines,
                       titleText: titleText,
-                      descriptionText: description, 
+                      descriptionText: description,
+                      creatorButtonTap: creatorButtonTap,
                       creatorProfilePath: creatorProfilePath,
                       creatorNicknameText: creatorNickname,
                       timeText: timeText,

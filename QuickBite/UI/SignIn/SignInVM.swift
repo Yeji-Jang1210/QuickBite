@@ -54,15 +54,15 @@ final class SignInVM: BaseVM, BaseVMProvider {
                 switch networkResult {
                 case .success(let result):
                     UserDefaultsManager.shared.setUserDetauls(result)
-                    LottieIndicator.shared.show()
+                    LottieIndicator.shared.dismiss()
                     isLoginSucceeded.accept(true)
                 case .error(let statusCode):
                     guard let error = SignInError(rawValue: statusCode) else {
-                        LottieIndicator.shared.show()
+                        LottieIndicator.shared.dismiss()
                         errorMessage.accept("알수없는 오류")
                         return
                     }
-                    LottieIndicator.shared.show()
+                    LottieIndicator.shared.dismiss()
                     errorMessage.accept(error.message)
                 }
             }

@@ -38,6 +38,11 @@ final class DetailPostContentVC: BaseVC {
         return object
     }()
     
+    private let creatorButton = {
+        let object = UIButton()
+        return object
+    }()
+    
     private let creatorLabel = {
         let object = UILabel()
         object.text = "🧑🏻‍🍳 요리사"
@@ -173,6 +178,7 @@ final class DetailPostContentVC: BaseVC {
     }()
     
     private var viewModel: DetailPostContentVM!
+    var sendUserId: ((String) -> Void)?
     
     convenience init(viewModel: DetailPostContentVM!) {
         self.init()
@@ -202,6 +208,7 @@ final class DetailPostContentVC: BaseVC {
         contentsView.addSubview(stepTitleLabel)
         contentsView.addSubview(stepCollectionView)
         contentsView.addSubview(pageControl)
+        contentsView.addSubview(creatorButton)
     }
     
     override func configureLayout() {
@@ -242,6 +249,11 @@ final class DetailPostContentVC: BaseVC {
             make.centerY.equalTo(creatorImageView)
             make.leading.equalTo(creatorImageView.snp.trailing).offset(12)
             make.trailing.equalToSuperview().offset(-40)
+        }
+        
+        creatorButton.snp.makeConstraints { make in
+            make.trailing.top.equalTo(creatorNicknameLabel)
+            make.leading.bottom.equalTo(creatorImageView)
         }
         
         cookInfoStackView.snp.makeConstraints { make in
@@ -291,6 +303,7 @@ final class DetailPostContentVC: BaseVC {
         super.bind()
         
         let input = DetailPostContentVM.Input(expandableButtonTap: expandableButton.rx.tap,
+                                              creatorButtonTap: creatorButton.rx.tap,
         pageContentOffset: stepCollectionView.rx.contentOffset,
                                               pageValueChanged: pageControl.rx.controlEvent(.valueChanged))
         let output = viewModel.transform(input: input)
@@ -374,6 +387,13 @@ final class DetailPostContentVC: BaseVC {
                 let indexPath = IndexPath(item: page, section: 0)
                 self.stepCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
             })
+            .disposed(by: disposeBag)
+        
+        output.creatorButtonTap
+            .drive(with: self){ owner, id in
+                owner.sendUserId?(id)
+                owner.dismiss(animated: true)
+            }
             .disposed(by: disposeBag)
     }
 }

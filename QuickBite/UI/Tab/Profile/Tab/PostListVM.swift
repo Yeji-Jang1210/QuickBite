@@ -35,8 +35,8 @@ final class PostListVM: BaseVM, BaseVMProvider {
             .compactMap { self.type }
             .flatMap {
                 switch $0 {
-                case .userPost:
-                    return Observable.just(PostParams.FetchUserPostsRequest(id: UserDefaultsManager.shared.userId))
+                case .userPost(let userId):
+                    return Observable.just(PostParams.FetchUserPostsRequest(id: userId))
                         .flatMap {
                             PostAPI.shared.networking(service: .fetchUserPosts(param: $0), type: PostParams.FetchUserPostsResponse.self)
                         }

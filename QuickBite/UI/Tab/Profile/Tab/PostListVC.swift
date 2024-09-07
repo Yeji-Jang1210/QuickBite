@@ -74,7 +74,8 @@ final class PostListVC: BaseVC {
         
         output.modelSelected
             .bind(with: self){ owner, post in
-                NotificationCenter.default.post(name: .pushDetailView, object: post)
+                let vc = DetailPostVC(viewModel: DetailPostVM(post: post))
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }

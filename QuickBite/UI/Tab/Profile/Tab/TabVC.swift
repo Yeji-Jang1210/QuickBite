@@ -10,8 +10,8 @@ import SnapKit
 import Tabman
 import Pageboy
 
-enum PostType: CaseIterable {
-    case userPost
+enum PostType {
+    case userPost(userId: String)
     case bookmark
     
     var icon: UIImage? {
@@ -22,11 +22,15 @@ enum PostType: CaseIterable {
             return ImageAssets.bookmarkFill
         }
     }
+    
+    static var icons: [UIImage?] {
+        return [ImageAssets.pencilLine, ImageAssets.bookmarkFill]
+    }
 }
 
 final class TabVC: TabmanViewController {
     
-    private var viewControllers: [UIViewController] = [PostListVC(viewModel: PostListVM(type: .userPost)), PostListVC(viewModel: PostListVM(type: .bookmark))]
+    private var viewControllers: [UIViewController]
     
     private lazy var bar = {
         let object = TMBarView<TMConstrainedHorizontalBarLayout, TMTabItemBarButton, TMLineBarIndicator>()
@@ -39,14 +43,33 @@ final class TabVC: TabmanViewController {
         }
         object.indicator.weight = .custom(value: 2)
         object.indicator.tintColor = Color.primaryColor
-
+        
         return object
     }()
+    
+    init(type: ProfileType){
+        switch type {
+        case .isUser:
+            viewControllers = [PostListVC(viewModel: PostListVM(type: .userPost(userId: UserDefaultsManager.shared.userId))), PostListVC(viewModel: PostListVM(type: .bookmark))]
+        case .otherUser(let userId):
+            viewControllers = [PostListVC(viewModel: PostListVM(type: .userPost(userId: type.userId)))]
+        }
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dataSource = self
         addBar(bar, dataSource: self, at: .top)
+    }
+    
+    deinit {
+        print("\(String(describing: type(of: self))) deinitialized")
     }
 }
 
@@ -65,7 +88,7 @@ extension TabVC: PageboyViewControllerDataSource, TMBarDataSource {
     
     func barItem(for bar: any Tabman.TMBar, at index: Int) -> any Tabman.TMBarItemable {
         let item = TMBarItem(title: "")
-        item.image = PostType.allCases[index].icon
+        item.image = PostType.icons[index]
         return item
     }
 }

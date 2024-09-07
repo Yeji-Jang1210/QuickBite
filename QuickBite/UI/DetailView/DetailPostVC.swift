@@ -47,7 +47,18 @@ final class DetailPostVC: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.tintColor = .clear
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presentVC.accept(())
     }
     
     override func configureHierarchy() {
@@ -94,7 +105,10 @@ final class DetailPostVC: BaseVC {
             .compactMap{ $0 }
             .drive(with: self){ owner, path in
                 KingfisherManager.shared.defaultOptions = [.requestModifier(TokenPlugin(token: UserDefaultsManager.shared.token))]
-                owner.backgroundImageView.kf.setImage(with: path)
+                
+                owner.backgroundImageView.kf.setImage(with: path,
+                                                      options: [.transition(.fade(2)),
+                                                        .forceTransition])
             }
             .disposed(by: disposeBag)
         
@@ -109,9 +123,22 @@ final class DetailPostVC: BaseVC {
             .disposed(by: disposeBag)
         
         output.presentVC
-            .bind(with: self){ owner, post in
-                let vc = DetailPostContentVC(viewModel: DetailPostContentVM(post: post))
-                owner.showBottomSheet(vc: vc)
+            .drive(with: self){ owner, post in
+                if let post = post {
+                    let vc = DetailPostContentVC(viewModel: DetailPostContentVM(post: post))
+                    vc.sendUserId = { [weak self] userId in
+                        if userId == UserDefaultsManager.shared.userId {
+                            let vc = ProfileVC(title: "프로필", isChild: true, viewModel: ProfileVM(type: .isUser))
+                            self?.navigationController?.navigationBar.isHidden = false
+                            self?.navigationController?.pushViewController(vc, animated: true)
+                        } else {
+                            let vc = ProfileVC(title: "프로필", isChild: true, viewModel: ProfileVM(type: .otherUser(userId: userId)))
+                            self?.navigationController?.navigationBar.isHidden = false
+                            self?.navigationController?.pushViewController(vc, animated: true)
+                        }
+                    }
+                    owner.showBottomSheet(vc: vc)
+                }
             }
             .disposed(by: disposeBag)
     }

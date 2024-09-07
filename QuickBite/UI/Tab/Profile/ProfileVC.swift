@@ -87,14 +87,14 @@ final class ProfileVC: BaseVC {
         [profileImageView, nicknameLabel, detailInfoStackView, containerView].map { object.addSubview($0) }
         return object
     }()
-
+    
     private lazy var containerView = {
         let object = UIView()
         object.addSubview(tabVC.view)
         return object
     }()
     
-    private var tabVC = TabVC()
+    private lazy var tabVC = TabVC(type: viewModel.type)
     
     private let callProfileAPI = PublishRelay<Void>()
     private var viewModel: ProfileVM!
@@ -102,7 +102,6 @@ final class ProfileVC: BaseVC {
     init(title: String = "", isChild: Bool = false, viewModel: ProfileVM) {
         super.init(title: title, isChild: isChild)
         self.viewModel = viewModel
-        NotificationCenter.default.addObserver(self, selector: #selector(pushDetailView), name: .pushDetailView, object: nil)
     }
     
     override func viewDidLoad() {
@@ -124,7 +123,7 @@ final class ProfileVC: BaseVC {
         super.configureLayout()
         
         headerView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
             make.bottom.horizontalEdges.equalToSuperview()
         }
         
@@ -163,7 +162,7 @@ final class ProfileVC: BaseVC {
         super.configureUI()
         configureNaivgationBarItem()
     }
-
+    
     func configureNaivgationBarItem(){
         navigationItem.rightBarButtonItem = settingBarButtonItem
         navigationItem.rightBarButtonItem?.tintColor = Color.primaryColor
@@ -173,7 +172,7 @@ final class ProfileVC: BaseVC {
         super.bind()
         
         let input = ProfileVM.Input(callProfileAPI: callProfileAPI,
-            settingBarButtonTap: settingBarButtonItem.rx.tap)
+                                    settingBarButtonTap: settingBarButtonItem.rx.tap)
         
         let output = viewModel.transform(input: input)
         
@@ -210,13 +209,18 @@ final class ProfileVC: BaseVC {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
-    }
-    
-    @objc
-    func pushDetailView(_ notification: Notification){
-        if let post = notification.object as? Post {
-            let vc = DetailPostVC(viewModel: DetailPostVM(post: post))
-            navigationController?.pushViewController(vc, animated: true)
-        }
+        
+        output.profileType
+            .drive(with: self){ owner, type in
+                switch type {
+                case .isUser:
+                    owner.navigationItem.rightBarButtonItem?.isHidden = false
+                    owner.detailInfoStackView.isHidden = false
+                case .otherUser:
+                    owner.navigationItem.rightBarButtonItem?.isHidden = true
+                    owner.detailInfoStackView.isHidden = true
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
