@@ -131,15 +131,18 @@ final class MainVM: BaseVM, BaseVMProvider {
         
         let payment = input.passPaymentInfo
             .flatMap { post in
-                return Observable.just((IamportPayment(pg: PG.html5_inicis.makePgRawName(pgId: "INIpayTest"),
-                                              merchant_uid: "ios_\(APIInfo.key)_\(Int(Date().timeIntervalSince1970))",
-                                              amount: "100")
-                     .then {
-                         $0.pay_method = PayMethod.card.rawValue
-                         $0.name = "\(post.title)"
-                         $0.buyer_name = "장예지"
-                         $0.app_scheme = "sesac"
-                     }, post))
+                if let price = post.price {
+                    return Observable.just((IamportPayment(pg: PG.html5_inicis.makePgRawName(pgId: "INIpayTest"),
+                                                  merchant_uid: "ios_\(APIInfo.key)_\(Int(Date().timeIntervalSince1970))",
+                                                           amount: "\(price)")
+                         .then {
+                             $0.pay_method = PayMethod.card.rawValue
+                             $0.name = "\(post.title)"
+                             $0.buyer_name = "장예지"
+                             $0.app_scheme = "sesac"
+                         }, post))
+                }
+                return Observable.empty()
             }
         
         return Output(addPostButtonTap: input.addPostButtonTap,
