@@ -187,6 +187,7 @@ final class DetailPostContentVC: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateBookmarkCount), name: .updateBookmarkCount, object: nil)
         isModalInPresentation = true
     }
     
@@ -395,5 +396,13 @@ final class DetailPostContentVC: BaseVC {
                 owner.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
+    }
+    
+    @objc
+    func updateBookmarkCount(_ notification: Notification){
+        if let isLiked = notification.object as? Bool {
+            let count = viewModel.updateBookmarkCount.value
+            viewModel.updateBookmarkCount.accept(isLiked ? count + 1 : count - 1)
+        }
     }
 }

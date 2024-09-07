@@ -47,11 +47,11 @@ final class RecipesVC: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
         //데이터 다시 불러오기
         isLastPage = false
         viewModel.items = []

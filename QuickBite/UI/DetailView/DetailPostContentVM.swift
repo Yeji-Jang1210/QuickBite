@@ -39,6 +39,7 @@ final class DetailPostContentVM: BaseVM, BaseVMProvider{
     }
     
     private var post = BehaviorRelay<Post?>(value: nil)
+    lazy var updateBookmarkCount = BehaviorRelay<Int>(value: post.value?.likes.count ?? 0)
     
     convenience init(post: Post){
         self.init()
@@ -69,8 +70,9 @@ final class DetailPostContentVM: BaseVM, BaseVMProvider{
         let sources = post.map { $0.content.sources }.compactMap{$0}.asDriver(onErrorJustReturn: [])
         
         //detailVC에서 +1 / -1 신호 받기
-        let bookmarkText = post.map { $0.likes.count.formatted() }
-            .asDriver(onErrorJustReturn: "0")
+        let bookmarkText = updateBookmarkCount
+            .map { "\($0)"}
+            .asDriver(onErrorJustReturn: "")
         
         //이미지 파일 어떻게 넘겨줄지 생각하기
         let stepDataSource = post
