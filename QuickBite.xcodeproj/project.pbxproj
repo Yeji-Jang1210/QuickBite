@@ -88,6 +88,7 @@
 		B83B022B2C7F385500E82F97 /* DetailPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83B022A2C7F385500E82F97 /* DetailPostVC.swift */; };
 		B83B022D2C7F388B00E82F97 /* DetailPostVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83B022C2C7F388B00E82F97 /* DetailPostVM.swift */; };
 		B844C6DE2C748ABA00B6F783 /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */; };
+		B84B34682C8C260000B2D7C8 /* VerticalLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84B34672C8C260000B2D7C8 /* VerticalLabels.swift */; };
 		B851AA022C761B6D003901F0 /* ProfileSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA012C761B6D003901F0 /* ProfileSettingVC.swift */; };
 		B851AA042C761B74003901F0 /* ProfileSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA032C761B74003901F0 /* ProfileSettingVM.swift */; };
 		B851AA062C762F7C003901F0 /* ProfileSettingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851AA052C762F7C003901F0 /* ProfileSettingSectionModel.swift */; };
@@ -201,6 +202,7 @@
 		B83B022A2C7F385500E82F97 /* DetailPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPostVC.swift; sourceTree = "<group>"; };
 		B83B022C2C7F388B00E82F97 /* DetailPostVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPostVM.swift; sourceTree = "<group>"; };
 		B844C6DD2C748ABA00B6F783 /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
+		B84B34672C8C260000B2D7C8 /* VerticalLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalLabels.swift; sourceTree = "<group>"; };
 		B851AA012C761B6D003901F0 /* ProfileSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVC.swift; sourceTree = "<group>"; };
 		B851AA032C761B74003901F0 /* ProfileSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVM.swift; sourceTree = "<group>"; };
 		B851AA052C762F7C003901F0 /* ProfileSettingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingSectionModel.swift; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 				B8AF81B42C80B86C00C3EBF9 /* CircleButton.swift */,
 				B8FFD8552C81949A00F21F99 /* VerticalImageLabel.swift */,
 				B8FFD8572C81977000F21F99 /* IngredientStackView.swift */,
+				B84B34672C8C260000B2D7C8 /* VerticalLabels.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -743,6 +746,7 @@
 				B835F1322C7C7B890006B718 /* AddStepVC.swift in Sources */,
 				B822CA442C6C763A00FAA59E /* Cell+Extension.swift in Sources */,
 				B8FFD8612C82F01A00F21F99 /* RecipesCollectionViewCell.swift in Sources */,
+				B84B34682C8C260000B2D7C8 /* VerticalLabels.swift in Sources */,
 				B822CA682C6C8BA100FAA59E /* ImageAssets.swift in Sources */,
 				B851AA0A2C7644BB003901F0 /* ProfileDetailSettingVC.swift in Sources */,
 				B822CA7A2C6D92D900FAA59E /* ProfileVC.swift in Sources */,

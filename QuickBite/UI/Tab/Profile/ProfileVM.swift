@@ -17,6 +17,8 @@ struct DisplayProfile: Codable {
     let phoneNumber: String?
     let email: String?
     let posts: [String]
+    let followers: [Creator]
+    let following: [Creator]
 }
 
 enum ProfileType {
@@ -39,7 +41,9 @@ enum ProfileType {
                               birthday: result.birthDay,
                               phoneNumber: result.phoneNum,
                               email: result.email,
-                              posts: result.posts)
+                              posts: result.posts,
+                              followers: result.followers,
+                              following: result.following)
     }
     
     func convertDisplayProfileInfo(_ result: Userparams.OtherUserResponse) -> DisplayProfile {
@@ -49,7 +53,9 @@ enum ProfileType {
                               birthday: nil,
                               phoneNumber: nil,
                               email: nil,
-                              posts: result.posts)
+                              posts: result.posts,
+                              followers: result.followers,
+                              following: result.following)
     }
 }
 
@@ -68,6 +74,9 @@ final class ProfileVM: BaseVM, BaseVMProvider {
         let birthdayIsEmpty: Driver<Bool>
         let imagePath: Driver<String?>
         let presentProfileSetting: PublishRelay<[String:String?]>
+        let postCount: Driver<String>
+        let followersCount: Driver<String>
+        let followingCount: Driver<String>
         let errorMessage: Driver<String>
     }
     
@@ -100,7 +109,7 @@ final class ProfileVM: BaseVM, BaseVMProvider {
                 
                 return nil
             }
-            .asDriver(onErrorJustReturn: DisplayProfile(userId: "", nickname: "", profile: "", birthday: "", phoneNumber: "", email: "", posts: []))
+            .asDriver(onErrorJustReturn: DisplayProfile(userId: "", nickname: "", profile: "", birthday: "", phoneNumber: "", email: "", posts: [], followers: [], following: []))
         
         
         let nickname = user
@@ -125,6 +134,18 @@ final class ProfileVM: BaseVM, BaseVMProvider {
         let imagePath = user
             .map{ $0.profile }
             .asDriver(onErrorJustReturn: nil)
+        
+        let postCount = user
+            .map { "\($0.posts.count)" }
+            .asDriver(onErrorJustReturn: "0")
+        
+        let followersCount = user
+            .map { "\($0.followers.count)" }
+            .asDriver(onErrorJustReturn: "0")
+        
+        let followingCount = user
+            .map { "\($0.following.count)" }
+            .asDriver(onErrorJustReturn: "0")
         
         input.settingBarButtonTap
             .withLatestFrom(user.asObservable())
@@ -151,6 +172,9 @@ final class ProfileVM: BaseVM, BaseVMProvider {
                       birthdayIsEmpty: birthdayIsEmpty,
                       imagePath: imagePath,
                       presentProfileSetting: presentProfileSetting,
+                      postCount: postCount,
+                      followersCount: followersCount,
+                      followingCount: followingCount,
                       errorMessage: errorMessage)
     }
     

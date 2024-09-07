@@ -63,10 +63,12 @@ extension PostService: TargetType {
             return .uploadMultipart(param.convertMultiPartFormData())
         case .fetchPosts(param: let param):
             return .requestParameters(parameters: param.toParameters(), encoding: URLEncoding.queryString)
-        case .fetchUserPosts, .fetchSpecificPost:
+        case .fetchSpecificPost:
             return .requestPlain
         case .like(_, let param):
             return .requestJSONEncodable(param)
+        case .fetchUserPosts(let param):
+            return .requestParameters(parameters: param.toParameters(), encoding: URLEncoding.queryString)
         case .fetchUserLikesPost(param: let param):
             return .requestParameters(parameters: param.toParameters(), encoding: URLEncoding.queryString)
         }

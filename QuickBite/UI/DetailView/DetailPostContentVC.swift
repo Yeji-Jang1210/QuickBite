@@ -294,7 +294,7 @@ final class DetailPostContentVC: BaseVC {
         }
         
         pageControl.snp.makeConstraints { make in
-            make.top.equalTo(stepCollectionView.snp.bottom).offset(-20)
+            make.top.equalTo(stepCollectionView.snp.bottom)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-20)
         }

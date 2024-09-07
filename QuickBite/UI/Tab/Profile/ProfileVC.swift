@@ -94,6 +94,36 @@ final class ProfileVC: BaseVC {
         return object
     }()
     
+    private let postCountLabels = {
+        let object = VerticalLabels(title: "게시글")
+        return object
+    }()
+    
+    private let followerLabels = {
+        let object = VerticalLabels(title: "팔로워")
+        return object
+    }()
+    
+    private let followingLabels = {
+        let object = VerticalLabels(title: "팔로잉")
+        return object
+    }()
+    
+    private lazy var profileInfoStackView = {
+        let object = UIStackView()
+        object.axis = .horizontal
+        object.distribution = .fillEqually
+        [postCountLabels, followerLabels, followingLabels].map{ object.addArrangedSubview($0) }
+        return object
+    }()
+    
+    private let fallowButton = {
+        let object = BaseButton()
+        object.title = "팔로우 하기"
+        object.font = Font.semiBold(.small)
+        return object
+    }()
+    
     private lazy var tabVC = TabVC(type: viewModel.type)
     
     private let callProfileAPI = PublishRelay<Void>()
@@ -116,6 +146,8 @@ final class ProfileVC: BaseVC {
     override func configureHierarchy() {
         super.configureHierarchy()
         view.addSubview(headerView)
+        view.addSubview(profileInfoStackView)
+        view.addSubview(fallowButton)
         addChild(tabVC)
     }
     
@@ -144,11 +176,22 @@ final class ProfileVC: BaseVC {
         
         detailInfoStackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(nicknameLabel.snp.bottom).offset(12)
+            make.top.equalTo(nicknameLabel.snp.bottom).offset(20)
+        }
+        
+        profileInfoStackView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview().inset(20)
+            make.top.equalTo(detailInfoStackView.snp.bottom).offset(20)
+        }
+        
+        fallowButton.snp.makeConstraints { make in
+            make.verticalEdges.equalTo(detailInfoStackView)
+            make.width.equalTo(120)
+            make.centerX.equalToSuperview()
         }
         
         containerView.snp.makeConstraints { make in
-            make.top.equalTo(detailInfoStackView.snp.bottom).offset(20)
+            make.top.equalTo(profileInfoStackView.snp.bottom).offset(20)
             make.horizontalEdges.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
@@ -203,6 +246,18 @@ final class ProfileVC: BaseVC {
             }
             .disposed(by: disposeBag)
         
+        output.postCount
+            .drive(postCountLabels.text)
+            .disposed(by: disposeBag)
+        
+        output.followersCount
+            .drive(followerLabels.text)
+            .disposed(by: disposeBag)
+        
+        output.followingCount
+            .drive(followingLabels.text)
+            .disposed(by: disposeBag)
+        
         output.presentProfileSetting
             .bind(with: self) { owner, user in
                 let vc = ProfileSettingVC(title: "프로필 수정", isChild: true, viewModel: ProfileSettingVM(user))
@@ -216,9 +271,11 @@ final class ProfileVC: BaseVC {
                 case .isUser:
                     owner.navigationItem.rightBarButtonItem?.isHidden = false
                     owner.detailInfoStackView.isHidden = false
+                    owner.fallowButton.isHidden = true
                 case .otherUser:
                     owner.navigationItem.rightBarButtonItem?.isHidden = true
                     owner.detailInfoStackView.isHidden = true
+                    owner.fallowButton.isHidden = false
                 }
             }
             .disposed(by: disposeBag)

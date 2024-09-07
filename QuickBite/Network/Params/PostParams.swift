@@ -68,6 +68,23 @@ class PostParams {
     
     struct FetchUserPostsRequest: Codable {
         let id: String
+        var next: String = ""
+        var limit: String = "100"
+        var product_id: String = "quickBite"
+
+        init(id: String){
+            self.id = id
+        }
+        
+        func toParameters() -> [String: Any] {
+            var params = [String: Any]()
+            
+            params["next"] = next
+            params["limit"] = limit
+            params["product_id"] = product_id
+            
+            return params
+        }
     }
     
     struct LikeRequest: Codable {

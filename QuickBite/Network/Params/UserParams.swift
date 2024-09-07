@@ -170,6 +170,8 @@ class Userparams {
         let birthDay: String?
         let profileImage: String?
         let posts: [String]
+        let followers: [Creator]
+        let following: [Creator]
         
         enum CodingKeys: String, CodingKey {
             case userId = "user_id"
@@ -179,6 +181,8 @@ class Userparams {
             case birthDay
             case profileImage
             case posts
+            case followers
+            case following
         }
     }
     
@@ -187,12 +191,16 @@ class Userparams {
         let nick: String
         let profileImage: String?
         let posts: [String]
+        let followers: [Creator]
+        let following: [Creator]
         
         enum CodingKeys: String, CodingKey {
             case userId = "user_id"
             case nick
             case profileImage
             case posts
+            case followers
+            case following
         }
     }
     
